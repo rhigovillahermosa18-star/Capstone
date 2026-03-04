@@ -8,7 +8,7 @@ export default function LandingPage() {
       {/* Logo */}
       <div className="mb-6">
         <Image
-          src="/logo.png"  // put your logo in public folder
+          src="/logo1.png"  // put your logo in public folder
           alt="Marvelously Polished Logo"
           width={220}
           height={220}

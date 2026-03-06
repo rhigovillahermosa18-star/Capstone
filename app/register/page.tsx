@@ -10,7 +10,7 @@ export default function Register() {
         backgroundImage: "url('/logo1.png')",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
-        backgroundSize: "500px",
+        backgroundSize: "1000px",
       }}
     >
       <div className="bg-white p-8 rounded-xl shadow-md w-80 text-center">

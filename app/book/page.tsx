@@ -8,9 +8,9 @@ export default function Book() {
 
       {/* Header */}
       <div className="bg-[#FFD3DF] py-6 text-center">
-        <h1 className="text-3xl tracking-widest font-medium text-black">
+        <Link href="/homepage" className="text-3xl tracking-widest font-medium text-black">
           MARVELOUSLY POLISHED
-        </h1>
+        </Link>
       </div>
 
       {/* Navigation */}

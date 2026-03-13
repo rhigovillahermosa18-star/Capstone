@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Book() {
   return (
@@ -9,7 +10,6 @@ export default function Book() {
       {/* Decorative Shapes */}
       <div className="absolute top-20 left-[-120px] w-80 h-80 bg-pink-300 rounded-full opacity-30 blur-3xl"></div>
       <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl"></div>
-      <div className="absolute top-1/2 left-10 w-40 h-40 bg-pink-200 rounded-full opacity-40 blur-2xl"></div>
 
       {/* Header */}
       <div className="bg-[#FFD3DF] py-6 text-center shadow-sm relative z-10">
@@ -45,9 +45,45 @@ export default function Book() {
         </Link>
       </div>
 
-      {/* Booking Form */}
-      <div className="flex justify-center pt-10 pb-10 relative z-10">
-        <div className="bg-white p-8 rounded-xl shadow-xl w-full max-w-lg">
+      {/* Booking Section */}
+      <div className="flex flex-grow justify-center items-start gap-8 px-10 py-10 relative z-10">
+
+        {/* Left Panel */}
+        <div className="hidden lg:flex flex-col gap-4 w-64">
+
+          <div className="bg-white p-4 rounded-xl shadow-md">
+            <h3 className="text-black font-semibold mb-2">Popular Nails 💅</h3>
+
+            <Image
+              src="/nail1.jpg"
+              width={220}
+              height={150}
+              alt="Nail Design"
+              className="rounded-lg mb-2"
+            />
+
+            <Image
+              src="/nail2.jpg"
+              width={220}
+              height={150}
+              alt="Nail Design"
+              className="rounded-lg"
+            />
+          </div>
+
+          <div className="bg-white p-4 rounded-xl shadow-md text-black">
+            <h3 className="font-semibold mb-2">Services</h3>
+            <p>✨ Plain Set</p>
+            <p>✨ Basic Set</p>
+            <p>✨ Gel Polish</p>
+            <p>✨ Nail Art</p>
+          </div>
+
+        </div>
+
+
+        {/* Booking Form */}
+        <div className="bg-white p-8 rounded-xl shadow-xl w-full max-w-md">
 
           <h2 className="text-center font-bold mb-6 text-black text-2xl">
             Book Appointment 💅
@@ -93,6 +129,33 @@ export default function Book() {
           </button>
 
         </div>
+
+
+        {/* Right Panel */}
+        <div className="hidden lg:flex flex-col gap-4 w-64">
+
+          <div className="bg-white p-4 rounded-xl shadow-md text-black">
+            <h3 className="font-semibold mb-2">Why Choose Us 💖</h3>
+            <p>⭐ Professional Nail Artists</p>
+            <p>⭐ Quality Nail Products</p>
+            <p>⭐ Clean Tools</p>
+            <p>⭐ Relaxing Experience</p>
+          </div>
+
+          <div className="bg-white p-4 rounded-xl shadow-md">
+            <h3 className="text-black font-semibold mb-2">Trending Design</h3>
+
+            <Image
+              src="/nail3.jpg"
+              width={220}
+              height={150}
+              alt="Trending Nail"
+              className="rounded-lg"
+            />
+          </div>
+
+        </div>
+
       </div>
 
     </div>

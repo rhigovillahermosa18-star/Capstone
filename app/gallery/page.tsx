@@ -49,7 +49,7 @@ export default function Gallery() {
             Gallery 💅
           </h2>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-6 gap-4">
 
             <Image
               src="/nail1.jpg"
@@ -69,6 +69,30 @@ export default function Gallery() {
 
             <Image
               src="/nail3.jpg"
+              width={200}
+              height={200}
+              alt="Nail design"
+              className="rounded-lg hover:scale-105 transition"
+            />
+
+            <Image
+              src="/nail4.jpg"
+              width={200}
+              height={200}
+              alt="Nail design"
+              className="rounded-lg hover:scale-105 transition"
+            />
+
+            <Image
+              src="/nail5.jpg"
+              width={200}
+              height={200}
+              alt="Nail design"
+              className="rounded-lg hover:scale-105 transition"
+            />
+
+            <Image
+              src="/nail6.jpg"
               width={200}
               height={200}
               alt="Nail design"

@@ -59,14 +59,14 @@ export default function Book() {
                 <Image
                   src="/nail1.jpg"
                   width={400}
-                  height={400}
+                  height={600}
                   alt="Nail Design"
                   className="rounded-xl w-full h-48 object-cover"
                 />
                 <Image
                   src="/nail2.jpg"
                   width={400}
-                  height={400}
+                  height={600}
                   alt="Nail Design"
                   className="rounded-xl w-full h-48 object-cover"
                 />
@@ -153,7 +153,7 @@ export default function Book() {
               <Image
                 src="/nail3.jpg"
                 width={400}
-                height={400}
+                height={600}
                 alt="Trending Nail"
                 className="rounded-xl w-full h-56 object-cover"
               />

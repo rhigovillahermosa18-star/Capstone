@@ -59,14 +59,14 @@ export default function Book() {
                 <Image
                   src="/nail1.jpg"
                   width={300}
-                  height={200}
+                  height={400}
                   alt="Nail Design"
                   className="rounded-xl w-full h-32 object-cover"
                 />
                 <Image
                   src="/nail2.jpg"
                   width={300}
-                  height={200}
+                  height={400}
                   alt="Nail Design"
                   className="rounded-xl w-full h-32 object-cover"
                 />
@@ -153,7 +153,7 @@ export default function Book() {
               <Image
                 src="/nail3.jpg"
                 width={300}
-                height={200}
+                height={400}
                 alt="Trending Nail"
                 className="rounded-xl w-full h-40 object-cover"
               />
@@ -172,7 +172,7 @@ export default function Book() {
           Santa Ana | Book Your Glam Today 💅
         </p>
       </footer>
-      
+
     </div>
   );
 }

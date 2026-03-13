@@ -33,10 +33,6 @@ export default function Register() {
             <div className="space-y-2 text-gray-600">
               <p className="flex items-center gap-2 justify-center">
                 <span className="text-pink-500">✓</span>
-                Professional Nail Artists
-              </p>
-              <p className="flex items-center gap-2 justify-center">
-                <span className="text-pink-500">✓</span>
                 Premium Products
               </p>
               <p className="flex items-center gap-2 justify-center">

@@ -53,24 +53,24 @@ export default function Gallery() {
 
             <Image
               src="/nail1.jpg"
-              width={120}
-              height={120}
+              width={200}
+              height={200}
               alt="Nail design"
               className="rounded-lg hover:scale-105 transition"
             />
 
             <Image
               src="/nail2.jpg"
-              width={120}
-              height={120}
+              width={200}
+              height={200}
               alt="Nail design"
               className="rounded-lg hover:scale-105 transition"
             />
 
             <Image
               src="/nail3.jpg"
-              width={120}
-              height={120}
+              width={200}
+              height={200}
               alt="Nail design"
               className="rounded-lg hover:scale-105 transition"
             />

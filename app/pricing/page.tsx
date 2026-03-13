@@ -2,12 +2,14 @@ import Link from "next/link";
 
 export default function Pricing() {
   return (
-    <div className="min-h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#FFE4EF] to-[#FFD3DF] flex flex-col relative overflow-hidden">
 
       {/* Decorative Shapes */}
-      <div className="absolute top-20 left-[-120px] w-80 h-80 bg-pink-300 rounded-full opacity-30 blur-3xl"></div>
-      <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl"></div>
-      <div className="absolute top-1/2 left-10 w-40 h-40 bg-pink-200 rounded-full opacity-40 blur-2xl"></div>
+      <div className="absolute top-20 left-[-150px] w-96 h-96 bg-pink-300 rounded-full opacity-30 blur-3xl"></div>
+      <div className="absolute bottom-10 right-[-150px] w-96 h-96 bg-pink-400 rounded-full opacity-30 blur-3xl"></div>
+      <div className="absolute top-1/2 left-5 w-48 h-48 bg-pink-200 rounded-full opacity-40 blur-2xl"></div>
+      <div className="absolute top-0 right-0 w-60 h-60 bg-pink-100 rounded-full opacity-50 blur-2xl"></div>
+      <div className="absolute bottom-0 left-0 w-60 h-60 bg-pink-200 rounded-full opacity-50 blur-2xl"></div>
 
       {/* Header */}
       <div className="bg-[#FFD3DF] py-6 text-center shadow-sm relative z-10">
@@ -41,8 +43,8 @@ export default function Pricing() {
       </div>
 
       {/* Pricing Content */}
-      <div className="flex flex-grow justify-center items-center relative z-10">
-        <div className="bg-white p-10 rounded-xl w-full max-w-md shadow-xl text-center">
+      <div className="flex flex-grow justify-center items-center relative z-10 px-4">
+        <div className="bg-white p-10 rounded-3xl w-full max-w-lg shadow-xl text-center relative z-20">
 
           <h2 className="text-2xl font-bold mb-6 text-black">
             Pricing 💅
@@ -71,6 +73,9 @@ export default function Pricing() {
 
         </div>
       </div>
+
+      {/* Optional subtle diagonal stripes */}
+      <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,#fff0,#fff0 20px,#FFE4EF 20px,#FFE4EF 40px)] opacity-10 pointer-events-none"></div>
 
     </div>
   );

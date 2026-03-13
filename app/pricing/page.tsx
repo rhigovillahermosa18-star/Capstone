@@ -43,39 +43,106 @@ export default function Pricing() {
       </div>
 
       {/* Pricing Content */}
-      <div className="flex flex-grow justify-center items-center relative z-10 px-4">
-        <div className="bg-white p-10 rounded-3xl w-full max-w-lg shadow-xl text-center relative z-20">
-
-          <h2 className="text-2xl font-bold mb-6 text-black">
-            Pricing 💅
+      <div className="flex-grow flex justify-center items-center relative z-10 px-6 py-12">
+        <div className="max-w-5xl w-full">
+          
+          <h2 className="text-4xl font-bold mb-12 text-black text-center">
+            Our Pricing 💅
           </h2>
 
-          <div className="mb-6 text-black border-b pb-4">
-            <h3 className="font-bold text-lg mb-2">Plain Set</h3>
-            <p>Short — ₱400</p>
-            <p>Medium — ₱450</p>
-            <p>Long — ₱500</p>
-          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            
+            {/* Plain Set */}
+            <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+              <div className="text-center mb-6">
+                <h3 className="font-bold text-2xl mb-2 text-pink-500">Plain Set</h3>
+                <p className="text-gray-600 text-sm">Simple & Elegant</p>
+              </div>
+              <div className="space-y-4 text-black">
+                <div className="flex justify-between items-center pb-3 border-b">
+                  <span className="font-medium">Short</span>
+                  <span className="text-xl font-bold text-pink-500">₱400</span>
+                </div>
+                <div className="flex justify-between items-center pb-3 border-b">
+                  <span className="font-medium">Medium</span>
+                  <span className="text-xl font-bold text-pink-500">₱450</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">Long</span>
+                  <span className="text-xl font-bold text-pink-500">₱500</span>
+                </div>
+              </div>
+              <Link
+                href="/book"
+                className="mt-6 block w-full bg-pink-100 text-pink-600 py-3 rounded-xl font-semibold text-center hover:bg-pink-200 transition"
+              >
+                Book Now
+              </Link>
+            </div>
 
-          <div className="mb-6 text-black border-b pb-4">
-            <h3 className="font-bold text-lg mb-2">Basic Set</h3>
-            <p>Short — ₱450</p>
-            <p>Medium — ₱500</p>
-            <p>Long — ₱550</p>
-          </div>
+            {/* Basic Set */}
+            <div className="bg-gradient-to-br from-pink-500 to-pink-400 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 relative">
+              <div className="absolute top-4 right-4 bg-white text-pink-500 text-xs font-bold px-3 py-1 rounded-full">
+                POPULAR
+              </div>
+              <div className="text-center mb-6">
+                <h3 className="font-bold text-2xl mb-2 text-white">Basic Set</h3>
+                <p className="text-pink-100 text-sm">Most Popular Choice</p>
+              </div>
+              <div className="space-y-4 text-white">
+                <div className="flex justify-between items-center pb-3 border-b border-pink-300">
+                  <span className="font-medium">Short</span>
+                  <span className="text-xl font-bold">₱450</span>
+                </div>
+                <div className="flex justify-between items-center pb-3 border-b border-pink-300">
+                  <span className="font-medium">Medium</span>
+                  <span className="text-xl font-bold">₱500</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">Long</span>
+                  <span className="text-xl font-bold">₱550</span>
+                </div>
+              </div>
+              <Link
+                href="/book"
+                className="mt-6 block w-full bg-white text-pink-500 py-3 rounded-xl font-semibold text-center hover:bg-pink-50 transition"
+              >
+                Book Now
+              </Link>
+            </div>
 
-          <div className="text-black">
-            <h3 className="font-bold text-lg mb-2">Full Set</h3>
-            <p>Short — ₱600</p>
-            <p>Medium — ₱650</p>
-            <p>Long — ₱700</p>
+            {/* Full Set */}
+            <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+              <div className="text-center mb-6">
+                <h3 className="font-bold text-2xl mb-2 text-pink-500">Full Set</h3>
+                <p className="text-gray-600 text-sm">Premium Experience</p>
+              </div>
+              <div className="space-y-4 text-black">
+                <div className="flex justify-between items-center pb-3 border-b">
+                  <span className="font-medium">Short</span>
+                  <span className="text-xl font-bold text-pink-500">₱600</span>
+                </div>
+                <div className="flex justify-between items-center pb-3 border-b">
+                  <span className="font-medium">Medium</span>
+                  <span className="text-xl font-bold text-pink-500">₱650</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">Long</span>
+                  <span className="text-xl font-bold text-pink-500">₱700</span>
+                </div>
+              </div>
+              <Link
+                href="/book"
+                className="mt-6 block w-full bg-pink-100 text-pink-600 py-3 rounded-xl font-semibold text-center hover:bg-pink-200 transition"
+              >
+                Book Now
+              </Link>
+            </div>
+
           </div>
 
         </div>
       </div>
-
-      {/* Optional subtle diagonal stripes */}
-      <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,#fff0,#fff0 20px,#FFE4EF 20px,#FFE4EF 40px)] opacity-10 pointer-events-none"></div>
 
     <footer className="bg-[#FFD3DF] text-center py-6 relative z-10">
         <p className="text-black font-medium">

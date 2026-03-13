@@ -46,107 +46,121 @@ export default function Book() {
       </div>
 
       {/* Booking Section */}
-      <div className="flex flex-grow justify-center items-start gap-8 px-10 py-10 relative z-10">
+      <div className="flex-grow flex justify-center items-center px-6 py-12 relative z-10">
+        <div className="max-w-6xl w-full grid lg:grid-cols-3 gap-8">
 
-        {/* Left Panel */}
-        <div className="hidden lg:flex flex-col gap-4 w-64">
+          {/* Left Info Card */}
+          <div className="hidden lg:block space-y-6">
+            <div className="bg-white p-6 rounded-2xl shadow-lg">
+              <h3 className="text-black font-bold text-lg mb-4 flex items-center gap-2">
+                <span>💅</span> Popular Designs
+              </h3>
+              <div className="space-y-3">
+                <Image
+                  src="/nail1.jpg"
+                  width={300}
+                  height={200}
+                  alt="Nail Design"
+                  className="rounded-xl w-full h-32 object-cover"
+                />
+                <Image
+                  src="/nail2.jpg"
+                  width={300}
+                  height={200}
+                  alt="Nail Design"
+                  className="rounded-xl w-full h-32 object-cover"
+                />
+              </div>
+            </div>
+          </div>
 
-          <div className="bg-white p-4 rounded-xl shadow-md">
-            <h3 className="text-black font-semibold mb-2">Popular Nails 💅</h3>
+          {/* Booking Form */}
+          <div className="bg-white p-8 rounded-2xl shadow-2xl">
+            <h2 className="text-center font-bold mb-8 text-black text-3xl">
+              Book Your Appointment
+            </h2>
 
-            <Image
-              src="/nail1.jpg"
-              width={220}
-              height={150}
-              alt="Nail Design"
-              className="rounded-lg mb-2"
-            />
+            <div className="space-y-4">
+              <input
+                placeholder="Full Name"
+                className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
+              />
 
-            <Image
-              src="/nail2.jpg"
-              width={220}
-              height={150}
-              alt="Nail Design"
-              className="rounded-lg"
-            />
+              <input
+                placeholder="Phone Number"
+                className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
+              />
+
+              <select className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition">
+                <option>Select Service</option>
+                <option>Plain Set</option>
+                <option>Basic Set</option>
+                <option>Full Set</option>
+              </select>
+
+              <input
+                type="date"
+                className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
+              />
+
+              <select className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition">
+                <option>Select Time</option>
+                <option>10:00 AM</option>
+                <option>1:00 PM</option>
+                <option>4:00 PM</option>
+              </select>
+
+              <textarea
+                placeholder="Special Requests (optional)"
+                rows={3}
+                className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none"
+              />
+
+              <button className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300">
+                Confirm Appointment
+              </button>
+            </div>
+          </div>
+
+          {/* Right Info Card */}
+          <div className="hidden lg:block space-y-6">
+            <div className="bg-white p-6 rounded-2xl shadow-lg text-black">
+              <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
+                <span>💖</span> Why Choose Us
+              </h3>
+              <div className="space-y-3 text-sm">
+                <p className="flex items-start gap-2">
+                  <span className="text-pink-500">✓</span>
+                  <span>Professional Nail Artists</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="text-pink-500">✓</span>
+                  <span>Premium Quality Products</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="text-pink-500">✓</span>
+                  <span>Sanitized Tools & Equipment</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="text-pink-500">✓</span>
+                  <span>Relaxing Atmosphere</span>
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl shadow-lg">
+              <h3 className="text-black font-bold text-lg mb-3">Trending Now</h3>
+              <Image
+                src="/nail3.jpg"
+                width={300}
+                height={200}
+                alt="Trending Nail"
+                className="rounded-xl w-full h-40 object-cover"
+              />
+            </div>
           </div>
 
         </div>
-
-
-        {/* Booking Form */}
-        <div className="bg-white p-8 rounded-xl shadow-xl w-full max-w-md">
-
-          <h2 className="text-center font-bold mb-6 text-black text-2xl">
-            Book Appointment 💅
-          </h2>
-
-          <input
-            placeholder="Full Name"
-            className="w-full mb-3 p-3 border rounded text-black focus:outline-none focus:ring-2 focus:ring-pink-300"
-          />
-
-          <input
-            placeholder="Phone Number"
-            className="w-full mb-3 p-3 border rounded text-black focus:outline-none focus:ring-2 focus:ring-pink-300"
-          />
-
-          <select className="w-full mb-3 p-3 border rounded text-black focus:outline-none focus:ring-2 focus:ring-pink-300">
-            <option>Select Service</option>
-            <option>Plain Set</option>
-            <option>Basic Set</option>
-            <option>Full Set</option>
-          </select>
-
-          <input
-            type="date"
-            className="w-full mb-3 p-3 border rounded text-black focus:outline-none focus:ring-2 focus:ring-pink-300"
-          />
-
-          <select className="w-full mb-3 p-3 border rounded text-black focus:outline-none focus:ring-2 focus:ring-pink-300">
-            <option>Select Time</option>
-            <option>10:00 AM</option>
-            <option>1:00 PM</option>
-            <option>4:00 PM</option>
-          </select>
-
-          <textarea
-            placeholder="Special Requests (optional)"
-            className="w-full mb-4 p-3 border rounded text-black focus:outline-none focus:ring-2 focus:ring-pink-300"
-          />
-
-          <button className="w-full bg-pink-400 text-white py-3 rounded hover:bg-pink-500 transition">
-            Submit Appointment
-          </button>
-
-        </div>
-
-
-        {/* Right Panel */}
-        <div className="hidden lg:flex flex-col gap-4 w-64">
-
-          <div className="bg-white p-4 rounded-xl shadow-md text-black">
-            <h3 className="font-semibold mb-2">Why Choose Us 💖</h3>
-            <p>⭐ Professional Nail Artists</p>
-            <p>⭐ Quality Nail Products</p>
-            <p>⭐ Clean Tools</p>
-            <p>⭐ Relaxing Experience</p>
-          </div>
-
-          <div className="bg-white p-4 rounded-xl shadow-md">
-            <h3 className="text-black font-semibold mb-2">Trending Design</h3>
-
-            <Image
-              src="/nail3.jpg"
-              width={220}
-              height={150}
-              alt="Trending Nail"
-              className="rounded-lg"
-            />
-          </div>
-
-        </div>
-
       </div>
     
     <footer className="bg-[#FFD3DF] text-center py-6 relative z-10">

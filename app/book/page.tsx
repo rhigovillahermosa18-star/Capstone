@@ -148,7 +148,17 @@ export default function Book() {
         </div>
 
       </div>
+    
+    <footer className="bg-[#FFD3DF] text-center py-6 relative z-10">
+        <p className="text-black font-medium">
+          © 2026 Marvelously Polished
+        </p>
 
+        <p className="text-sm text-black mt-1">
+          Santa Ana | Book Your Glam Today 💅
+        </p>
+      </footer>
+      
     </div>
   );
 }

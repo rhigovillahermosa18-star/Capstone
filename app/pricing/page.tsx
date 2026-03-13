@@ -77,6 +77,16 @@ export default function Pricing() {
       {/* Optional subtle diagonal stripes */}
       <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,#fff0,#fff0 20px,#FFE4EF 20px,#FFE4EF 40px)] opacity-10 pointer-events-none"></div>
 
+    <footer className="bg-[#FFD3DF] text-center py-6 relative z-10">
+        <p className="text-black font-medium">
+          © 2026 Marvelously Polished
+        </p>
+
+        <p className="text-sm text-black mt-1">
+          Santa Ana | Book Your Glam Today 💅
+        </p>
+      </footer>
+      
     </div>
   );
 }

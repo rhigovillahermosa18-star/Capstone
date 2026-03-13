@@ -58,17 +58,17 @@ export default function Book() {
               <div className="space-y-3">
                 <Image
                   src="/nail1.jpg"
-                  width={300}
+                  width={400}
                   height={400}
                   alt="Nail Design"
-                  className="rounded-xl w-full h-32 object-cover"
+                  className="rounded-xl w-full h-48 object-cover"
                 />
                 <Image
                   src="/nail2.jpg"
-                  width={300}
+                  width={400}
                   height={400}
                   alt="Nail Design"
-                  className="rounded-xl w-full h-32 object-cover"
+                  className="rounded-xl w-full h-48 object-cover"
                 />
               </div>
             </div>
@@ -152,10 +152,10 @@ export default function Book() {
               <h3 className="text-black font-bold text-lg mb-3">Trending Now</h3>
               <Image
                 src="/nail3.jpg"
-                width={300}
+                width={400}
                 height={400}
                 alt="Trending Nail"
-                className="rounded-xl w-full h-40 object-cover"
+                className="rounded-xl w-full h-56 object-cover"
               />
             </div>
           </div>

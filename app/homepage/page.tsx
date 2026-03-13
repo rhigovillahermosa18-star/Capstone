@@ -41,25 +41,97 @@ export default function Home() {
         </Link>
       </div>
 
-      {/* Main */}
-      <div className="flex flex-col items-center justify-center py-16 text-center flex-grow relative z-10">
+      {/* Main Content */}
+      <div className="flex-grow flex items-center justify-center px-6 py-12 relative z-10">
+        <div className="max-w-6xl w-full grid lg:grid-cols-2 gap-12 items-center">
+          
+          {/* Left Content */}
+          <div className="text-center lg:text-left space-y-6">
+            <h2 className="text-5xl md:text-6xl font-bold text-gray-800 leading-tight">
+              Marvelously<br/>Polished
+            </h2>
 
-        <Image
-          src="/logo1.png"
-          alt="Logo"
-          width={400}
-          height={400}
-          className="hover:scale-105 transition"
-        />
+            <p className="text-2xl text-pink-600 font-medium">
+              Beauty Starts From Tips to Toes 💅
+            </p>
 
-        <h2 className="text-3xl text-black mt-6 font-bold">
-          Marvelously Polished
-        </h2>
+            <p className="text-gray-700 text-lg leading-relaxed">
+              Experience luxury nail care in Santa Ana. Our professional artists use premium products to create stunning designs that express your unique style.
+            </p>
 
-        <p className="italic text-xl mt-2 text-black">
-          Beauty Starts From Tips to Toes
-        </p>
+            {/* CTA Buttons */}
+            <div className="flex gap-4 flex-wrap justify-center lg:justify-start pt-4">
+              <Link
+                href="/book"
+                className="bg-pink-500 text-white px-10 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-pink-600 hover:scale-105 transition-all duration-300"
+              >
+                Book Now
+              </Link>
+              
+              <Link
+                href="/gallery"
+                className="bg-white text-pink-600 px-10 py-4 rounded-full text-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-pink-300"
+              >
+                View Gallery
+              </Link>
+            </div>
 
+            {/* Quick Info */}
+            <div className="flex gap-6 justify-center lg:justify-start pt-6 text-sm text-gray-600 flex-wrap">
+              <div className="flex items-center gap-2">
+                <span className="text-pink-500 text-xl">✓</span>
+                <span>Professional Artists</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-pink-500 text-xl">✓</span>
+                <span>Premium Products</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-pink-500 text-xl">✓</span>
+                <span>Santa Ana</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Content - Logo & Images */}
+          <div className="flex flex-col items-center gap-6">
+            <div className="relative">
+              <Image
+                src="/logo1.png"
+                alt="Marvelously Polished Logo"
+                width={400}
+                height={400}
+                className="rounded-full shadow-2xl border-4 border-white hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+
+            {/* Featured Nail Designs */}
+            <div className="grid grid-cols-3 gap-3 w-full max-w-md">
+              <Image
+                src="/nail1.jpg"
+                width={200}
+                height={200}
+                alt="Nail Design"
+                className="rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300 w-full h-24 object-cover"
+              />
+              <Image
+                src="/nail2.jpg"
+                width={200}
+                height={200}
+                alt="Nail Design"
+                className="rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300 w-full h-24 object-cover"
+              />
+              <Image
+                src="/nail3.jpg"
+                width={200}
+                height={200}
+                alt="Nail Design"
+                className="rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300 w-full h-24 object-cover"
+              />
+            </div>
+          </div>
+
+        </div>
       </div>
 
       {/* Footer */}

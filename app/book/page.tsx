@@ -71,14 +71,6 @@ export default function Book() {
             />
           </div>
 
-          <div className="bg-white p-4 rounded-xl shadow-md text-black">
-            <h3 className="font-semibold mb-2">Services</h3>
-            <p>✨ Plain Set</p>
-            <p>✨ Basic Set</p>
-            <p>✨ Gel Polish</p>
-            <p>✨ Nail Art</p>
-          </div>
-
         </div>
 
 

@@ -62,6 +62,13 @@ export default function Pricing() {
             <p>Long — ₱550</p>
           </div>
 
+          <div className="text-black">
+            <h3 className="font-bold text-lg mb-2">Full Set</h3>
+            <p>Short — ₱600</p>
+            <p>Medium — ₱650</p>
+            <p>Long — ₱700</p>
+          </div>
+
         </div>
       </div>
 

@@ -95,8 +95,7 @@ export default function Book() {
             <option>Select Service</option>
             <option>Plain Set</option>
             <option>Basic Set</option>
-            <option>Gel Polish</option>
-            <option>Nail Art</option>
+            <option>Full Set</option>
           </select>
 
           <input

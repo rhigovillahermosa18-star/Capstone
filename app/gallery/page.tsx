@@ -49,7 +49,7 @@ export default function Gallery() {
             Gallery 💅
           </h2>
 
-          <div className="grid grid-cols-6 gap-4">
+          <div className="grid grid-cols-6 gap-1">
 
             <Image
               src="/nail1.jpg"

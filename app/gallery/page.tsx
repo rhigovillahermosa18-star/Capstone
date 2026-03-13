@@ -42,62 +42,74 @@ export default function Gallery() {
       </div>
 
       {/* Gallery Content */}
-      <div className="flex flex-grow justify-center items-center relative z-10">
-        <div className="bg-white p-8 rounded-xl shadow-xl max-w-lg">
+      <div className="flex-grow relative z-10 py-12 px-6">
+        <div className="max-w-6xl mx-auto">
 
-          <h2 className="text-center font-bold mb-6 text-black text-2xl">
-            Gallery 💅
+          <h2 className="text-center font-bold mb-12 text-black text-4xl tracking-wide">
+            Our Work 💅
           </h2>
 
-          <div className="grid grid-cols-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 
-            <Image
-              src="/nail1.jpg"
-              width={200}
-              height={200}
-              alt="Nail design"
-              className="rounded-lg hover:scale-105 transition"
-            />
+            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
+              <Image
+                src="/nail1.jpg"
+                width={400}
+                height={400}
+                alt="Nail design"
+                className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+            </div>
 
-            <Image
-              src="/nail2.jpg"
-              width={200}
-              height={200}
-              alt="Nail design"
-              className="rounded-lg hover:scale-105 transition"
-            />
+            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
+              <Image
+                src="/nail2.jpg"
+                width={400}
+                height={400}
+                alt="Nail design"
+                className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+            </div>
 
-            <Image
-              src="/nail3.jpg"
-              width={200}
-              height={200}
-              alt="Nail design"
-              className="rounded-lg hover:scale-105 transition"
-            />
+            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
+              <Image
+                src="/nail3.jpg"
+                width={400}
+                height={400}
+                alt="Nail design"
+                className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+            </div>
 
-            <Image
-              src="/nail4.jpg"
-              width={200}
-              height={200}
-              alt="Nail design"
-              className="rounded-lg hover:scale-105 transition"
-            />
+            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
+              <Image
+                src="/nail4.jpg"
+                width={400}
+                height={400}
+                alt="Nail design"
+                className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+            </div>
 
-            <Image
-              src="/nail5.jpg"
-              width={200}
-              height={200}
-              alt="Nail design"
-              className="rounded-lg hover:scale-105 transition"
-            />
+            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
+              <Image
+                src="/nail5.jpg"
+                width={400}
+                height={400}
+                alt="Nail design"
+                className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+            </div>
 
-            <Image
-              src="/nail6.jpg"
-              width={200}
-              height={200}
-              alt="Nail design"
-              className="rounded-lg hover:scale-105 transition"
-            />
+            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
+              <Image
+                src="/nail6.jpg"
+                width={400}
+                height={400}
+                alt="Nail design"
+                className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+            </div>
 
           </div>
 

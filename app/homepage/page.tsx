@@ -56,7 +56,7 @@ export default function Home() {
             </p>
 
             <p className="text-gray-700 text-lg leading-relaxed">
-              Experience luxury nail care in Santa Ana. Our professional artists use premium products to create stunning designs that express your unique style.
+              Experience luxury nail care in Santa Ana. Our artists use premium products to create stunning designs that express your unique style.
             </p>
 
             {/* CTA Buttons */}

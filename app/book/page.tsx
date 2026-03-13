@@ -131,10 +131,6 @@ export default function Book() {
               <div className="space-y-3 text-sm">
                 <p className="flex items-start gap-2">
                   <span className="text-pink-500">✓</span>
-                  <span>Professional Nail Artists</span>
-                </p>
-                <p className="flex items-start gap-2">
-                  <span className="text-pink-500">✓</span>
                   <span>Premium Quality Products</span>
                 </p>
                 <p className="flex items-start gap-2">

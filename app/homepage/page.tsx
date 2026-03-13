@@ -80,10 +80,6 @@ export default function Home() {
             <div className="flex gap-6 justify-center lg:justify-start pt-6 text-sm text-gray-600 flex-wrap">
               <div className="flex items-center gap-2">
                 <span className="text-pink-500 text-xl">✓</span>
-                <span>Professional Artists</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-pink-500 text-xl">✓</span>
                 <span>Premium Products</span>
               </div>
               <div className="flex items-center gap-2">

@@ -61,14 +61,14 @@ export default function Book() {
                   width={400}
                   height={600}
                   alt="Nail Design"
-                  className="rounded-xl w-full h-48 object-cover"
+                  className="rounded-xl w-full h-100 object-cover"
                 />
                 <Image
                   src="/nail2.jpg"
                   width={400}
                   height={600}
                   alt="Nail Design"
-                  className="rounded-xl w-full h-48 object-cover"
+                  className="rounded-xl w-full h-100 object-cover"
                 />
               </div>
             </div>
@@ -155,7 +155,7 @@ export default function Book() {
                 width={400}
                 height={600}
                 alt="Trending Nail"
-                className="rounded-xl w-full h-56 object-cover"
+                className="rounded-xl w-full h-100 object-cover"
               />
             </div>
           </div>

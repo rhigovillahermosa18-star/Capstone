@@ -75,7 +75,7 @@ export default function Book() {
           </div>
 
           {/* Booking Form */}
-          <div className="bg-white p-8 h-100 rounded-2xl shadow-2xl">
+          <div className="bg-white p-8 h-200 rounded-2xl shadow-2xl">
             <h2 className="text-center font-bold mb-8 text-black text-3xl">
               Book Your Appointment
             </h2>

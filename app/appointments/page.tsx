@@ -1,18 +1,39 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-const appointments = [
-  { id: 1, name: "Maria Santos", service: "Full Set", date: "2026-01-15", time: "10:00 AM", status: "Confirmed" },
-  { id: 2, name: "Jessica Lim", service: "Basic Set", date: "2026-01-18", time: "1:00 PM", status: "Pending" },
-  { id: 3, name: "Sarah Cruz", service: "Plain Set", date: "2026-01-20", time: "4:00 PM", status: "Confirmed" },
-];
+type Appointment = {
+  id: number;
+  name: string;
+  phone: string;
+  service: string;
+  date: string;
+  time: string;
+  requests: string;
+  design: string;
+  status: string;
+};
 
 export default function Appointments() {
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("appointments");
+    if (stored) setAppointments(JSON.parse(stored));
+  }, []);
+
+  const handleCancel = (id: number) => {
+    const updated = appointments.map((a) =>
+      a.id === id ? { ...a, status: "Cancelled" } : a
+    );
+    setAppointments(updated);
+    localStorage.setItem("appointments", JSON.stringify(updated));
+  };
+
   return (
     <div className="min-h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">
 
-      {/* Decorative Shapes */}
       <div className="absolute top-20 left-[-120px] w-80 h-80 bg-pink-300 rounded-full opacity-30 blur-3xl"></div>
       <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl"></div>
 
@@ -37,9 +58,6 @@ export default function Appointments() {
         <Link href="/gallery" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">
           Gallery
         </Link>
-        <Link href="/admin" className="bg-pink-500 px-5 py-2 rounded-full text-white hover:bg-pink-600 transition">
-          Admin Panel
-        </Link>
       </div>
 
       {/* Content */}
@@ -49,48 +67,67 @@ export default function Appointments() {
           <h2 className="text-4xl font-bold text-gray-800 mb-2 text-center">My Appointments</h2>
           <p className="text-center text-gray-600 mb-10">View and manage your upcoming nail appointments</p>
 
-          {/* Appointment Cards */}
-          <div className="space-y-4">
-            {appointments.map((appt) => (
-              <div key={appt.id} className="bg-white p-6 rounded-2xl shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div className="flex items-center gap-4">
-                  <div className="bg-pink-100 text-pink-600 text-2xl w-14 h-14 rounded-full flex items-center justify-center font-bold">
-                    💅
+          {appointments.length === 0 ? (
+            <div className="bg-white p-12 rounded-2xl shadow-lg text-center">
+              <p className="text-5xl mb-4">💅</p>
+              <p className="text-gray-600 text-lg mb-6">You have no appointments yet.</p>
+              <Link
+                href="/book"
+                className="inline-block bg-pink-500 text-white px-10 py-4 rounded-full font-semibold text-lg hover:bg-pink-600 transition"
+              >
+                Book Now
+              </Link>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {appointments.map((appt) => (
+                <div key={appt.id} className="bg-white p-6 rounded-2xl shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="bg-pink-100 text-2xl w-14 h-14 rounded-full flex items-center justify-center">
+                      💅
+                    </div>
+                    <div>
+                      <p className="font-bold text-gray-800 text-lg">{appt.name}</p>
+                      <p className="text-gray-600 text-sm">{appt.service}</p>
+                      {appt.design && <p className="text-pink-500 text-xs mt-1">Design: {appt.design}</p>}
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-bold text-gray-800 text-lg">{appt.name}</p>
-                    <p className="text-gray-600 text-sm">{appt.service}</p>
+
+                  <div className="flex gap-8 text-sm text-gray-600">
+                    <div>
+                      <p className="font-semibold text-gray-800">📅 Date</p>
+                      <p>{appt.date}</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-800">⏰ Time</p>
+                      <p>{appt.time}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
+                      appt.status === "Confirmed"
+                        ? "bg-green-100 text-green-600"
+                        : appt.status === "Cancelled"
+                        ? "bg-red-100 text-red-500"
+                        : "bg-yellow-100 text-yellow-600"
+                    }`}>
+                      {appt.status}
+                    </span>
+                    {appt.status !== "Cancelled" && (
+                      <button
+                        onClick={() => handleCancel(appt.id)}
+                        className="bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-pink-200 transition"
+                      >
+                        Cancel
+                      </button>
+                    )}
                   </div>
                 </div>
+              ))}
+            </div>
+          )}
 
-                <div className="flex gap-8 text-sm text-gray-600">
-                  <div>
-                    <p className="font-semibold text-gray-800">📅 Date</p>
-                    <p>{appt.date}</p>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-800">⏰ Time</p>
-                    <p>{appt.time}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                    appt.status === "Confirmed"
-                      ? "bg-green-100 text-green-600"
-                      : "bg-yellow-100 text-yellow-600"
-                  }`}>
-                    {appt.status}
-                  </span>
-                  <button className="bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-pink-200 transition">
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Book New */}
           <div className="text-center mt-10">
             <Link
               href="/book"

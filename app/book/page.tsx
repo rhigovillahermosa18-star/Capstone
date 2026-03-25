@@ -2,6 +2,41 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function Book() {
+  const router = useRouter();
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [service, setService] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [requests, setRequests] = useState("");
+  const [design, setDesign] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = () => {
+    if (!name || !phone || !service || service === "" || !date || !time) {
+      setError("Please fill in all required fields.");
+      return;
+    }
+    const stored = localStorage.getItem("appointments");
+    const existing = stored ? JSON.parse(stored) : [];
+    const newAppointment = {
+      id: Date.now(),
+      name,
+      phone,
+      service,
+      date,
+      time,
+      requests,
+      design,
+      status: "Pending",
+    };
+    localStorage.setItem("appointments", JSON.stringify([...existing, newAppointment]));
+    router.push("/appointments");
+  };
 
 export default function Book() {
   return (

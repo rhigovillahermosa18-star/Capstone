@@ -50,6 +50,9 @@ export default function Book() {
                 <div className="relative h-32"><Image src="/nail6.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
                 <div className="relative h-32"><Image src="/nail7.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
                 <div className="relative h-32"><Image src="/nail8.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail9.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail10.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail11.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
               </div>
             </div>
           </div>

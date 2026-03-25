@@ -19,8 +19,12 @@ export default function Appointments() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
 
   useEffect(() => {
-    const stored = localStorage.getItem("appointments");
-    if (stored) setAppointments(JSON.parse(stored));
+    try {
+      const stored = localStorage.getItem("appointments");
+      if (stored) setAppointments(JSON.parse(stored));
+    } catch (e) {
+      setAppointments([]);
+    }
   }, []);
 
   const handleCancel = (id: number) => {

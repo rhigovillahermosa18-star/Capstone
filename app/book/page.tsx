@@ -21,21 +21,25 @@ export default function Book() {
       setError("Please fill in all required fields.");
       return;
     }
-    const stored = localStorage.getItem("appointments");
-    const existing = stored ? JSON.parse(stored) : [];
-    const newAppointment = {
-      id: Date.now(),
-      name,
-      phone,
-      service,
-      date,
-      time,
-      requests,
-      design,
-      status: "Pending",
-    };
-    localStorage.setItem("appointments", JSON.stringify([...existing, newAppointment]));
-    router.push("/appointments");
+    try {
+      const stored = localStorage.getItem("appointments");
+      const existing = stored ? JSON.parse(stored) : [];
+      const newAppointment = {
+        id: Date.now(),
+        name,
+        phone,
+        service,
+        date,
+        time,
+        requests,
+        design,
+        status: "Pending",
+      };
+      localStorage.setItem("appointments", JSON.stringify([...existing, newAppointment]));
+      router.push("/appointments");
+    } catch (e) {
+      setError("Something went wrong. Please try again.");
+    }
   };
 
   return (

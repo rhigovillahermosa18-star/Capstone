@@ -48,6 +48,8 @@ export default function Book() {
                 <div className="relative h-32"><Image src="/nail4.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
                 <div className="relative h-32"><Image src="/nail5.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
                 <div className="relative h-32"><Image src="/nail6.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail7.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail8.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
               </div>
             </div>
           </div>
@@ -129,10 +131,12 @@ export default function Book() {
               <div className="grid grid-cols-2 gap-2 flex-grow">
                 <div className="relative h-32"><Image src="/nail5.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
                 <div className="relative h-32"><Image src="/nail6.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail7.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail8.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail9.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail10.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail11.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
                 <div className="relative h-32"><Image src="/nail1.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail2.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail3.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail4.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
               </div>
             </div>
           </div>

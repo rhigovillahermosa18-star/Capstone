@@ -13,8 +13,10 @@ export default function Login() {
 
   const handleLogin = () => {
     if (username === "admin" && password === "admin123") {
+      localStorage.setItem("role", "admin");
       router.push("/admin");
     } else if (username !== "" && password !== "") {
+      localStorage.setItem("role", "customer");
       router.push("/homepage");
     } else {
       setError("Please enter your username and password.");

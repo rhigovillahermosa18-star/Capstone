@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const appointments = [
   { id: 1, name: "Maria Santos", phone: "(714) 111-1111", service: "Full Set", date: "2026-01-15", time: "10:00 AM", status: "Confirmed", design: "Floral pink tips" },
@@ -17,6 +19,25 @@ const stats = [
 ];
 
 export default function Admin() {
+  const router = useRouter();
+  const [authorized, setAuthorized] = useState(false);
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    if (role !== "admin") {
+      router.replace("/login");
+    } else {
+      setAuthorized(true);
+    }
+  }, [router]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("role");
+    router.push("/login");
+  };
+
+  if (!authorized) return null;
+
   return (
     <div className="min-h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">
 
@@ -26,25 +47,22 @@ export default function Admin() {
 
       {/* Header */}
       <div className="bg-[#FFD3DF] py-6 text-center shadow-sm relative z-10">
-        <Link href="/homepage" className="text-3xl tracking-widest font-semibold text-black">
+        <span className="text-3xl tracking-widest font-semibold text-black">
           MARVELOUSLY POLISHED
-        </Link>
+        </span>
       </div>
 
       {/* Navigation */}
       <div className="py-4 flex justify-center gap-4 relative z-10 flex-wrap">
-        <Link href="/homepage" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">
-          🏠 Home
-        </Link>
-        <Link href="/appointments" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">
-          My Appointments
-        </Link>
-        <Link href="/book" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">
-          Book Appointment
-        </Link>
-        <Link href="/gallery" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">
-          Gallery
-        </Link>
+        <span className="bg-pink-500 px-5 py-2 rounded-full text-white font-semibold">
+          Admin Panel
+        </span>
+        <button
+          onClick={handleLogout}
+          className="bg-gray-200 px-5 py-2 rounded-full text-gray-700 hover:bg-gray-300 transition"
+        >
+          Logout
+        </button>
       </div>
 
       {/* Content */}
@@ -69,9 +87,6 @@ export default function Admin() {
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
             <div className="p-6 border-b border-gray-100 flex justify-between items-center">
               <h3 className="text-xl font-bold text-gray-800">All Appointments</h3>
-              <Link href="/book" className="bg-pink-500 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-pink-600 transition">
-                + New Booking
-              </Link>
             </div>
 
             <div className="overflow-x-auto">
@@ -136,10 +151,8 @@ export default function Admin() {
             <div className="space-y-3">
               <h4 className="font-bold text-gray-800 text-lg">Quick Links</h4>
               <div className="space-y-2 text-sm">
-                <Link href="/homepage" className="block text-gray-700 hover:text-pink-600 transition">Home</Link>
-                <Link href="/book" className="block text-gray-700 hover:text-pink-600 transition">Book Appointment</Link>
-                <Link href="/pricing" className="block text-gray-700 hover:text-pink-600 transition">Pricing</Link>
                 <Link href="/gallery" className="block text-gray-700 hover:text-pink-600 transition">Gallery</Link>
+                <Link href="/pricing" className="block text-gray-700 hover:text-pink-600 transition">Pricing</Link>
               </div>
             </div>
             <div className="space-y-3">

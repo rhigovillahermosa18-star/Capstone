@@ -41,11 +41,13 @@ export default function Book() {
               <h3 className="text-black font-bold text-lg mb-4 flex items-center gap-2">
                 <span>💅</span> Popular Designs
               </h3>
-              <div className="space-y-3">
-                <Image src="/nail1.jpg" width={400} height={400} alt="Nail Design" className="rounded-xl w-full h-40 object-cover hover:scale-105 transition-transform duration-300" />
-                <Image src="/nail2.jpg" width={400} height={400} alt="Nail Design" className="rounded-xl w-full h-40 object-cover hover:scale-105 transition-transform duration-300" />
-                <Image src="/nail3.jpg" width={400} height={400} alt="Nail Design" className="rounded-xl w-full h-40 object-cover hover:scale-105 transition-transform duration-300" />
-                <Image src="/nail4.jpg" width={400} height={400} alt="Nail Design" className="rounded-xl w-full h-40 object-cover hover:scale-105 transition-transform duration-300" />
+              <div className="grid grid-cols-2 gap-2">
+                <Image src="/nail1.jpg" width={400} height={400} alt="Nail Design" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
+                <Image src="/nail2.jpg" width={400} height={400} alt="Nail Design" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
+                <Image src="/nail3.jpg" width={400} height={400} alt="Nail Design" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
+                <Image src="/nail4.jpg" width={400} height={400} alt="Nail Design" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
+                <Image src="/nail5.jpg" width={400} height={400} alt="Nail Design" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
+                <Image src="/nail6.jpg" width={400} height={400} alt="Nail Design" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
               </div>
             </div>
           </div>
@@ -145,9 +147,13 @@ export default function Book() {
               <h3 className="text-black font-bold text-lg mb-4 flex items-center gap-2">
                 <span>🔥</span> Trending Now
               </h3>
-              <div className="space-y-3">
-                <Image src="/nail5.jpg" width={400} height={400} alt="Trending Nail" className="rounded-xl w-full h-40 object-cover hover:scale-105 transition-transform duration-300" />
-                <Image src="/nail6.jpg" width={400} height={400} alt="Trending Nail" className="rounded-xl w-full h-40 object-cover hover:scale-105 transition-transform duration-300" />
+              <div className="grid grid-cols-2 gap-2">
+                <Image src="/nail5.jpg" width={400} height={400} alt="Trending Nail" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
+                <Image src="/nail6.jpg" width={400} height={400} alt="Trending Nail" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
+                <Image src="/nail1.jpg" width={400} height={400} alt="Trending Nail" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
+                <Image src="/nail2.jpg" width={400} height={400} alt="Trending Nail" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
+                <Image src="/nail3.jpg" width={400} height={400} alt="Trending Nail" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
+                <Image src="/nail4.jpg" width={400} height={400} alt="Trending Nail" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
               </div>
             </div>
           </div>

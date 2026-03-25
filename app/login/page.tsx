@@ -14,10 +14,10 @@ export default function Login() {
   const handleLogin = () => {
     if (username === "admin" && password === "admin123") {
       localStorage.setItem("role", "admin");
-      router.push("/admin");
+      router.replace("/admin");
     } else if (username !== "" && password !== "") {
       localStorage.setItem("role", "customer");
-      router.push("/homepage");
+      router.replace("/homepage");
     } else {
       setError("Please enter your username and password.");
     }
@@ -99,8 +99,6 @@ export default function Login() {
               >
                 Login
               </button>
-
-              <p className="text-center text-xs text-gray-400">Admin: username <span className="font-semibold">admin</span> / password <span className="font-semibold">admin123</span></p>
             </div>
 
             <div className="mt-6 text-center">

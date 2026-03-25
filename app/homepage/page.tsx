@@ -46,13 +46,6 @@ export default function Home() {
         >
           My Appointments
         </Link>
-
-        <Link
-          href="/admin"
-          className="bg-pink-500 px-5 py-2 rounded-full text-white hover:bg-pink-600 transition"
-        >
-          Admin Panel
-        </Link>
       </div>
 
       {/* Main Content */}

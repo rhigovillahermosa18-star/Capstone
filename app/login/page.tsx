@@ -2,13 +2,23 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Login() {
   const router = useRouter();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = () => {
-    router.push("/homepage");
+    if (username === "admin" && password === "admin123") {
+      router.push("/admin");
+    } else if (username !== "" && password !== "") {
+      router.push("/homepage");
+    } else {
+      setError("Please enter your username and password.");
+    }
   };
 
   return (
@@ -52,6 +62,8 @@ export default function Login() {
                 <input
                   type="text"
                   placeholder="Enter your username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
                 />
               </div>
@@ -61,6 +73,8 @@ export default function Login() {
                 <input
                   type="password"
                   placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
                 />
               </div>
@@ -75,12 +89,16 @@ export default function Login() {
                 </Link>
               </div>
 
+              {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
               <button
                 onClick={handleLogin}
                 className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300"
               >
                 Login
               </button>
+
+              <p className="text-center text-xs text-gray-400">Admin: username <span className="font-semibold">admin</span> / password <span className="font-semibold">admin123</span></p>
             </div>
 
             <div className="mt-6 text-center">

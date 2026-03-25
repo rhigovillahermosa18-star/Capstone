@@ -18,7 +18,14 @@ export default function Gallery() {
       </div>
 
       {/* Navigation */}
-      <div className="py-4 flex justify-center gap-4 relative z-10">
+      <div className="py-4 flex justify-center gap-4 relative z-10 flex-wrap">
+        <Link
+          href="/homepage"
+          className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition"
+        >
+          🏠 Home
+        </Link>
+
         <Link
           href="/book"
           className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition"
@@ -38,6 +45,13 @@ export default function Gallery() {
           className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition"
         >
           Gallery
+        </Link>
+
+        <Link
+          href="/appointments"
+          className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition"
+        >
+          My Appointments
         </Link>
       </div>
 

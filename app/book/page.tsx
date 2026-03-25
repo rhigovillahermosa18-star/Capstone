@@ -69,6 +69,12 @@ export default function Book() {
         <Link href="/appointments" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">
           My Appointments
         </Link>
+        <button
+          onClick={() => { localStorage.removeItem("role"); router.push("/login"); }}
+          className="bg-gray-200 px-5 py-2 rounded-full text-gray-700 hover:bg-gray-300 transition"
+        >
+          Logout
+        </button>
       </div>
 
       {/* Booking Section */}

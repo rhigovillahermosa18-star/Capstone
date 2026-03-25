@@ -53,6 +53,14 @@ export default function Gallery() {
         >
           My Appointments
         </Link>
+
+        <Link
+          href="/login"
+          onClick={() => localStorage.removeItem("role")}
+          className="bg-gray-200 px-5 py-2 rounded-full text-gray-700 hover:bg-gray-300 transition"
+        >
+          Logout
+        </Link>
       </div>
 
       {/* Gallery Content */}

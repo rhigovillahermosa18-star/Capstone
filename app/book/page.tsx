@@ -17,7 +17,7 @@ export default function Book() {
   const [error, setError] = useState("");
 
   const handleSubmit = () => {
-    if (!name || !phone || !service || service === "" || !date || !time) {
+    if (!name || !phone || !service || !date || !time) {
       setError("Please fill in all required fields.");
       return;
     }
@@ -38,7 +38,6 @@ export default function Book() {
     router.push("/appointments");
   };
 
-export default function Book() {
   return (
     <div className="min-h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">
 
@@ -107,24 +106,38 @@ export default function Book() {
             <div className="space-y-4 flex-grow">
               <input
                 placeholder="Full Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
               />
               <input
                 placeholder="Phone Number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
               />
-              <select className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition">
-                <option>Select Service</option>
+              <select
+                value={service}
+                onChange={(e) => setService(e.target.value)}
+                className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
+              >
+                <option value="">Select Service</option>
                 <option>Plain Set</option>
                 <option>Basic Set</option>
                 <option>Full Set</option>
               </select>
               <input
                 type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
                 className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
               />
-              <select className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition">
-                <option>Select Time</option>
+              <select
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
+              >
+                <option value="">Select Time</option>
                 <option>10:00 AM</option>
                 <option>1:00 PM</option>
                 <option>4:00 PM</option>
@@ -132,6 +145,8 @@ export default function Book() {
               <textarea
                 placeholder="Special Requests (optional)"
                 rows={2}
+                value={requests}
+                onChange={(e) => setRequests(e.target.value)}
                 className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none"
               />
               <div className="border-2 border-dashed border-pink-300 rounded-xl p-5 bg-pink-50">
@@ -146,9 +161,15 @@ export default function Book() {
               <textarea
                 placeholder="Describe your dream design (e.g. French tips, glitter, floral, color preferences...)"
                 rows={2}
+                value={design}
+                onChange={(e) => setDesign(e.target.value)}
                 className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none"
               />
-              <button className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300">
+              {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+              <button
+                onClick={handleSubmit}
+                className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300"
+              >
                 Confirm Appointment
               </button>
             </div>

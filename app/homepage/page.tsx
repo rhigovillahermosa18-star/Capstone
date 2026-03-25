@@ -18,7 +18,7 @@ export default function Home() {
       </div>
 
       {/* Navigation */}
-      <div className="py-4 flex justify-center gap-4 relative z-10">
+      <div className="py-4 flex justify-center gap-4 relative z-10 flex-wrap">
         <Link
           href="/book"
           className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition"
@@ -38,6 +38,20 @@ export default function Home() {
           className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition"
         >
           Gallery
+        </Link>
+
+        <Link
+          href="/appointments"
+          className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition"
+        >
+          My Appointments
+        </Link>
+
+        <Link
+          href="/admin"
+          className="bg-pink-500 px-5 py-2 rounded-full text-white hover:bg-pink-600 transition"
+        >
+          Admin Panel
         </Link>
       </div>
 

@@ -13,44 +13,30 @@ export default function Book() {
 
       {/* Header */}
       <div className="bg-[#FFD3DF] py-6 text-center shadow-sm relative z-10">
-        <Link
-          href="/homepage"
-          className="text-3xl tracking-widest font-semibold text-black"
-        >
+        <Link href="/homepage" className="text-3xl tracking-widest font-semibold text-black">
           MARVELOUSLY POLISHED
         </Link>
       </div>
 
       {/* Navigation */}
       <div className="py-4 flex justify-center gap-4 relative z-10">
-        <Link
-          href="/book"
-          className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition"
-        >
+        <Link href="/book" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">
           Book Appointment
         </Link>
-
-        <Link
-          href="/pricing"
-          className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition"
-        >
+        <Link href="/pricing" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">
           Pricing
         </Link>
-
-        <Link
-          href="/gallery"
-          className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition"
-        >
+        <Link href="/gallery" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">
           Gallery
         </Link>
       </div>
 
       {/* Booking Section */}
-      <div className="flex-grow flex justify-center items-center px-6 py-12 relative z-10">
-        <div className="max-w-6xl w-full grid lg:grid-cols-3 gap-8">
+      <div className="flex-grow flex justify-center items-start px-6 py-12 relative z-10">
+        <div className="max-w-6xl w-full grid lg:grid-cols-3 gap-8 items-start">
 
           {/* Left Info Card */}
-          <div className="hidden lg:block space-y-6">
+          <div className="hidden lg:flex flex-col gap-6">
             <div className="bg-white p-6 rounded-2xl shadow-lg">
               <h3 className="text-black font-bold text-lg mb-4 flex items-center gap-2">
                 <span>💅</span> Popular Designs
@@ -59,23 +45,23 @@ export default function Book() {
                 <Image
                   src="/nail1.jpg"
                   width={400}
-                  height={600}
+                  height={400}
                   alt="Nail Design"
-                  className="rounded-xl w-full h-100 object-cover"
+                  className="rounded-xl w-full h-48 object-cover"
                 />
                 <Image
                   src="/nail2.jpg"
                   width={400}
-                  height={600}
+                  height={400}
                   alt="Nail Design"
-                  className="rounded-xl w-full h-100 object-cover"
+                  className="rounded-xl w-full h-48 object-cover"
                 />
               </div>
             </div>
           </div>
 
           {/* Booking Form */}
-          <div className="bg-white p-8 h-180 rounded-2xl shadow-2xl">
+          <div className="bg-white p-8 rounded-2xl shadow-2xl">
             <h2 className="text-center font-bold mb-8 text-black text-3xl">
               Book Your Appointment
             </h2>
@@ -112,13 +98,13 @@ export default function Book() {
 
               <textarea
                 placeholder="Special Requests (optional)"
-                rows={3}
+                rows={2}
                 className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none"
               />
 
               {/* Design Upload Section */}
               <div className="border-2 border-dashed border-pink-300 rounded-xl p-5 bg-pink-50">
-                <p className="text-black font-semibold mb-1">Upload Your Desired Design 💅</p>
+                <p className="text-black font-semibold mb-1">💅 Upload Your Desired Design</p>
                 <p className="text-gray-500 text-sm mb-3">Share a photo of the nail design you want (PNG, JPG)</p>
                 <input
                   type="file"
@@ -129,7 +115,7 @@ export default function Book() {
 
               <textarea
                 placeholder="Describe your dream design (e.g. French tips, glitter, floral, color preferences...)"
-                rows={3}
+                rows={2}
                 className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none"
               />
 
@@ -140,12 +126,16 @@ export default function Book() {
           </div>
 
           {/* Right Info Card */}
-          <div className="hidden lg:block space-y-6">
+          <div className="hidden lg:flex flex-col gap-6">
             <div className="bg-white p-6 rounded-2xl shadow-lg text-black">
               <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
                 <span>💖</span> Why Choose Us
               </h3>
               <div className="space-y-3 text-sm">
+                <p className="flex items-start gap-2">
+                  <span className="text-pink-500">✓</span>
+                  <span>Professional Nail Artists</span>
+                </p>
                 <p className="flex items-start gap-2">
                   <span className="text-pink-500">✓</span>
                   <span>Premium Quality Products</span>
@@ -166,22 +156,21 @@ export default function Book() {
               <Image
                 src="/nail3.jpg"
                 width={400}
-                height={600}
+                height={400}
                 alt="Trending Nail"
-                className="rounded-xl w-full h-100 object-cover"
+                className="rounded-xl w-full h-48 object-cover"
               />
             </div>
           </div>
 
         </div>
       </div>
-    
+
       <footer className="bg-[#FFD3DF] relative z-10 pt-12 pb-6 px-6">
         <div className="max-w-6xl mx-auto">
 
           <div className="grid md:grid-cols-3 gap-8 mb-10">
 
-            {/* Brand */}
             <div className="space-y-3">
               <h3 className="text-xl font-bold text-gray-800 tracking-widest">MARVELOUSLY POLISHED</h3>
               <p className="text-gray-700 text-sm leading-relaxed">
@@ -190,7 +179,6 @@ export default function Book() {
               <p className="text-pink-600 font-medium text-sm">Beauty Starts From Tips to Toes 💅</p>
             </div>
 
-            {/* Quick Links */}
             <div className="space-y-3">
               <h4 className="font-bold text-gray-800 text-lg">Quick Links</h4>
               <div className="space-y-2 text-sm">
@@ -201,7 +189,6 @@ export default function Book() {
               </div>
             </div>
 
-            {/* Contact */}
             <div className="space-y-3">
               <h4 className="font-bold text-gray-800 text-lg">Contact Us</h4>
               <div className="space-y-2 text-sm text-gray-700">

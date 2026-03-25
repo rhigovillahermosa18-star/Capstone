@@ -32,69 +32,62 @@ export default function Book() {
       </div>
 
       {/* Booking Section */}
-      <div className="flex-grow flex justify-center items-start px-6 py-12 relative z-10">
-        <div className="max-w-6xl w-full grid lg:grid-cols-3 gap-8 items-start">
+      <div className="flex-grow flex justify-center px-6 py-12 relative z-10">
+        <div className="max-w-6xl w-full grid lg:grid-cols-3 gap-8 items-stretch">
 
-          {/* Left Info Card */}
-          <div className="hidden lg:flex flex-col gap-6">
-            <div className="bg-white p-6 rounded-2xl shadow-lg">
+          {/* Left - Popular Designs */}
+          <div className="hidden lg:flex flex-col">
+            <div className="bg-white p-6 rounded-2xl shadow-lg flex flex-col flex-grow">
               <h3 className="text-black font-bold text-lg mb-4 flex items-center gap-2">
                 <span>💅</span> Popular Designs
               </h3>
-              <div className="grid grid-cols-2 gap-2">
-                <Image src="/nail1.jpg" width={400} height={400} alt="Nail Design" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
-                <Image src="/nail2.jpg" width={400} height={400} alt="Nail Design" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
-                <Image src="/nail3.jpg" width={400} height={400} alt="Nail Design" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
-                <Image src="/nail4.jpg" width={400} height={400} alt="Nail Design" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
-                <Image src="/nail5.jpg" width={400} height={400} alt="Nail Design" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
-                <Image src="/nail6.jpg" width={400} height={400} alt="Nail Design" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
+              <div className="grid grid-cols-2 gap-2 flex-grow">
+                <div className="relative h-32"><Image src="/nail1.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail2.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail3.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail4.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail5.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail6.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
               </div>
             </div>
           </div>
 
           {/* Booking Form */}
-          <div className="bg-white p-8 rounded-2xl shadow-2xl">
+          <div className="bg-white p-8 rounded-2xl shadow-2xl flex flex-col">
             <h2 className="text-center font-bold mb-8 text-black text-3xl">
               Book Your Appointment
             </h2>
 
-            <div className="space-y-4">
+            <div className="space-y-4 flex-grow">
               <input
                 placeholder="Full Name"
                 className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
               />
-
               <input
                 placeholder="Phone Number"
                 className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
               />
-
               <select className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition">
                 <option>Select Service</option>
                 <option>Plain Set</option>
                 <option>Basic Set</option>
                 <option>Full Set</option>
               </select>
-
               <input
                 type="date"
                 className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
               />
-
               <select className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition">
                 <option>Select Time</option>
                 <option>10:00 AM</option>
                 <option>1:00 PM</option>
                 <option>4:00 PM</option>
               </select>
-
               <textarea
                 placeholder="Special Requests (optional)"
                 rows={2}
                 className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none"
               />
-
-              {/* Design Upload Section */}
               <div className="border-2 border-dashed border-pink-300 rounded-xl p-5 bg-pink-50">
                 <p className="text-black font-semibold mb-1">💅 Upload Your Desired Design</p>
                 <p className="text-gray-500 text-sm mb-3">Share a photo of the nail design you want (PNG, JPG)</p>
@@ -104,56 +97,42 @@ export default function Book() {
                   className="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-pink-400 file:text-white hover:file:bg-pink-500 cursor-pointer"
                 />
               </div>
-
               <textarea
                 placeholder="Describe your dream design (e.g. French tips, glitter, floral, color preferences...)"
                 rows={2}
                 className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none"
               />
-
               <button className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300">
                 Confirm Appointment
               </button>
             </div>
           </div>
 
-          {/* Right Info Card */}
+          {/* Right - Why Choose Us + Trending */}
           <div className="hidden lg:flex flex-col gap-6">
             <div className="bg-white p-6 rounded-2xl shadow-lg text-black">
               <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
                 <span>💖</span> Why Choose Us
               </h3>
               <div className="space-y-3 text-sm">
-                <p className="flex items-start gap-2">
-                  <span className="text-pink-500">✓</span>
-                  <span>Professional Nail Artists</span>
-                </p>
-                <p className="flex items-start gap-2">
-                  <span className="text-pink-500">✓</span>
-                  <span>Premium Quality Products</span>
-                </p>
-                <p className="flex items-start gap-2">
-                  <span className="text-pink-500">✓</span>
-                  <span>Sanitized Tools & Equipment</span>
-                </p>
-                <p className="flex items-start gap-2">
-                  <span className="text-pink-500">✓</span>
-                  <span>Relaxing Atmosphere</span>
-                </p>
+                <p className="flex items-start gap-2"><span className="text-pink-500">✓</span><span>Professional Nail Artists</span></p>
+                <p className="flex items-start gap-2"><span className="text-pink-500">✓</span><span>Premium Quality Products</span></p>
+                <p className="flex items-start gap-2"><span className="text-pink-500">✓</span><span>Sanitized Tools & Equipment</span></p>
+                <p className="flex items-start gap-2"><span className="text-pink-500">✓</span><span>Relaxing Atmosphere</span></p>
               </div>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl shadow-lg">
+            <div className="bg-white p-6 rounded-2xl shadow-lg flex flex-col flex-grow">
               <h3 className="text-black font-bold text-lg mb-4 flex items-center gap-2">
                 <span>🔥</span> Trending Now
               </h3>
-              <div className="grid grid-cols-2 gap-2">
-                <Image src="/nail5.jpg" width={400} height={400} alt="Trending Nail" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
-                <Image src="/nail6.jpg" width={400} height={400} alt="Trending Nail" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
-                <Image src="/nail1.jpg" width={400} height={400} alt="Trending Nail" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
-                <Image src="/nail2.jpg" width={400} height={400} alt="Trending Nail" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
-                <Image src="/nail3.jpg" width={400} height={400} alt="Trending Nail" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
-                <Image src="/nail4.jpg" width={400} height={400} alt="Trending Nail" className="rounded-xl w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
+              <div className="grid grid-cols-2 gap-2 flex-grow">
+                <div className="relative h-32"><Image src="/nail5.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail6.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail1.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail2.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail3.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
+                <div className="relative h-32"><Image src="/nail4.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
               </div>
             </div>
           </div>
@@ -163,17 +142,12 @@ export default function Book() {
 
       <footer className="bg-[#FFD3DF] relative z-10 pt-12 pb-6 px-6">
         <div className="max-w-6xl mx-auto">
-
           <div className="grid md:grid-cols-3 gap-8 mb-10">
-
             <div className="space-y-3">
               <h3 className="text-xl font-bold text-gray-800 tracking-widest">MARVELOUSLY POLISHED</h3>
-              <p className="text-gray-700 text-sm leading-relaxed">
-                Premium nail care in Santa Ana. Where beauty meets artistry.
-              </p>
+              <p className="text-gray-700 text-sm leading-relaxed">Premium nail care in Santa Ana. Where beauty meets artistry.</p>
               <p className="text-pink-600 font-medium text-sm">Beauty Starts From Tips to Toes 💅</p>
             </div>
-
             <div className="space-y-3">
               <h4 className="font-bold text-gray-800 text-lg">Quick Links</h4>
               <div className="space-y-2 text-sm">
@@ -183,7 +157,6 @@ export default function Book() {
                 <Link href="/gallery" className="block text-gray-700 hover:text-pink-600 transition">Gallery</Link>
               </div>
             </div>
-
             <div className="space-y-3">
               <h4 className="font-bold text-gray-800 text-lg">Contact Us</h4>
               <div className="space-y-2 text-sm text-gray-700">
@@ -193,14 +166,11 @@ export default function Book() {
                 <p>⏰ Mon–Sat: 9AM – 7PM</p>
               </div>
             </div>
-
           </div>
-
           <div className="border-t border-pink-300 pt-6 flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-gray-700">
             <p>© 2026 Marvelously Polished. All rights reserved.</p>
             <p>Santa Ana | Book Your Glam Today 💅</p>
           </div>
-
         </div>
       </footer>
 

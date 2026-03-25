@@ -116,6 +116,23 @@ export default function Book() {
                 className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none"
               />
 
+              {/* Design Upload Section */}
+              <div className="border-2 border-dashed border-pink-300 rounded-xl p-5 bg-pink-50">
+                <p className="text-black font-semibold mb-1">Upload Your Desired Design 💅</p>
+                <p className="text-gray-500 text-sm mb-3">Share a photo of the nail design you want (PNG, JPG)</p>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-pink-400 file:text-white hover:file:bg-pink-500 cursor-pointer"
+                />
+              </div>
+
+              <textarea
+                placeholder="Describe your dream design (e.g. French tips, glitter, floral, color preferences...)"
+                rows={3}
+                className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none"
+              />
+
               <button className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300">
                 Confirm Appointment
               </button>

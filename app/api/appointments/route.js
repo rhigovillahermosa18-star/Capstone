@@ -7,60 +7,48 @@ const supabase = createClient(
 );
 
 export async function GET() {
-  try {
-    const { data, error } = await supabase
-      .from("appointments")
-      .select("*")
-      .order("created_at", { ascending: false });
+  const { data, error } = await supabase
+    .from("appointments")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    return NextResponse.json(data ?? []);
-  } catch (err) {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
-  }
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json(data ?? []);
 }
 
 export async function POST(request) {
-  try {
-    const body = await request.json();
-    const { name, phone, service, date, time, requests, design } = body;
+  const body = await request.json();
+  const { name, phone, service, date, time, requests, design } = body;
 
-    if (!name || !phone || !service || !date || !time) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
-    }
-
-    const { data, error } = await supabase
-      .from("appointments")
-      .insert([{ name, phone, service, date, time, requests: requests ?? "", design: design ?? "", status: "Pending" }])
-      .select()
-      .single();
-
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    return NextResponse.json(data, { status: 201 });
-  } catch (err) {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  if (!name || !phone || !service || !date || !time) {
+    return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
   }
+
+  const { data, error } = await supabase
+    .from("appointments")
+    .insert([{ name, phone, service, date, time, requests: requests ?? "", design: design ?? "", status: "Pending" }])
+    .select()
+    .single();
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json(data, { status: 201 });
 }
 
 export async function PATCH(request) {
-  try {
-    const body = await request.json();
-    const { id, status } = body;
+  const body = await request.json();
+  const { id, status } = body;
 
-    if (!id || !status) {
-      return NextResponse.json({ error: "Missing id or status" }, { status: 400 });
-    }
-
-    const { data, error } = await supabase
-      .from("appointments")
-      .update({ status })
-      .eq("id", id)
-      .select()
-      .single();
-
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    return NextResponse.json(data);
-  } catch (err) {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  if (!id || !status) {
+    return NextResponse.json({ error: "Missing id or status." }, { status: 400 });
   }
+
+  const { data, error } = await supabase
+    .from("appointments")
+    .update({ status })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json(data);
 }

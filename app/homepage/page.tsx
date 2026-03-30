@@ -7,8 +7,10 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const router = useRouter();
 
-  const handleLogout = () => {
-    if (typeof window !== "undefined") localStorage.removeItem("role");
+  const handleLogout = async () => {
+    await fetch("/api/logout", { method: "POST" });
+    localStorage.removeItem("role");
+    localStorage.removeItem("user_id");
     router.push("/login");
   };
 

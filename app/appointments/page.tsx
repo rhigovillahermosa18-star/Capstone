@@ -46,7 +46,8 @@ export default function Appointments() {
     fetchAppointments();
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await fetch("/api/logout", { method: "POST" });
     localStorage.removeItem("role");
     localStorage.removeItem("user_id");
     router.push("/login");

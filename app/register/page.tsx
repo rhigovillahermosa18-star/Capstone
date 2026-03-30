@@ -2,12 +2,49 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase.js";
 
 export default function Register() {
+  const router = useRouter();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleRegister = async () => {
+    if (!username || !email || !password || !confirmPassword) {
+      setError("Please fill in all fields.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+    setLoading(true);
+    setError("");
+
+    const { error: authError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { username } },
+    });
+
+    if (authError) {
+      setError(authError.message);
+      setLoading(false);
+      return;
+    }
+
+    router.push("/login");
+  };
+
   return (
     <div className="min-h-screen bg-[#FFE4EF] flex items-center justify-center relative overflow-hidden">
       
-      {/* Decorative Shapes */}
       <div className="absolute top-20 left-[-120px] w-80 h-80 bg-pink-300 rounded-full opacity-30 blur-3xl"></div>
       <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl"></div>
       <div className="absolute top-1/2 left-10 w-40 h-40 bg-pink-200 rounded-full opacity-40 blur-2xl"></div>
@@ -17,28 +54,12 @@ export default function Register() {
           
           {/* Left Side - Branding */}
           <div className="hidden lg:flex flex-col items-center text-center space-y-6">
-            <Image
-              src="/logo1.png"
-              alt="Marvelously Polished Logo"
-              width={300}
-              height={300}
-              className="rounded-full shadow-2xl border-4 border-white"
-            />
-            <h1 className="text-4xl font-bold text-gray-800">
-              MARVELOUSLY POLISHED
-            </h1>
-            <p className="text-xl text-pink-600 font-medium">
-              Beauty Starts From Tips to Toes 💅
-            </p>
+            <Image src="/logo1.png" alt="Marvelously Polished Logo" width={300} height={300} className="rounded-full shadow-2xl border-4 border-white" />
+            <h1 className="text-4xl font-bold text-gray-800">MARVELOUSLY POLISHED</h1>
+            <p className="text-xl text-pink-600 font-medium">Beauty Starts From Tips to Toes 💅</p>
             <div className="space-y-2 text-gray-600">
-              <p className="flex items-center gap-2 justify-center">
-                <span className="text-pink-500">✓</span>
-                Premium Products
-              </p>
-              <p className="flex items-center gap-2 justify-center">
-                <span className="text-pink-500">✓</span>
-                Exclusive Member Benefits
-              </p>
+              <p className="flex items-center gap-2 justify-center"><span className="text-pink-500">✓</span> Premium Products</p>
+              <p className="flex items-center gap-2 justify-center"><span className="text-pink-500">✓</span> Exclusive Member Benefits</p>
             </div>
           </div>
 
@@ -55,6 +76,8 @@ export default function Register() {
                 <input
                   type="text"
                   placeholder="Choose a username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
                 />
               </div>
@@ -64,6 +87,8 @@ export default function Register() {
                 <input
                   type="email"
                   placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
                 />
               </div>
@@ -73,6 +98,8 @@ export default function Register() {
                 <input
                   type="password"
                   placeholder="Create a password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
                 />
               </div>
@@ -82,19 +109,20 @@ export default function Register() {
                 <input
                   type="password"
                   placeholder="Confirm your password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
                 />
               </div>
 
-              <div className="flex items-start text-sm">
-                <input type="checkbox" className="mr-2 mt-1" />
-                <label className="text-gray-600">
-                  I agree to the <Link href="#" className="text-pink-500 hover:text-pink-600">Terms & Conditions</Link> and <Link href="#" className="text-pink-500 hover:text-pink-600">Privacy Policy</Link>
-                </label>
-              </div>
+              {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
-              <button className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300">
-                Create Account
+              <button
+                onClick={handleRegister}
+                disabled={loading}
+                className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300 disabled:opacity-50"
+              >
+                {loading ? "Creating Account..." : "Create Account"}
               </button>
             </div>
 

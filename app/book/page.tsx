@@ -24,10 +24,11 @@ export default function Book() {
     }
     setLoading(true);
     setError("");
+    const user_id = localStorage.getItem("user_id");
     const res = await fetch("/api/appointments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, phone, service, date, time, requests, design }),
+      body: JSON.stringify({ name, phone, service, date, time, requests, design, user_id }),
     });
     const data = await res.json();
     if (!res.ok) {

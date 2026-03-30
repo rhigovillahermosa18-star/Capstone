@@ -27,7 +27,8 @@ export default function Appointments() {
 
   const fetchAppointments = async () => {
     try {
-      const res = await fetch("/api/appointments");
+      const user_id = localStorage.getItem("user_id");
+      const res = await fetch(`/api/appointments${user_id ? `?user_id=${user_id}` : ""}`);
       const data = await res.json();
       if (res.ok) setAppointments(data);
     } catch (e) {

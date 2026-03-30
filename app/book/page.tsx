@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+
+const TOTAL_SLOTS = 3; // 10AM, 1PM, 4PM
 
 export default function Book() {
   const router = useRouter();
@@ -16,6 +18,52 @@ export default function Book() {
   const [design, setDesign] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [bookedDates, setBookedDates] = useState<Record<string, number>>({});
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  useEffect(() => {
+    fetchBookedDates();
+  }, []);
+
+  const fetchBookedDates = async () => {
+    const res = await fetch("/api/appointments");
+    const data = await res.json();
+    if (res.ok) {
+      const counts: Record<string, number> = {};
+      data.forEach((appt: any) => {
+        if (appt.status !== "Cancelled") {
+          counts[appt.date] = (counts[appt.date] || 0) + 1;
+        }
+      });
+      setBookedDates(counts);
+    }
+  };
+
+  const isFullyBooked = (dateStr: string) => (bookedDates[dateStr] || 0) >= TOTAL_SLOTS;
+
+  const getDaysInMonth = (year: number, month: number) => new Date(year, month + 1, 0).getDate();
+  const getFirstDayOfMonth = (year: number, month: number) => new Date(year, month, 1).getDay();
+
+  const formatDate = (year: number, month: number, day: number) => {
+    return `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+  };
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const year = currentMonth.getFullYear();
+  const month = currentMonth.getMonth();
+  const daysInMonth = getDaysInMonth(year, month);
+  const firstDay = getFirstDayOfMonth(year, month);
+  const monthName = currentMonth.toLocaleString("default", { month: "long", year: "numeric" });
+
+  const handleDayClick = (day: number) => {
+    const dateStr = formatDate(year, month, day);
+    const clickedDate = new Date(dateStr);
+    if (clickedDate < today) return;
+    if (isFullyBooked(dateStr)) return;
+    setDate(dateStr);
+  };
 
   const handleSubmit = async () => {
     if (!name || !phone || !service || !date || !time) {
@@ -134,12 +182,56 @@ export default function Book() {
                 <option>Basic Set</option>
                 <option>Full Set</option>
               </select>
-              <input
-                type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
-              />
+              {/* Custom Calendar */}
+              <div className="border-2 border-gray-200 rounded-xl p-4">
+                <div className="flex justify-between items-center mb-4">
+                  <button onClick={() => setCurrentMonth(new Date(year, month - 1))} className="text-pink-500 hover:text-pink-700 font-bold text-lg px-2">‹</button>
+                  <p className="font-semibold text-gray-800">{monthName}</p>
+                  <button onClick={() => setCurrentMonth(new Date(year, month + 1))} className="text-pink-500 hover:text-pink-700 font-bold text-lg px-2">›</button>
+                </div>
+
+                <div className="grid grid-cols-7 mb-2">
+                  {["Su","Mo","Tu","We","Th","Fr","Sa"].map(d => (
+                    <div key={d} className="text-center text-xs font-semibold text-gray-500 py-1">{d}</div>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-7 gap-1">
+                  {Array.from({ length: firstDay }).map((_, i) => <div key={`empty-${i}`} />)}
+                  {Array.from({ length: daysInMonth }).map((_, i) => {
+                    const day = i + 1;
+                    const dateStr = formatDate(year, month, day);
+                    const isPast = new Date(dateStr) < today;
+                    const fullyBooked = isFullyBooked(dateStr);
+                    const isSelected = date === dateStr;
+                    const partiallyBooked = (bookedDates[dateStr] || 0) > 0 && !fullyBooked;
+
+                    return (
+                      <button
+                        key={day}
+                        onClick={() => handleDayClick(day)}
+                        disabled={isPast || fullyBooked}
+                        className={`text-center text-sm py-2 rounded-lg font-medium transition
+                          ${ isSelected ? "bg-pink-500 text-white"
+                          : fullyBooked ? "bg-red-100 text-red-500 line-through cursor-not-allowed"
+                          : partiallyBooked ? "bg-yellow-100 text-yellow-700 hover:bg-yellow-200"
+                          : isPast ? "text-gray-300 cursor-not-allowed"
+                          : "hover:bg-pink-100 text-gray-700"}`}
+                      >
+                        {day}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="flex gap-4 mt-4 text-xs text-gray-500">
+                  <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-red-100 inline-block"></span> Fully Booked</span>
+                  <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-yellow-100 inline-block"></span> Partially Booked</span>
+                  <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-pink-500 inline-block"></span> Selected</span>
+                </div>
+
+                {date && <p className="mt-3 text-sm text-pink-600 font-medium">Selected: {date}</p>}
+              </div>
               <select
                 value={time}
                 onChange={(e) => setTime(e.target.value)}

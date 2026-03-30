@@ -24,6 +24,10 @@ export default function Register() {
       setError("Passwords do not match.");
       return;
     }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
     setLoading(true);
     setError("");
 
@@ -44,6 +48,7 @@ export default function Register() {
     setSuccess("Account created! Redirecting to login...");
     setLoading(false);
     setTimeout(() => router.push("/login"), 2000);
+  };
 
   return (
     <div className="min-h-screen bg-[#FFE4EF] flex items-center justify-center relative overflow-hidden">
@@ -100,7 +105,7 @@ export default function Register() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
                 <input
                   type="password"
-                  placeholder="Create a password"
+                  placeholder="Create a password (min 6 characters)"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"

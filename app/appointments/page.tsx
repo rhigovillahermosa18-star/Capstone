@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Appointment = {
   id: string;
@@ -16,6 +17,7 @@ type Appointment = {
 };
 
 export default function Appointments() {
+  const router = useRouter();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -24,19 +26,30 @@ export default function Appointments() {
   }, []);
 
   const fetchAppointments = async () => {
-    const res = await fetch("/api/appointments");
-    const data = await res.json();
-    if (res.ok) setAppointments(data);
-    setLoading(false);
+    try {
+      const res = await fetch("/api/appointments");
+      const data = await res.json();
+      if (res.ok) setAppointments(data);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleCancel = async (id) => {
+  const handleCancel = async (id: string) => {
     await fetch("/api/appointments", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, status: "Cancelled" }),
     });
     fetchAppointments();
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("role");
+    localStorage.removeItem("user_id");
+    router.push("/login");
   };
 
   return (
@@ -66,13 +79,12 @@ export default function Appointments() {
         <Link href="/gallery" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">
           Gallery
         </Link>
-        <Link
-          href="/login"
-          onClick={() => localStorage.removeItem("role")}
+        <button
+          onClick={handleLogout}
           className="bg-gray-200 px-5 py-2 rounded-full text-gray-700 hover:bg-gray-300 transition"
         >
           Logout
-        </Link>
+        </button>
       </div>
 
       {/* Content */}
@@ -90,10 +102,7 @@ export default function Appointments() {
             <div className="bg-white p-12 rounded-2xl shadow-lg text-center">
               <p className="text-5xl mb-4">💅</p>
               <p className="text-gray-600 text-lg mb-6">You have no appointments yet.</p>
-              <Link
-                href="/book"
-                className="inline-block bg-pink-500 text-white px-10 py-4 rounded-full font-semibold text-lg hover:bg-pink-600 transition"
-              >
+              <Link href="/book" className="inline-block bg-pink-500 text-white px-10 py-4 rounded-full font-semibold text-lg hover:bg-pink-600 transition">
                 Book Now
               </Link>
             </div>
@@ -102,9 +111,7 @@ export default function Appointments() {
               {appointments.map((appt) => (
                 <div key={appt.id} className="bg-white p-6 rounded-2xl shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div className="flex items-center gap-4">
-                    <div className="bg-pink-100 text-2xl w-14 h-14 rounded-full flex items-center justify-center">
-                      💅
-                    </div>
+                    <div className="bg-pink-100 text-2xl w-14 h-14 rounded-full flex items-center justify-center">💅</div>
                     <div>
                       <p className="font-bold text-gray-800 text-lg">{appt.name}</p>
                       <p className="text-gray-600 text-sm">{appt.service}</p>
@@ -125,11 +132,9 @@ export default function Appointments() {
 
                   <div className="flex items-center gap-3">
                     <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                      appt.status === "Confirmed"
-                        ? "bg-green-100 text-green-600"
-                        : appt.status === "Cancelled"
-                        ? "bg-red-100 text-red-500"
-                        : "bg-yellow-100 text-yellow-600"
+                      appt.status === "Confirmed" ? "bg-green-100 text-green-600"
+                      : appt.status === "Cancelled" ? "bg-red-100 text-red-500"
+                      : "bg-yellow-100 text-yellow-600"
                     }`}>
                       {appt.status}
                     </span>
@@ -148,10 +153,7 @@ export default function Appointments() {
           )}
 
           <div className="text-center mt-10">
-            <Link
-              href="/book"
-              className="inline-block bg-pink-500 text-white px-10 py-4 rounded-full font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300"
-            >
+            <Link href="/book" className="inline-block bg-pink-500 text-white px-10 py-4 rounded-full font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300">
               + Book New Appointment
             </Link>
           </div>
@@ -159,7 +161,6 @@ export default function Appointments() {
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="bg-[#FFD3DF] relative z-10 pt-12 pb-6 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8 mb-10">

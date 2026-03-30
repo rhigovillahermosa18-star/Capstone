@@ -21,7 +21,7 @@ export default function Admin() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
 
   useEffect(() => {
-    const role = localStorage.getItem("role");
+    const role = typeof window !== "undefined" ? localStorage.getItem("role") : null;
     if (role !== "admin") {
       router.replace("/login");
     } else {
@@ -31,12 +31,16 @@ export default function Admin() {
   }, [router]);
 
   const fetchAppointments = async () => {
-    const res = await fetch("/api/appointments");
-    const data = await res.json();
-    if (res.ok) setAppointments(data);
+    try {
+      const res = await fetch("/api/appointments");
+      const data = await res.json();
+      if (res.ok) setAppointments(data);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  const updateStatus = async (id, status) => {
+  const updateStatus = async (id: string, status: string) => {
     await fetch("/api/appointments", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -47,6 +51,7 @@ export default function Admin() {
 
   const handleLogout = () => {
     localStorage.removeItem("role");
+    localStorage.removeItem("user_id");
     router.push("/login");
   };
 
@@ -62,26 +67,18 @@ export default function Admin() {
   return (
     <div className="min-h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">
 
-      {/* Decorative Shapes */}
       <div className="absolute top-20 left-[-120px] w-80 h-80 bg-pink-300 rounded-full opacity-30 blur-3xl"></div>
       <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl"></div>
 
       {/* Header */}
       <div className="bg-[#FFD3DF] py-6 text-center shadow-sm relative z-10">
-        <span className="text-3xl tracking-widest font-semibold text-black">
-          MARVELOUSLY POLISHED
-        </span>
+        <span className="text-3xl tracking-widest font-semibold text-black">MARVELOUSLY POLISHED</span>
       </div>
 
       {/* Navigation */}
       <div className="py-4 flex justify-center gap-4 relative z-10 flex-wrap">
-        <span className="bg-pink-500 px-5 py-2 rounded-full text-white font-semibold">
-          Admin Panel
-        </span>
-        <button
-          onClick={handleLogout}
-          className="bg-gray-200 px-5 py-2 rounded-full text-gray-700 hover:bg-gray-300 transition"
-        >
+        <span className="bg-pink-500 px-5 py-2 rounded-full text-white font-semibold">Admin Panel</span>
+        <button onClick={handleLogout} className="bg-gray-200 px-5 py-2 rounded-full text-gray-700 hover:bg-gray-300 transition">
           Logout
         </button>
       </div>
@@ -143,16 +140,10 @@ export default function Admin() {
                       </td>
                       <td className="p-4">
                         <div className="flex gap-2">
-                          <button
-                            onClick={() => updateStatus(appt.id, "Confirmed")}
-                            className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-semibold hover:bg-green-200 transition"
-                          >
+                          <button onClick={() => updateStatus(appt.id, "Confirmed")} className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-semibold hover:bg-green-200 transition">
                             Confirm
                           </button>
-                          <button
-                            onClick={() => updateStatus(appt.id, "Cancelled")}
-                            className="bg-red-100 text-red-500 px-3 py-1 rounded-full text-xs font-semibold hover:bg-red-200 transition"
-                          >
+                          <button onClick={() => updateStatus(appt.id, "Cancelled")} className="bg-red-100 text-red-500 px-3 py-1 rounded-full text-xs font-semibold hover:bg-red-200 transition">
                             Cancel
                           </button>
                         </div>
@@ -167,7 +158,6 @@ export default function Admin() {
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="bg-[#FFD3DF] relative z-10 pt-12 pb-6 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8 mb-10">

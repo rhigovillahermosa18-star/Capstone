@@ -1,12 +1,13 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
+);
 
 export async function POST(request) {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
-  );
-
   const body = await request.json();
   const { email, password } = body;
 
@@ -14,6 +15,7 @@ export async function POST(request) {
     return NextResponse.json({ error: "Email and password are required." }, { status: 400 });
   }
 
+  // Admin check
   const adminEmail = process.env.ADMIN_EMAIL || "admin@marvelouslypolished.com";
   const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
 
@@ -29,13 +31,25 @@ export async function POST(request) {
     return response;
   }
 
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  // Find user in users table
+  const { data: user } = await supabase
+    .from("users")
+    .select("*")
+    .eq("email", email)
+    .single();
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 401 });
+  if (!user) {
+    return NextResponse.json({ error: "Invalid email or password." }, { status: 401 });
   }
 
-  const response = NextResponse.json({ role: "customer", user: data.user });
+  // Compare password
+  const isValid = await bcrypt.compare(password, user.password);
+
+  if (!isValid) {
+    return NextResponse.json({ error: "Invalid email or password." }, { status: 401 });
+  }
+
+  const response = NextResponse.json({ role: "customer", user });
   response.cookies.set("role", "customer", {
     httpOnly: false,
     path: "/",

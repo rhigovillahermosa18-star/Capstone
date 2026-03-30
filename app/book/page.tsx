@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 
 export default function Book() {
   const router = useRouter();
@@ -15,30 +16,25 @@ export default function Book() {
   const [requests, setRequests] = useState("");
   const [design, setDesign] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name || !phone || !service || !date || !time) {
       setError("Please fill in all required fields.");
       return;
     }
+    setLoading(true);
+    setError("");
     try {
-      const stored = localStorage.getItem("appointments");
-      const existing = stored ? JSON.parse(stored) : [];
-      const newAppointment = {
-        id: Date.now(),
-        name,
-        phone,
-        service,
-        date,
-        time,
-        requests,
-        design,
-        status: "Pending",
-      };
-      localStorage.setItem("appointments", JSON.stringify([...existing, newAppointment]));
+      const { error: dbError } = await supabase.from("appointments").insert([
+        { name, phone, service, date, time, requests, design, status: "Pending" },
+      ]);
+      if (dbError) throw dbError;
       router.push("/appointments");
     } catch (e) {
       setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -178,9 +174,10 @@ export default function Book() {
               {error && <p className="text-red-500 text-sm text-center">{error}</p>}
               <button
                 onClick={handleSubmit}
-                className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300"
+                disabled={loading}
+                className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300 disabled:opacity-50"
               >
-                Confirm Appointment
+                {loading ? "Submitting..." : "Confirm Appointment"}
               </button>
             </div>
           </div>

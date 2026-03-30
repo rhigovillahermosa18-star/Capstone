@@ -3,24 +3,23 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 
-const appointments = [
-  { id: 1, name: "Maria Santos", phone: "(714) 111-1111", service: "Full Set", date: "2026-01-15", time: "10:00 AM", status: "Confirmed", design: "Floral pink tips" },
-  { id: 2, name: "Jessica Lim", phone: "(714) 222-2222", service: "Basic Set", date: "2026-01-18", time: "1:00 PM", status: "Pending", design: "Glitter ombre" },
-  { id: 3, name: "Sarah Cruz", phone: "(714) 333-3333", service: "Plain Set", date: "2026-01-20", time: "4:00 PM", status: "Confirmed", design: "Classic nude" },
-  { id: 4, name: "Anna Reyes", phone: "(714) 444-4444", service: "Full Set", date: "2026-01-22", time: "10:00 AM", status: "Pending", design: "French tips with gems" },
-];
-
-const stats = [
-  { label: "Total Bookings", value: "24", icon: "📋" },
-  { label: "Confirmed", value: "18", icon: "✅" },
-  { label: "Pending", value: "6", icon: "⏳" },
-  { label: "Today's Appointments", value: "3", icon: "📅" },
-];
+type Appointment = {
+  id: string;
+  name: string;
+  phone: string;
+  service: string;
+  date: string;
+  time: string;
+  design: string;
+  status: string;
+};
 
 export default function Admin() {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
 
   useEffect(() => {
     const role = localStorage.getItem("role");
@@ -28,13 +27,37 @@ export default function Admin() {
       router.replace("/login");
     } else {
       setAuthorized(true);
+      fetchAppointments();
     }
   }, [router]);
+
+  const fetchAppointments = async () => {
+    const { data, error } = await supabase
+      .from("appointments")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (!error && data) setAppointments(data);
+  };
+
+  const updateStatus = async (id: string, status: string) => {
+    const { error } = await supabase
+      .from("appointments")
+      .update({ status })
+      .eq("id", id);
+    if (!error) fetchAppointments();
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("role");
     router.push("/login");
   };
+
+  const stats = [
+    { label: "Total Bookings", value: appointments.length, icon: "📋" },
+    { label: "Confirmed", value: appointments.filter(a => a.status === "Confirmed").length, icon: "✅" },
+    { label: "Pending", value: appointments.filter(a => a.status === "Pending").length, icon: "⏳" },
+    { label: "Cancelled", value: appointments.filter(a => a.status === "Cancelled").length, icon: "❌" },
+  ];
 
   if (!authorized) return null;
 
@@ -85,10 +108,9 @@ export default function Admin() {
 
           {/* Appointments Table */}
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div className="p-6 border-b border-gray-100 flex justify-between items-center">
+            <div className="p-6 border-b border-gray-100">
               <h3 className="text-xl font-bold text-gray-800">All Appointments</h3>
             </div>
-
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead className="bg-pink-50">
@@ -103,7 +125,9 @@ export default function Admin() {
                   </tr>
                 </thead>
                 <tbody>
-                  {appointments.map((appt, i) => (
+                  {appointments.length === 0 ? (
+                    <tr><td colSpan={7} className="p-8 text-center text-gray-500">No appointments yet.</td></tr>
+                  ) : appointments.map((appt, i) => (
                     <tr key={appt.id} className={i % 2 === 0 ? "bg-white" : "bg-pink-50/30"}>
                       <td className="p-4 font-medium text-gray-800">{appt.name}</td>
                       <td className="p-4 text-gray-600">{appt.phone}</td>
@@ -112,19 +136,25 @@ export default function Admin() {
                       <td className="p-4 text-gray-600">{appt.date} {appt.time}</td>
                       <td className="p-4">
                         <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          appt.status === "Confirmed"
-                            ? "bg-green-100 text-green-600"
-                            : "bg-yellow-100 text-yellow-600"
+                          appt.status === "Confirmed" ? "bg-green-100 text-green-600"
+                          : appt.status === "Cancelled" ? "bg-red-100 text-red-500"
+                          : "bg-yellow-100 text-yellow-600"
                         }`}>
                           {appt.status}
                         </span>
                       </td>
                       <td className="p-4">
                         <div className="flex gap-2">
-                          <button className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-semibold hover:bg-green-200 transition">
+                          <button
+                            onClick={() => updateStatus(appt.id, "Confirmed")}
+                            className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-semibold hover:bg-green-200 transition"
+                          >
                             Confirm
                           </button>
-                          <button className="bg-red-100 text-red-500 px-3 py-1 rounded-full text-xs font-semibold hover:bg-red-200 transition">
+                          <button
+                            onClick={() => updateStatus(appt.id, "Cancelled")}
+                            className="bg-red-100 text-red-500 px-3 py-1 rounded-full text-xs font-semibold hover:bg-red-200 transition"
+                          >
                             Cancel
                           </button>
                         </div>

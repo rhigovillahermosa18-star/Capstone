@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 type Appointment = {
-  id: number;
+  id: string;
   name: string;
   phone: string;
   service: string;
@@ -17,22 +18,27 @@ type Appointment = {
 
 export default function Appointments() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem("appointments");
-      if (stored) setAppointments(JSON.parse(stored));
-    } catch (e) {
-      setAppointments([]);
-    }
+    fetchAppointments();
   }, []);
 
-  const handleCancel = (id: number) => {
-    const updated = appointments.map((a) =>
-      a.id === id ? { ...a, status: "Cancelled" } : a
-    );
-    setAppointments(updated);
-    localStorage.setItem("appointments", JSON.stringify(updated));
+  const fetchAppointments = async () => {
+    const { data, error } = await supabase
+      .from("appointments")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (!error && data) setAppointments(data);
+    setLoading(false);
+  };
+
+  const handleCancel = async (id: string) => {
+    const { error } = await supabase
+      .from("appointments")
+      .update({ status: "Cancelled" })
+      .eq("id", id);
+    if (!error) fetchAppointments();
   };
 
   return (
@@ -78,7 +84,11 @@ export default function Appointments() {
           <h2 className="text-4xl font-bold text-gray-800 mb-2 text-center">My Appointments</h2>
           <p className="text-center text-gray-600 mb-10">View and manage your upcoming nail appointments</p>
 
-          {appointments.length === 0 ? (
+          {loading ? (
+            <div className="bg-white p-12 rounded-2xl shadow-lg text-center">
+              <p className="text-gray-500 text-lg">Loading appointments...</p>
+            </div>
+          ) : appointments.length === 0 ? (
             <div className="bg-white p-12 rounded-2xl shadow-lg text-center">
               <p className="text-5xl mb-4">💅</p>
               <p className="text-gray-600 text-lg mb-6">You have no appointments yet.</p>

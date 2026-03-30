@@ -19,6 +19,7 @@ export default function Book() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [bookedDates, setBookedDates] = useState<Record<string, number>>({});
+  const [bookedSlots, setBookedSlots] = useState<Record<string, string[]>>({});
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   useEffect(() => {
@@ -30,12 +31,16 @@ export default function Book() {
     const data = await res.json();
     if (res.ok) {
       const counts: Record<string, number> = {};
+      const slots: Record<string, string[]> = {};
       data.forEach((appt: any) => {
         if (appt.status !== "Cancelled") {
           counts[appt.date] = (counts[appt.date] || 0) + 1;
+          if (!slots[appt.date]) slots[appt.date] = [];
+          slots[appt.date].push(appt.time);
         }
       });
       setBookedDates(counts);
+      setBookedSlots(slots);
     }
   };
 
@@ -232,16 +237,30 @@ export default function Book() {
 
                 {date && <p className="mt-3 text-sm text-pink-600 font-medium">Selected: {date}</p>}
               </div>
-              <select
-                value={time}
-                onChange={(e) => setTime(e.target.value)}
-                className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
-              >
-                <option value="">Select Time</option>
-                <option>10:00 AM</option>
-                <option>1:00 PM</option>
-                <option>4:00 PM</option>
-              </select>
+              {/* Time Slots */}
+              <div className="border-2 border-gray-200 rounded-xl p-4">
+                <p className="text-sm font-semibold text-gray-700 mb-3">Select Time</p>
+                <div className="grid grid-cols-3 gap-3">
+                  {["10:00 AM", "1:00 PM", "4:00 PM"].map((slot) => {
+                    const taken = date ? (bookedSlots[date] || []).includes(slot) : false;
+                    const isSelected = time === slot;
+                    return (
+                      <button
+                        key={slot}
+                        onClick={() => !taken && setTime(slot)}
+                        disabled={taken}
+                        className={`py-3 rounded-xl text-sm font-semibold transition
+                          ${ isSelected ? "bg-pink-500 text-white shadow-lg"
+                          : taken ? "bg-red-100 text-red-400 line-through cursor-not-allowed"
+                          : "bg-gray-100 text-gray-700 hover:bg-pink-100 hover:text-pink-600"}`}
+                      >
+                        {slot}
+                      </button>
+                    );
+                  })}
+                </div>
+                {!date && <p className="text-xs text-gray-400 mt-2">Please select a date first</p>}
+              </div>
               <textarea
                 placeholder="Special Requests (optional)"
                 rows={2}

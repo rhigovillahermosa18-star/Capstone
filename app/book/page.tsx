@@ -4,6 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
+);
 
 const TOTAL_SLOTS = 3; // 10AM, 1PM, 4PM
 
@@ -16,6 +22,8 @@ export default function Book() {
   const [time, setTime] = useState("");
   const [requests, setRequests] = useState("");
   const [design, setDesign] = useState("");
+  const [designFile, setDesignFile] = useState<File | null>(null);
+  const [designPreview, setDesignPreview] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [bookedDates, setBookedDates] = useState<Record<string, number>>({});
@@ -77,11 +85,25 @@ export default function Book() {
     }
     setLoading(true);
     setError("");
+
+    let designImageUrl = "";
+    if (designFile) {
+      const fileExt = designFile.name.split(".").pop();
+      const fileName = `${Date.now()}.${fileExt}`;
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from("designs")
+        .upload(fileName, designFile, { upsert: true });
+      if (!uploadError && uploadData) {
+        const { data: urlData } = supabase.storage.from("designs").getPublicUrl(fileName);
+        designImageUrl = urlData.publicUrl;
+      }
+    }
+
     const user_id = localStorage.getItem("user_id");
     const res = await fetch("/api/appointments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, phone, service, date, time, requests, design, user_id }),
+      body: JSON.stringify({ name, phone, service, date, time, requests, design, design_image: designImageUrl, user_id }),
     });
     const data = await res.json();
     if (!res.ok) {
@@ -274,8 +296,20 @@ export default function Book() {
                 <input
                   type="file"
                   accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0] || null;
+                    setDesignFile(file);
+                    if (file) setDesignPreview(URL.createObjectURL(file));
+                    else setDesignPreview("");
+                  }}
                   className="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-pink-400 file:text-white hover:file:bg-pink-500 cursor-pointer"
                 />
+                {designPreview && (
+                  <div className="mt-3">
+                    <p className="text-xs text-gray-500 mb-1">Preview:</p>
+                    <img src={designPreview} alt="Design preview" className="w-full h-40 object-cover rounded-xl" />
+                  </div>
+                )}
               </div>
               <textarea
                 placeholder="Describe your dream design (e.g. French tips, glitter, floral, color preferences...)"

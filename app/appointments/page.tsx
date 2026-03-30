@@ -118,6 +118,9 @@ export default function Appointments() {
                       <p className="font-bold text-gray-800 text-lg">{appt.name}</p>
                       <p className="text-gray-600 text-sm">{appt.service}</p>
                       {appt.design && <p className="text-pink-500 text-xs mt-1">Design: {appt.design}</p>}
+                      {appt.design_image && (
+                        <img src={appt.design_image} alt="Design" className="mt-2 w-24 h-24 object-cover rounded-xl border-2 border-pink-200" />
+                      )}
                     </div>
                   </div>
 

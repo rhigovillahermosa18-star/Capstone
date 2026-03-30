@@ -166,7 +166,12 @@ export default function Admin() {
                         <td className="p-4 font-medium text-gray-800">{appt.name}</td>
                         <td className="p-4 text-gray-600">{appt.phone}</td>
                         <td className="p-4 text-gray-600">{appt.service}</td>
-                        <td className="p-4 text-gray-600">{appt.design}</td>
+                        <td className="p-4 text-gray-600">
+                        {appt.design && <p className="text-xs">{appt.design}</p>}
+                        {appt.design_image && (
+                          <img src={appt.design_image} alt="Design" className="mt-1 w-16 h-16 object-cover rounded-lg border border-pink-200" />
+                        )}
+                      </td>
                         <td className="p-4 text-gray-600">{appt.date} {appt.time}</td>
                         <td className="p-4">
                           <span className={`px-3 py-1 rounded-full text-xs font-semibold ${

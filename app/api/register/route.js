@@ -7,20 +7,43 @@ const supabase = createClient(
 );
 
 export async function POST(request) {
-  const body = await request.json();
-  const { username, email, password } = body;
+  try {
+    const body = await request.json();
+    const { username, email, password } = body;
 
-  if (!username || !email || !password) {
-    return NextResponse.json({ error: "All fields are required" }, { status: 400 });
+    if (!username || !email || !password) {
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400 }
+      );
+    }
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { username },
+      },
+    });
+
+    if (error) {
+      console.log("Supabase error:", error);
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
+
+    return NextResponse.json(
+      {
+        message: "Account created successfully",
+        user: data.user,
+      },
+      { status: 201 }
+    );
+
+  } catch (err) {
+    console.log("Server error:", err);
+    return NextResponse.json(
+      { error: "Server error" },
+      { status: 500 }
+    );
   }
-
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: { data: { username } },
-  });
-
-  if (error) return NextResponse.json({ error: error.message }, { status: 400 });
-
-  return NextResponse.json({ message: "Account created successfully", user: data.user }, { status: 201 });
 }

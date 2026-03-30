@@ -42,8 +42,8 @@ export default function Register() {
     }
 
     setSuccess("Account created! Redirecting to login...");
+    setLoading(false);
     setTimeout(() => router.push("/login"), 2000);
-  };
 
   return (
     <div className="min-h-screen bg-[#FFE4EF] flex items-center justify-center relative overflow-hidden">

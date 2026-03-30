@@ -20,24 +20,29 @@ export default function Login() {
     setLoading(true);
     setError("");
 
-    const res = await fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (!res.ok) {
-      setError(data.error || "Login failed.");
+      if (!res.ok) {
+        setError(data.error || "Login failed.");
+        setLoading(false);
+        return;
+      }
+
+      localStorage.setItem("role", data.role);
+      if (data.user) localStorage.setItem("user_id", data.user.id);
+
+      data.role === "admin" ? router.replace("/admin") : router.replace("/homepage");
+    } catch (e) {
+      setError("Something went wrong. Please try again.");
       setLoading(false);
-      return;
     }
-
-    localStorage.setItem("role", data.role);
-    if (data.user) localStorage.setItem("user_id", data.user.id);
-
-    data.role === "admin" ? router.replace("/admin") : router.replace("/homepage");
   };
 
   return (

@@ -25,9 +25,6 @@ export async function POST(request) {
   });
 
   if (error) {
-    if (error.message.toLowerCase().includes("rate limit") || error.message.toLowerCase().includes("email rate")) {
-      return NextResponse.json({ error: "Too many sign-up attempts. Please wait a few minutes and try again." }, { status: 429 });
-    }
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 

@@ -12,6 +12,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleRegister = async () => {
@@ -40,7 +41,8 @@ export default function Register() {
       return;
     }
 
-    router.push("/login");
+    setSuccess("Account created! Redirecting to login...");
+    setTimeout(() => router.push("/login"), 2000);
   };
 
   return (
@@ -117,6 +119,7 @@ export default function Register() {
               </div>
 
               {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+              {success && <p className="text-green-500 text-sm text-center">{success}</p>}
 
               <button
                 onClick={handleRegister}

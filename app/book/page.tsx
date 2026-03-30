@@ -70,7 +70,7 @@ export default function Book() {
           My Appointments
         </Link>
         <button
-          onClick={() => { localStorage.removeItem("role"); router.push("/login"); }}
+          onClick={() => { if (typeof window !== "undefined") localStorage.removeItem("role"); router.push("/login"); }}
           className="bg-gray-200 px-5 py-2 rounded-full text-gray-700 hover:bg-gray-300 transition"
         >
           Logout

@@ -23,7 +23,7 @@ export default function Login() {
 
     // Check if admin
     if (email === "admin@marvelouslypolished.com" && password === "admin123") {
-      localStorage.setItem("role", "admin");
+      if (typeof window !== "undefined") localStorage.setItem("role", "admin");
       router.replace("/admin");
       return;
     }
@@ -36,8 +36,10 @@ export default function Login() {
       return;
     }
 
-    localStorage.setItem("role", "customer");
-    localStorage.setItem("user_id", data.user.id);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("role", "customer");
+      localStorage.setItem("user_id", data.user.id);
+    }
     router.replace("/homepage");
   };
 

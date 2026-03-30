@@ -8,7 +8,7 @@ export default function Home() {
   const router = useRouter();
 
   const handleLogout = () => {
-    localStorage.removeItem("role");
+    if (typeof window !== "undefined") localStorage.removeItem("role");
     router.push("/login");
   };
 

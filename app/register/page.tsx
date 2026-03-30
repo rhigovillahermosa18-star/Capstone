@@ -27,14 +27,16 @@ export default function Register() {
     setLoading(true);
     setError("");
 
-    const { error: authError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { data: { username } },
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, email, password }),
     });
 
-    if (authError) {
-      setError(authError.message);
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.error || "Registration failed.");
       setLoading(false);
       return;
     }

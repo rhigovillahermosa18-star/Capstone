@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase.js";
 
 type Appointment = {
   id: string;
@@ -32,19 +31,18 @@ export default function Admin() {
   }, [router]);
 
   const fetchAppointments = async () => {
-    const { data, error } = await supabase
-      .from("appointments")
-      .select("*")
-      .order("created_at", { ascending: false });
-    if (!error && data) setAppointments(data);
+    const res = await fetch("/api/appointments");
+    const data = await res.json();
+    if (res.ok) setAppointments(data);
   };
 
-  const updateStatus = async (id: string, status: string) => {
-    const { error } = await supabase
-      .from("appointments")
-      .update({ status })
-      .eq("id", id);
-    if (!error) fetchAppointments();
+  const updateStatus = async (id, status) => {
+    await fetch("/api/appointments", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, status }),
+    });
+    fetchAppointments();
   };
 
   const handleLogout = () => {

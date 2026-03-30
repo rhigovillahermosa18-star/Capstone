@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase.js";
 
 type Appointment = {
   id: string;
@@ -25,20 +24,19 @@ export default function Appointments() {
   }, []);
 
   const fetchAppointments = async () => {
-    const { data, error } = await supabase
-      .from("appointments")
-      .select("*")
-      .order("created_at", { ascending: false });
-    if (!error && data) setAppointments(data);
+    const res = await fetch("/api/appointments");
+    const data = await res.json();
+    if (res.ok) setAppointments(data);
     setLoading(false);
   };
 
-  const handleCancel = async (id: string) => {
-    const { error } = await supabase
-      .from("appointments")
-      .update({ status: "Cancelled" })
-      .eq("id", id);
-    if (!error) fetchAppointments();
+  const handleCancel = async (id) => {
+    await fetch("/api/appointments", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, status: "Cancelled" }),
+    });
+    fetchAppointments();
   };
 
   return (

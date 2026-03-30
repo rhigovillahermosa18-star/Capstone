@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase.js";
 
 export default function Book() {
   const router = useRouter();
@@ -25,17 +24,19 @@ export default function Book() {
     }
     setLoading(true);
     setError("");
-    try {
-      const { error: dbError } = await supabase.from("appointments").insert([
-        { name, phone, service, date, time, requests, design, status: "Pending" },
-      ]);
-      if (dbError) throw dbError;
-      router.push("/appointments");
-    } catch (e) {
-      setError("Something went wrong. Please try again.");
-    } finally {
+    const res = await fetch("/api/appointments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, phone, service, date, time, requests, design }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      setError(data.error || "Something went wrong. Please try again.");
       setLoading(false);
+      return;
     }
+    router.push("/appointments");
+    setLoading(false);
   };
 
   return (

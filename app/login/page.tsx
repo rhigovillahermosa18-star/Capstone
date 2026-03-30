@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase.js";
 
 export default function Login() {
   const router = useRouter();
@@ -21,26 +20,24 @@ export default function Login() {
     setLoading(true);
     setError("");
 
-    // Check if admin
-    if (email === "admin@marvelouslypolished.com" && password === "admin123") {
-      if (typeof window !== "undefined") localStorage.setItem("role", "admin");
-      router.replace("/admin");
-      return;
-    }
+    const res = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-    const { data, error: authError } = await supabase.auth.signInWithPassword({ email, password });
+    const data = await res.json();
 
-    if (authError) {
-      setError(authError.message);
+    if (!res.ok) {
+      setError(data.error || "Login failed.");
       setLoading(false);
       return;
     }
 
-    if (typeof window !== "undefined") {
-      localStorage.setItem("role", "customer");
-      localStorage.setItem("user_id", data.user.id);
-    }
-    router.replace("/homepage");
+    localStorage.setItem("role", data.role);
+    if (data.user) localStorage.setItem("user_id", data.user.id);
+
+    data.role === "admin" ? router.replace("/admin") : router.replace("/homepage");
   };
 
   return (

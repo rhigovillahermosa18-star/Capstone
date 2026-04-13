@@ -39,6 +39,9 @@ export default function Home() {
 
       {/* Navigation */}
       <div className="py-4 flex justify-center gap-4 relative z-10 flex-wrap">
+        <Link href="/homepage" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">
+          🏠 Home
+        </Link>
         <Link href="/book" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">
           Book Appointment
         </Link>

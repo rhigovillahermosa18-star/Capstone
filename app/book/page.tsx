@@ -23,19 +23,20 @@ function Carousel({ images }: { images: string[] }) {
     return () => clearInterval(timer);
   }, [images.length]);
   return (
-    <div className="relative w-full overflow-hidden rounded-xl flex-grow">
-      <div className="flex transition-transform duration-700 ease-in-out h-full" style={{ transform: `translateX(-${current * 100}%)` }}>
+    <div className="relative w-full overflow-hidden rounded-2xl flex-grow shadow-inner">
+      <div className="flex transition-transform duration-700 ease-in-out" style={{ transform: `translateX(-${current * 100}%)` }}>
         {images.map((src, i) => (
-          <div key={i} className="min-w-full h-24">
+          <div key={i} className="min-w-full h-24 relative">
             <Image src={src} fill alt={`Design ${i + 1}`} className="object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
           </div>
         ))}
       </div>
-      <button onClick={() => setCurrent((prev) => (prev - 1 + images.length) % images.length)} className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-pink-500 rounded-full w-8 h-8 flex items-center justify-center shadow z-10">‹</button>
-      <button onClick={() => setCurrent((prev) => (prev + 1) % images.length)} className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-pink-500 rounded-full w-8 h-8 flex items-center justify-center shadow z-10">›</button>
+      <button onClick={() => setCurrent((prev) => (prev - 1 + images.length) % images.length)} className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-pink-500 rounded-full w-7 h-7 flex items-center justify-center shadow-md z-10 text-lg font-bold">‹</button>
+      <button onClick={() => setCurrent((prev) => (prev + 1) % images.length)} className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-pink-500 rounded-full w-7 h-7 flex items-center justify-center shadow-md z-10 text-lg font-bold">›</button>
       <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
         {images.map((_, i) => (
-          <button key={i} onClick={() => setCurrent(i)} className={`w-2 h-2 rounded-full transition ${i === current ? "bg-pink-500" : "bg-white/70"}`} />
+          <button key={i} onClick={() => setCurrent(i)} className={`rounded-full transition-all duration-300 ${i === current ? "bg-pink-500 w-4 h-2" : "bg-white/70 w-2 h-2"}`} />
         ))}
       </div>
     </div>
@@ -189,19 +190,21 @@ export default function Book() {
 
           {/* Left - Popular Designs */}
           <div className="hidden lg:flex flex-col">
-            <div className="bg-white p-6 rounded-2xl shadow-lg flex flex-col flex-grow">
-              <h3 className="text-black font-bold text-lg mb-4 flex items-center gap-2">
+            <div className="bg-gradient-to-b from-pink-50 to-white p-6 rounded-2xl shadow-lg border border-pink-100 flex flex-col flex-grow">
+              <h3 className="text-pink-600 font-bold text-lg mb-4 flex items-center gap-2">
                 <span>💅</span> Popular Designs
               </h3>
               <Carousel images={popularImages} />
+              <p className="text-xs text-gray-400 text-center mt-3">Swipe through our popular styles</p>
             </div>
           </div>
 
           {/* Booking Form */}
-          <div className="bg-white p-8 rounded-2xl shadow-2xl flex flex-col">
-            <h2 className="text-center font-bold mb-8 text-black text-3xl">
+          <div className="bg-white p-8 rounded-2xl shadow-2xl border border-pink-100 flex flex-col">
+            <h2 className="text-center font-bold mb-2 text-gray-800 text-3xl">
               Book Your Appointment
             </h2>
+            <p className="text-center text-pink-400 text-sm mb-6">💅 Fill in the details below</p>
 
             <div className="space-y-4 flex-grow">
               <input
@@ -360,11 +363,12 @@ export default function Book() {
               </div>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl shadow-lg flex flex-col flex-grow">
-              <h3 className="text-black font-bold text-lg mb-4 flex items-center gap-2">
+            <div className="bg-gradient-to-b from-pink-50 to-white p-6 rounded-2xl shadow-lg border border-pink-100 flex flex-col flex-grow">
+              <h3 className="text-pink-600 font-bold text-lg mb-4 flex items-center gap-2">
                 <span>🔥</span> Trending Now
               </h3>
               <Carousel images={trendingImages} />
+              <p className="text-xs text-gray-400 text-center mt-3">Latest nail trends just for you</p>
             </div>
           </div>
 

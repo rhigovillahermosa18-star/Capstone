@@ -4,15 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
-);
 
 const TOTAL_SLOTS = 4;
-const popularImages = ["/nail1.jpg","/nail2.jpg","/nail3.jpg","/nail4.jpg","/nail5.jpg","/nail6.jpg","/nail7.jpg","/nail8.jpg","/nail9.jpg","/nail10.jpg","/nail11.jpg"];
 const trendingImages = ["/nail5.jpg","/nail6.jpg","/nail7.jpg","/nail8.jpg","/nail9.jpg","/nail10.jpg","/nail11.jpg","/nail1.jpg"];
 
 function Carousel({ images, height = "h-48" }: { images: string[]; height?: string }) {
@@ -48,9 +41,7 @@ function CustomerReviews() {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    fetch("/api/reviews")
-      .then((r) => r.json())
-      .then((d) => setReviews(d));
+    fetch("/api/reviews").then((r) => r.json()).then((d) => setReviews(d));
   }, []);
 
   const handleSubmit = async () => {
@@ -74,8 +65,6 @@ function CustomerReviews() {
       <h3 className="text-pink-600 font-bold text-xl mb-4 flex items-center gap-2">
         <span>⭐</span> Customer Reviews
       </h3>
-
-      {/* Reviews List */}
       <div className="space-y-3 mb-5 max-h-64 overflow-y-auto pr-1">
         {reviews.length === 0 ? (
           <p className="text-gray-400 text-sm text-center py-4">No reviews yet. Be the first!</p>
@@ -89,8 +78,6 @@ function CustomerReviews() {
           </div>
         ))}
       </div>
-
-      {/* Leave a Review */}
       <div className="border-t border-pink-100 pt-4 space-y-3">
         <p className="text-sm font-semibold text-gray-700">Leave a Review</p>
         <input
@@ -113,10 +100,7 @@ function CustomerReviews() {
           className="w-full p-3 border-2 border-gray-200 rounded-xl text-black text-sm focus:outline-none focus:border-pink-400 transition resize-none"
         />
         {submitted && <p className="text-green-500 text-xs text-center">✓ Review submitted!</p>}
-        <button
-          onClick={handleSubmit}
-          className="w-full bg-pink-500 text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-pink-600 transition"
-        >
+        <button onClick={handleSubmit} className="w-full bg-pink-500 text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-pink-600 transition">
           Submit Review
         </button>
       </div>
@@ -176,9 +160,7 @@ export default function Book() {
 
   const handleDayClick = (day: number) => {
     const dateStr = formatDate(year, month, day);
-    const clickedDate = new Date(dateStr);
-    if (clickedDate < today) return;
-    if (isFullyBooked(dateStr)) return;
+    if (new Date(dateStr) < today || isFullyBooked(dateStr)) return;
     setDate(dateStr);
   };
 
@@ -191,6 +173,11 @@ export default function Book() {
     setError("");
     let designImageUrl = "";
     if (designFile) {
+      const { createClient } = await import("@supabase/supabase-js");
+      const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
+      );
       const fileExt = designFile.name.split(".").pop();
       const fileName = `${Date.now()}.${fileExt}`;
       const { data: uploadData, error: uploadError } = await supabase.storage.from("designs").upload(fileName, designFile, { upsert: true });
@@ -249,29 +236,13 @@ export default function Book() {
 
           {/* Left - Booking Form */}
           <div className="bg-white p-8 rounded-2xl shadow-2xl border border-pink-100 flex flex-col">
-            <h2 className="text-center font-bold mb-2 text-gray-800 text-3xl">
-              Book Your Appointment
-            </h2>
+            <h2 className="text-center font-bold mb-2 text-gray-800 text-3xl">Book Your Appointment</h2>
             <p className="text-center text-pink-400 text-sm mb-6">💅 Fill in the details below</p>
 
             <div className="space-y-4 flex-grow">
-              <input
-                placeholder="Full Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
-              />
-              <input
-                placeholder="Phone Number"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
-              />
-              <select
-                value={service}
-                onChange={(e) => setService(e.target.value)}
-                className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
-              >
+              <input placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition" />
+              <input placeholder="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition" />
+              <select value={service} onChange={(e) => setService(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition">
                 <option value="">Select Service</option>
                 <option>Plain Set</option>
                 <option>Basic Set</option>
@@ -327,7 +298,7 @@ export default function Book() {
               {/* Time Slots */}
               <div className="border-2 border-gray-200 rounded-xl p-4">
                 <p className="text-sm font-semibold text-gray-700 mb-3">Select Time</p>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-4 gap-3">
                   {["9:00 AM", "1:00 PM", "4:00 PM", "7:00 PM"].map((slot) => {
                     const taken = date ? (bookedSlots[date] || []).includes(slot) : false;
                     const isSelected = time === slot;
@@ -349,13 +320,7 @@ export default function Book() {
                 {!date && <p className="text-xs text-gray-400 mt-2">Please select a date first</p>}
               </div>
 
-              <textarea
-                placeholder="Special Requests (optional)"
-                rows={2}
-                value={requests}
-                onChange={(e) => setRequests(e.target.value)}
-                className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none"
-              />
+              <textarea placeholder="Special Requests (optional)" rows={2} value={requests} onChange={(e) => setRequests(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none" />
 
               <div className="border-2 border-dashed border-pink-300 rounded-xl p-5 bg-pink-50">
                 <p className="text-black font-semibold mb-1">💅 Upload Your Desired Design</p>
@@ -379,20 +344,10 @@ export default function Book() {
                 )}
               </div>
 
-              <textarea
-                placeholder="Describe your dream design (e.g. French tips, glitter, floral, color preferences...)"
-                rows={2}
-                value={design}
-                onChange={(e) => setDesign(e.target.value)}
-                className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none"
-              />
+              <textarea placeholder="Describe your dream design (e.g. French tips, glitter, floral, color preferences...)" rows={2} value={design} onChange={(e) => setDesign(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none" />
 
               {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-              <button
-                onClick={handleSubmit}
-                disabled={loading}
-                className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300 disabled:opacity-50"
-              >
+              <button onClick={handleSubmit} disabled={loading} className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300 disabled:opacity-50">
                 {loading ? "Submitting..." : "Confirm Appointment"}
               </button>
             </div>
@@ -416,9 +371,6 @@ export default function Book() {
       <div className="px-6 pb-12 relative z-10">
         <div className="max-w-6xl mx-auto">
           <CustomerReviews />
-        </div>
-      </div>
-
         </div>
       </div>
 

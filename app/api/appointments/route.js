@@ -1,26 +1,28 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
-);
+function getSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
+}
 
 export async function GET(request) {
+  const supabase = getSupabase();
   const { searchParams } = new URL(request.url);
   const user_id = searchParams.get("user_id");
 
   let query = supabase.from("appointments").select("*").order("created_at", { ascending: false });
-
   if (user_id) query = query.eq("user_id", user_id);
 
   const { data, error } = await query;
-
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json(data ?? []);
 }
 
 export async function POST(request) {
+  const supabase = getSupabase();
   const body = await request.json();
   const { name, phone, service, date, time, requests, design, design_image, user_id } = body;
 
@@ -39,6 +41,7 @@ export async function POST(request) {
 }
 
 export async function PATCH(request) {
+  const supabase = getSupabase();
   const body = await request.json();
   const { id, status } = body;
 

@@ -169,13 +169,7 @@ function PaymentContent() {
             <div className="text-center">
               <p className="font-semibold text-gray-700 mb-3">Scan GCash QR Code</p>
               <div className="inline-flex flex-col items-center bg-white border-4 border-pink-300 rounded-2xl p-4 shadow-lg">
-                <div className="w-[200px] h-[200px] bg-pink-50 rounded-xl flex flex-col items-center justify-center border-2 border-dashed border-pink-200">
-                  <p className="text-5xl">📱</p>
-                  <p className="text-xs text-gray-400 mt-2 font-semibold">GCash QR Code</p>
-                  <p className="text-xs text-gray-300 mt-1">Replace with your QR image</p>
-                </div>
-                {/* Once you have your QR image, replace the div above with:
-                <Image src="/gcash-qr.png" alt="GCash QR" width={200} height={200} className="rounded-xl" /> */}
+                <Image src="/qrcode.jpg" alt="GCash QR" width={200} height={200} className="rounded-xl" />
               </div>
               <p className="text-sm text-gray-500 mt-3">Send <span className="font-bold text-pink-500">₱{amountToPay}</span> to this GCash account</p>
               <p className="text-xs text-gray-400 mt-1">Account Name: <span className="font-semibold text-gray-600">Marvelously Polished</span></p>

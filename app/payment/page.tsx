@@ -24,14 +24,37 @@ function PaymentContent() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const amountToPay = paymentType === "half" ? halfAmount : totalAmount;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!refNumber.trim()) {
       setError("Please enter your GCash reference number.");
       return;
     }
     setError("");
+    setLoading(true);
+    const user_id = localStorage.getItem("user_id");
+    const res = await fetch("/api/payments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        appointment_id: searchParams.get("id") || null,
+        user_id,
+        service,
+        amount: amountToPay,
+        payment_type: paymentType,
+        reference_number: refNumber,
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      setError(data.error || "Something went wrong. Please try again.");
+      setLoading(false);
+      return;
+    }
+    setLoading(false);
     setSubmitted(true);
   };
 
@@ -149,9 +172,10 @@ function PaymentContent() {
 
             <button
               onClick={handleSubmit}
-              className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300"
+              disabled={loading}
+              className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300 disabled:opacity-50"
             >
-              Confirm Payment — ₱{amountToPay}
+              {loading ? "Submitting..." : `Confirm Payment — ₱${amountToPay}`}
             </button>
 
             <p className="text-xs text-gray-400 text-center">

@@ -105,6 +105,23 @@ create policy "Services are viewable by everyone" on services for select using (
 -- Gallery: public read
 create policy "Gallery is viewable by everyone" on gallery for select using (true);
 
--- Reviews: public read, authenticated can insert
-create policy "Reviews are viewable by everyone" on reviews for select using (true);
-create policy "Authenticated users can insert reviews" on reviews for insert with check (true);
+-- ============================================
+-- 6. PAYMENTS TABLE
+-- ============================================
+create table if not exists payments (
+  id uuid default gen_random_uuid() primary key,
+  appointment_id uuid references appointments(id) on delete set null,
+  user_id uuid references auth.users(id) on delete set null,
+  service text not null,
+  amount numeric not null,
+  payment_type text not null check (payment_type in ('half', 'full')),
+  reference_number text not null,
+  status text default 'Pending' check (status in ('Pending', 'Verified', 'Rejected')),
+  created_at timestamp with time zone default now()
+);
+
+-- Payments: anyone can insert, anyone can read
+create policy "Anyone can insert payments" on payments for insert with check (true);
+create policy "Anyone can read payments" on payments for select using (true);
+create policy "Anyone can update payments" on payments for update using (true);
+alter table payments enable row level security;

@@ -15,7 +15,7 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">
 
       <div className="absolute top-20 left-[-120px] w-80 h-80 bg-pink-300 rounded-full opacity-30 blur-3xl"></div>
       <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl"></div>
@@ -97,11 +97,37 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-[#FFD3DF] relative z-10 py-4 px-6">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-gray-700">
-          <p className="font-medium">© 2026 Marvelously Polished. All rights reserved.</p>
-          <p>📍 Santa Ana | 📞 (714) 000-0000 | ⏰ Mon–Sat: 9AM–7PM</p>
-          <p>Book Your Glam Today 💅</p>
+      <footer className="bg-[#FFD3DF] relative z-10 pt-12 pb-6 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 mb-10">
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold text-gray-800 tracking-widest">MARVELOUSLY POLISHED</h3>
+              <p className="text-gray-700 text-sm leading-relaxed">Premium nail care in Santa Ana. Where beauty meets artistry.</p>
+              <p className="text-pink-600 font-medium text-sm">Beauty Starts From Tips to Toes 💅</p>
+            </div>
+            <div className="space-y-3">
+              <h4 className="font-bold text-gray-800 text-lg">Quick Links</h4>
+              <div className="space-y-2 text-sm">
+                <Link href="/homepage" className="block text-gray-700 hover:text-pink-600 transition">Home</Link>
+                <Link href="/book" className="block text-gray-700 hover:text-pink-600 transition">Book Appointment</Link>
+                <Link href="/pricing" className="block text-gray-700 hover:text-pink-600 transition">Pricing</Link>
+                <Link href="/gallery" className="block text-gray-700 hover:text-pink-600 transition">Gallery</Link>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <h4 className="font-bold text-gray-800 text-lg">Contact Us</h4>
+              <div className="space-y-2 text-sm text-gray-700">
+                <p>📍 Santa Ana, CA</p>
+                <p>📞 (714) 000-0000</p>
+                <p>📧 hello@marvelouslypolished.com</p>
+                <p>⏰ Mon–Sat: 9AM – 7PM</p>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-pink-300 pt-6 flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-gray-700">
+            <p>© 2026 Marvelously Polished. All rights reserved.</p>
+            <p>Santa Ana | Book Your Glam Today 💅</p>
+          </div>
         </div>
       </footer>
 

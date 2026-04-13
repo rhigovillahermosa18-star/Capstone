@@ -45,14 +45,14 @@ function PaymentContent() {
     const fileExt = screenshotFile.name.split(".").pop();
     const fileName = `${Date.now()}.${fileExt}`;
     const { data: uploadData, error: uploadError } = await supabase.storage
-      .from("payments")
+      .from("designs")
       .upload(fileName, screenshotFile, { upsert: true });
     if (uploadError) {
       setError(`Failed to upload screenshot: ${uploadError.message}`);
       setLoading(false);
       return;
     }
-    const { data: urlData } = supabase.storage.from("payments").getPublicUrl(fileName);
+    const { data: urlData } = supabase.storage.from("designs").getPublicUrl(fileName);
     screenshotUrl = urlData.publicUrl;
 
     const user_id = localStorage.getItem("user_id");

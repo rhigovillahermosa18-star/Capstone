@@ -22,17 +22,19 @@ function Carousel({ images }: { images: string[] }) {
     return () => clearInterval(timer);
   }, [images.length]);
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl flex-grow shadow-inner">
-      <div className="flex transition-transform duration-700 ease-in-out" style={{ transform: `translateX(-${current * 100}%)` }}>
-        {images.map((src, i) => (
-          <div key={i} className="min-w-full h-24 relative">
-            <Image src={src} fill alt={`Design ${i + 1}`} className="object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-          </div>
-        ))}
-      </div>
-      <button onClick={() => setCurrent((prev) => (prev - 1 + images.length) % images.length)} className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-pink-500 rounded-full w-7 h-7 flex items-center justify-center shadow-md z-10 text-lg font-bold">‹</button>
-      <button onClick={() => setCurrent((prev) => (prev + 1) % images.length)} className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-pink-500 rounded-full w-7 h-7 flex items-center justify-center shadow-md z-10 text-lg font-bold">›</button>
+    <div className="relative w-full h-48 overflow-hidden rounded-2xl shadow-inner">
+      {images.map((src, i) => (
+        <div
+          key={i}
+          className="absolute inset-0 transition-opacity duration-700"
+          style={{ opacity: i === current ? 1 : 0 }}
+        >
+          <Image src={src} fill alt={`Design ${i + 1}`} className="object-cover rounded-2xl" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-2xl" />
+        </div>
+      ))}
+      <button onClick={() => setCurrent((prev) => (prev - 1 + images.length) % images.length)} className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-pink-500 rounded-full w-7 h-7 flex items-center justify-center shadow-md z-10 font-bold">‹</button>
+      <button onClick={() => setCurrent((prev) => (prev + 1) % images.length)} className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-pink-500 rounded-full w-7 h-7 flex items-center justify-center shadow-md z-10 font-bold">›</button>
       <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
         {images.map((_, i) => (
           <button key={i} onClick={() => setCurrent(i)} className={`rounded-full transition-all duration-300 ${i === current ? "bg-pink-400 w-4 h-2" : "bg-white/60 w-2 h-2"}`} />

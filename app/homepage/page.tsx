@@ -85,7 +85,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col items-center gap-4">
-            <Image src="/logo1.png" alt="Marvelously Polished Logo" width={300} height={300} className="rounded-full shadow-2xl border-4 border-white hover:scale-105 transition-transform duration-300" />
+            <Image src="/logo1.png" alt="Marvelously Polished Logo" width={200} height={200} className="rounded-full shadow-2xl border-4 border-white hover:scale-105 transition-transform duration-300" />
             <div className="grid grid-cols-3 gap-3 w-full max-w-md">
               <Image src="/nail1.jpg" width={200} height={200} alt="Nail Design" className="rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300 w-full h-20 object-cover" />
               <Image src="/nail2.jpg" width={200} height={200} alt="Nail Design" className="rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300 w-full h-20 object-cover" />

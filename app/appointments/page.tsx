@@ -81,6 +81,9 @@ export default function Appointments() {
         <Link href="/gallery" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">
           Gallery
         </Link>
+        <Link href="/appointments" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">
+          My Appointments
+        </Link>
         <button
           onClick={handleLogout}
           className="bg-gray-200 px-5 py-2 rounded-full text-gray-700 hover:bg-gray-300 transition"

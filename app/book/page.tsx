@@ -40,6 +40,90 @@ function Carousel({ images, height = "h-48" }: { images: string[]; height?: stri
   );
 }
 
+function CustomerReviews() {
+  const [reviews, setReviews] = useState<{ id: string; name: string; rating: number; comment: string }[]>([]);
+  const [name, setName] = useState("");
+  const [rating, setRating] = useState(5);
+  const [comment, setComment] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/reviews")
+      .then((r) => r.json())
+      .then((d) => setReviews(d));
+  }, []);
+
+  const handleSubmit = async () => {
+    if (!name || !comment) return;
+    const res = await fetch("/api/reviews", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, rating, comment }),
+    });
+    if (res.ok) {
+      const newReview = await res.json();
+      setReviews((prev) => [newReview, ...prev]);
+      setName(""); setComment(""); setRating(5);
+      setSubmitted(true);
+      setTimeout(() => setSubmitted(false), 3000);
+    }
+  };
+
+  return (
+    <div className="bg-white p-6 rounded-2xl shadow-lg border border-pink-100">
+      <h3 className="text-pink-600 font-bold text-xl mb-4 flex items-center gap-2">
+        <span>⭐</span> Customer Reviews
+      </h3>
+
+      {/* Reviews List */}
+      <div className="space-y-3 mb-5 max-h-64 overflow-y-auto pr-1">
+        {reviews.length === 0 ? (
+          <p className="text-gray-400 text-sm text-center py-4">No reviews yet. Be the first!</p>
+        ) : reviews.map((r) => (
+          <div key={r.id} className="bg-pink-50 rounded-xl p-3">
+            <div className="flex justify-between items-center mb-1">
+              <p className="font-semibold text-gray-800 text-sm">{r.name}</p>
+              <span className="text-yellow-400 text-sm">{"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}</span>
+            </div>
+            <p className="text-gray-600 text-xs">{r.comment}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Leave a Review */}
+      <div className="border-t border-pink-100 pt-4 space-y-3">
+        <p className="text-sm font-semibold text-gray-700">Leave a Review</p>
+        <input
+          placeholder="Your name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="w-full p-3 border-2 border-gray-200 rounded-xl text-black text-sm focus:outline-none focus:border-pink-400 transition"
+        />
+        <div className="flex gap-2 items-center">
+          <p className="text-sm text-gray-600">Rating:</p>
+          {[1,2,3,4,5].map((star) => (
+            <button key={star} onClick={() => setRating(star)} className={`text-xl transition ${star <= rating ? "text-yellow-400" : "text-gray-300"}`}>★</button>
+          ))}
+        </div>
+        <textarea
+          placeholder="Share your experience..."
+          rows={2}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          className="w-full p-3 border-2 border-gray-200 rounded-xl text-black text-sm focus:outline-none focus:border-pink-400 transition resize-none"
+        />
+        {submitted && <p className="text-green-500 text-xs text-center">✓ Review submitted!</p>}
+        <button
+          onClick={handleSubmit}
+          className="w-full bg-pink-500 text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-pink-600 transition"
+        >
+          Submit Review
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function Book() {
   const router = useRouter();
   const [name, setName] = useState("");
@@ -314,15 +398,18 @@ export default function Book() {
             </div>
           </div>
 
-          {/* Right - Trending Now */}
-          <div className="hidden lg:flex flex-col">
-            <div className="bg-gradient-to-b from-pink-50 to-white p-6 rounded-2xl shadow-lg border border-pink-100 flex flex-col flex-grow">
+          {/* Right - Trending Now + Reviews */}
+          <div className="hidden lg:flex flex-col gap-6">
+            <div className="bg-gradient-to-b from-pink-50 to-white p-6 rounded-2xl shadow-lg border border-pink-100 flex flex-col">
               <h3 className="text-pink-600 font-bold text-xl mb-4 flex items-center gap-2">
                 <span>🔥</span> Trending Now
               </h3>
               <Carousel images={trendingImages} height="h-96" />
               <p className="text-xs text-gray-400 text-center mt-3">Latest nail trends just for you</p>
             </div>
+
+            {/* Customer Reviews */}
+            <CustomerReviews />
           </div>
 
         </div>

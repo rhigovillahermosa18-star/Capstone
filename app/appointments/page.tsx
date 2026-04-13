@@ -147,12 +147,20 @@ export default function Appointments() {
                       {appt.status}
                     </span>
                     {appt.status !== "Cancelled" && (
-                      <button
-                        onClick={() => handleCancel(appt.id)}
-                        className="bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-pink-200 transition"
-                      >
-                        Cancel
-                      </button>
+                      <div className="flex gap-2">
+                        <Link
+                          href={`/payment?service=${encodeURIComponent(appt.service)}&id=${appt.id}`}
+                          className="bg-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-pink-600 transition"
+                        >
+                          💳 Pay
+                        </Link>
+                        <button
+                          onClick={() => handleCancel(appt.id)}
+                          className="bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-pink-200 transition"
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     )}
                   </div>
                 </div>

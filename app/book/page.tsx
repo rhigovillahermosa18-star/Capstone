@@ -11,7 +11,7 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
 );
 
-const TOTAL_SLOTS = 3;
+const TOTAL_SLOTS = 4;
 const popularImages = ["/nail1.jpg","/nail2.jpg","/nail3.jpg","/nail4.jpg","/nail5.jpg","/nail6.jpg","/nail7.jpg","/nail8.jpg","/nail9.jpg","/nail10.jpg","/nail11.jpg"];
 const trendingImages = ["/nail5.jpg","/nail6.jpg","/nail7.jpg","/nail8.jpg","/nail9.jpg","/nail10.jpg","/nail11.jpg","/nail1.jpg"];
 
@@ -328,7 +328,7 @@ export default function Book() {
               <div className="border-2 border-gray-200 rounded-xl p-4">
                 <p className="text-sm font-semibold text-gray-700 mb-3">Select Time</p>
                 <div className="grid grid-cols-3 gap-3">
-                  {["10:00 AM", "1:00 PM", "4:00 PM"].map((slot) => {
+                  {["9:00 AM", "1:00 PM", "4:00 PM", "7:00 PM"].map((slot) => {
                     const taken = date ? (bookedSlots[date] || []).includes(slot) : false;
                     const isSelected = time === slot;
                     return (

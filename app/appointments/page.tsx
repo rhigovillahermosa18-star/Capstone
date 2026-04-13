@@ -166,12 +166,14 @@ export default function Appointments() {
                     </span>
                     {appt.status !== "Cancelled" && (
                       <div className="flex gap-2">
-                        <Link
-                          href={`/payment?service=${encodeURIComponent(appt.service)}&id=${appt.id}`}
-                          className="bg-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-pink-600 transition"
-                        >
-                          💳 Pay
-                        </Link>
+                        {!hasPaid(appt.id) && (
+                          <Link
+                            href={`/payment?service=${encodeURIComponent(appt.service)}&id=${appt.id}`}
+                            className="bg-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-pink-600 transition"
+                          >
+                            💳 Pay
+                          </Link>
+                        )}
                         {hasPaid(appt.id) ? (
                           <span className="bg-gray-100 text-gray-400 px-4 py-2 rounded-full text-sm font-semibold cursor-not-allowed" title="No refunds after payment">
                             🚫 No Refund

@@ -172,8 +172,8 @@ function PaymentContent() {
                 <Image src="/qrcode.jpg" alt="GCash QR" width={200} height={200} className="rounded-xl" />
               </div>
               <p className="text-sm text-gray-500 mt-3">Send <span className="font-bold text-pink-500">₱{amountToPay}</span> to this GCash account</p>
-              <p className="text-xs text-gray-400 mt-1">Account Name: <span className="font-semibold text-gray-600">Marvelously Polished</span></p>
-              <p className="text-xs text-gray-400">Number: <span className="font-semibold text-gray-600">09XX-XXX-XXXX</span></p>
+              <p className="text-xs text-gray-400 mt-1">Account Name: <span className="font-semibold text-gray-600">Marvelous Felaine Villahermosa</span></p>
+              <p className="text-xs text-gray-400">Number: <span className="font-semibold text-gray-600">0906-445-5283</span></p>
             </div>
 
             {/* Screenshot Upload */}

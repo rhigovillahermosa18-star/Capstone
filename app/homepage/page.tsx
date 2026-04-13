@@ -103,7 +103,7 @@ export default function Home() {
               >
                 {nailImages.map((src, i) => (
                   <div key={i} className="min-w-full">
-                    <Image src={src} width={400} height={200} alt={`Nail ${i + 1}`} className="w-full h-40 object-cover" />
+                    <Image src={src} width={400} height={200} alt={`Nail ${i + 1}`} className="w-full h-56 object-cover" />
                   </div>
                 ))}
               </div>

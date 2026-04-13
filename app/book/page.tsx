@@ -26,7 +26,7 @@ function Carousel({ images }: { images: string[] }) {
     <div className="relative w-full overflow-hidden rounded-xl flex-grow">
       <div className="flex transition-transform duration-700 ease-in-out h-full" style={{ transform: `translateX(-${current * 100}%)` }}>
         {images.map((src, i) => (
-          <div key={i} className="min-w-full h-64">
+          <div key={i} className="min-w-full h-40">
             <Image src={src} fill alt={`Design ${i + 1}`} className="object-cover" />
           </div>
         ))}

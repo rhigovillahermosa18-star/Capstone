@@ -24,7 +24,7 @@ export async function GET(request) {
 export async function POST(request) {
   const supabase = getSupabase();
   const body = await request.json();
-  const { appointment_id, user_id, service, amount, payment_type, screenshot_url } = body;
+  const { appointment_id, user_id, service, amount, payment_type, screenshot_url, customer_name } = body;
 
   if (!service || !amount || !payment_type || !screenshot_url) {
     return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
@@ -32,7 +32,7 @@ export async function POST(request) {
 
   const { data, error } = await supabase
     .from("payments")
-    .insert([{ appointment_id: appointment_id ?? null, user_id: user_id ?? null, service, amount, payment_type, screenshot_url, status: "Pending" }])
+    .insert([{ appointment_id: appointment_id ?? null, user_id: user_id ?? null, service, amount, payment_type, screenshot_url, customer_name: customer_name ?? "", status: "Pending" }])
     .select()
     .single();
 

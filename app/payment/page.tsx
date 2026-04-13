@@ -20,6 +20,7 @@ function PaymentContent() {
   const halfAmount = totalAmount / 2;
 
   const [paymentType, setPaymentType] = useState<"half" | "full">("full");
+  const [customerName, setCustomerName] = useState("");
   const [screenshotFile, setScreenshotFile] = useState<File | null>(null);
   const [screenshotPreview, setScreenshotPreview] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -29,8 +30,8 @@ function PaymentContent() {
   const amountToPay = paymentType === "half" ? halfAmount : totalAmount;
 
   const handleSubmit = async () => {
-    if (!screenshotFile) {
-      setError("Please upload a screenshot of your payment.");
+    if (!screenshotFile || !customerName.trim()) {
+      setError(!customerName.trim() ? "Please enter your name." : "Please upload a screenshot of your payment.");
       return;
     }
     setError("");
@@ -66,6 +67,7 @@ function PaymentContent() {
         amount: amountToPay,
         payment_type: paymentType,
         screenshot_url: screenshotUrl,
+        customer_name: customerName,
       }),
     });
     const data = await res.json();
@@ -174,6 +176,17 @@ function PaymentContent() {
               <p className="text-sm text-gray-500 mt-3">Send <span className="font-bold text-pink-500">₱{amountToPay}</span> to this GCash account</p>
               <p className="text-xs text-gray-400 mt-1">Account Name: <span className="font-semibold text-gray-600">Marvelous Felaine Villahermosa</span></p>
               <p className="text-xs text-gray-400">Number: <span className="font-semibold text-gray-600">0906-445-5283</span></p>
+            </div>
+
+            {/* Customer Name */}
+            <div>
+              <p className="font-semibold text-gray-700 mb-2">Your Name</p>
+              <input
+                placeholder="Enter your full name"
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
+                className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
+              />
             </div>
 
             {/* Screenshot Upload */}

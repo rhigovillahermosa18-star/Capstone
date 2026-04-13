@@ -25,6 +25,7 @@ type User = {
 
 type Payment = {
   id: string;
+  customer_name: string;
   service: string;
   amount: number;
   payment_type: string;
@@ -249,9 +250,9 @@ export default function Admin() {
                 <table className="w-full text-sm">
                   <thead className="bg-pink-50">
                     <tr>
+                      <th className="text-left p-4 text-gray-700 font-semibold">Customer</th>
                       <th className="text-left p-4 text-gray-700 font-semibold">Service</th>
                       <th className="text-left p-4 text-gray-700 font-semibold">Amount</th>
-                      <th className="text-left p-4 text-gray-700 font-semibold">Type</th>
                       <th className="text-left p-4 text-gray-700 font-semibold">Screenshot</th>
                       <th className="text-left p-4 text-gray-700 font-semibold">Date</th>
                       <th className="text-left p-4 text-gray-700 font-semibold">Status</th>
@@ -263,7 +264,8 @@ export default function Admin() {
                       <tr><td colSpan={7} className="p-8 text-center text-gray-500">No payments yet.</td></tr>
                     ) : payments.map((payment, i) => (
                       <tr key={payment.id} className={i % 2 === 0 ? "bg-white" : "bg-pink-50/30"}>
-                        <td className="p-4 font-medium text-gray-800">{payment.service}</td>
+                        <td className="p-4 font-medium text-gray-800">{payment.customer_name || "—"}</td>
+                        <td className="p-4 text-gray-600">{payment.service}</td>
                         <td className="p-4 text-gray-600 font-semibold text-pink-500">₱{payment.amount}</td>
                         <td className="p-4">
                           <span className={`px-3 py-1 rounded-full text-xs font-semibold ${

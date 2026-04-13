@@ -354,7 +354,7 @@ export default function Book() {
           </div>
 
           {/* Right - Trending Now + Reviews */}
-          <div className="hidden lg:flex flex-col gap-6 pt-72">
+          <div className="hidden lg:flex flex-col gap-6">
             <div className="bg-gradient-to-b from-pink-50 to-white p-6 rounded-2xl shadow-lg border border-pink-100 flex flex-col">
               <h3 className="text-pink-600 font-bold text-xl mb-4 flex items-center gap-2">
                 <span>🔥</span> Trending Now
@@ -362,7 +362,7 @@ export default function Book() {
               <Carousel images={trendingImages} height="h-96" />
               <p className="text-xs text-gray-400 text-center mt-3">Latest nail trends just for you</p>
             </div>
-            <CustomerReviews />
+            <div className="pt-72"><CustomerReviews /></div>
           </div>
 
         </div>

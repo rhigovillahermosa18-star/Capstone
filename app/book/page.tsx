@@ -11,7 +11,36 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
 );
 
-const TOTAL_SLOTS = 3; // 10AM, 1PM, 4PM
+const TOTAL_SLOTS = 3;
+
+const popularImages = ["/nail1.jpg","/nail2.jpg","/nail3.jpg","/nail4.jpg","/nail5.jpg","/nail6.jpg","/nail7.jpg","/nail8.jpg","/nail9.jpg","/nail10.jpg","/nail11.jpg"];
+const trendingImages = ["/nail5.jpg","/nail6.jpg","/nail7.jpg","/nail8.jpg","/nail9.jpg","/nail10.jpg","/nail11.jpg","/nail1.jpg"];
+
+function Carousel({ images }: { images: string[] }) {
+  const [current, setCurrent] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => setCurrent((prev) => (prev + 1) % images.length), 3000);
+    return () => clearInterval(timer);
+  }, [images.length]);
+  return (
+    <div className="relative w-full overflow-hidden rounded-xl flex-grow">
+      <div className="flex transition-transform duration-700 ease-in-out h-full" style={{ transform: `translateX(-${current * 100}%)` }}>
+        {images.map((src, i) => (
+          <div key={i} className="min-w-full h-64">
+            <Image src={src} fill alt={`Design ${i + 1}`} className="object-cover" />
+          </div>
+        ))}
+      </div>
+      <button onClick={() => setCurrent((prev) => (prev - 1 + images.length) % images.length)} className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-pink-500 rounded-full w-8 h-8 flex items-center justify-center shadow z-10">‹</button>
+      <button onClick={() => setCurrent((prev) => (prev + 1) % images.length)} className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-pink-500 rounded-full w-8 h-8 flex items-center justify-center shadow z-10">›</button>
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
+        {images.map((_, i) => (
+          <button key={i} onClick={() => setCurrent(i)} className={`w-2 h-2 rounded-full transition ${i === current ? "bg-pink-500" : "bg-white/70"}`} />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Book() {
   const router = useRouter();
@@ -164,19 +193,7 @@ export default function Book() {
               <h3 className="text-black font-bold text-lg mb-4 flex items-center gap-2">
                 <span>💅</span> Popular Designs
               </h3>
-              <div className="grid grid-cols-2 gap-2 flex-grow">
-                <div className="relative h-32"><Image src="/nail1.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail2.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail3.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail4.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail5.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail6.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail7.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail8.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail9.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail10.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail11.jpg" fill alt="Nail Design" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-              </div>
+              <Carousel images={popularImages} />
             </div>
           </div>
 
@@ -347,16 +364,7 @@ export default function Book() {
               <h3 className="text-black font-bold text-lg mb-4 flex items-center gap-2">
                 <span>🔥</span> Trending Now
               </h3>
-              <div className="grid grid-cols-2 gap-2 flex-grow">
-                <div className="relative h-32"><Image src="/nail5.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail6.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail7.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail8.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail9.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail10.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail11.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-                <div className="relative h-32"><Image src="/nail1.jpg" fill alt="Trending Nail" className="rounded-xl object-cover hover:scale-105 transition-transform duration-300" /></div>
-              </div>
+              <Carousel images={trendingImages} />
             </div>
           </div>
 

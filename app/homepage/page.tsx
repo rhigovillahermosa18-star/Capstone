@@ -3,9 +3,18 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+
+const nailImages = ["/nail1.jpg","/nail2.jpg","/nail3.jpg","/nail4.jpg","/nail5.jpg","/nail6.jpg","/nail7.jpg","/nail8.jpg","/nail9.jpg","/nail10.jpg","/nail11.jpg"];
 
 export default function Home() {
   const router = useRouter();
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrent((prev) => (prev + 1) % nailImages.length), 3000);
+    return () => clearInterval(timer);
+  }, []);
 
   const handleLogout = async () => {
     await fetch("/api/logout", { method: "POST" });
@@ -86,10 +95,25 @@ export default function Home() {
 
           <div className="flex flex-col items-center gap-4">
             <Image src="/logo1.png" alt="Marvelously Polished Logo" width={200} height={200} className="rounded-full shadow-2xl border-4 border-white hover:scale-105 transition-transform duration-300" />
-            <div className="grid grid-cols-3 gap-3 w-full max-w-md">
-              <Image src="/nail1.jpg" width={200} height={200} alt="Nail Design" className="rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300 w-full h-20 object-cover" />
-              <Image src="/nail2.jpg" width={200} height={200} alt="Nail Design" className="rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300 w-full h-20 object-cover" />
-              <Image src="/nail3.jpg" width={200} height={200} alt="Nail Design" className="rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300 w-full h-20 object-cover" />
+            {/* Carousel */}
+            <div className="relative w-full max-w-md overflow-hidden rounded-2xl shadow-lg">
+              <div
+                className="flex transition-transform duration-700 ease-in-out"
+                style={{ transform: `translateX(-${current * 100}%)` }}
+              >
+                {nailImages.map((src, i) => (
+                  <div key={i} className="min-w-full">
+                    <Image src={src} width={400} height={200} alt={`Nail ${i + 1}`} className="w-full h-40 object-cover" />
+                  </div>
+                ))}
+              </div>
+              <button onClick={() => setCurrent((prev) => (prev - 1 + nailImages.length) % nailImages.length)} className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-pink-500 rounded-full w-8 h-8 flex items-center justify-center shadow">‹</button>
+              <button onClick={() => setCurrent((prev) => (prev + 1) % nailImages.length)} className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-pink-500 rounded-full w-8 h-8 flex items-center justify-center shadow">›</button>
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                {nailImages.map((_, i) => (
+                  <button key={i} onClick={() => setCurrent(i)} className={`w-2 h-2 rounded-full transition ${i === current ? "bg-pink-500" : "bg-white/70"}`} />
+                ))}
+              </div>
             </div>
           </div>
 

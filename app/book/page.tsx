@@ -15,20 +15,16 @@ const TOTAL_SLOTS = 3;
 const popularImages = ["/nail1.jpg","/nail2.jpg","/nail3.jpg","/nail4.jpg","/nail5.jpg","/nail6.jpg","/nail7.jpg","/nail8.jpg","/nail9.jpg","/nail10.jpg","/nail11.jpg"];
 const trendingImages = ["/nail5.jpg","/nail6.jpg","/nail7.jpg","/nail8.jpg","/nail9.jpg","/nail10.jpg","/nail11.jpg","/nail1.jpg"];
 
-function Carousel({ images }: { images: string[] }) {
+function Carousel({ images, height = "h-48" }: { images: string[]; height?: string }) {
   const [current, setCurrent] = useState(0);
   useEffect(() => {
     const timer = setInterval(() => setCurrent((prev) => (prev + 1) % images.length), 3000);
     return () => clearInterval(timer);
   }, [images.length]);
   return (
-    <div className="relative w-full h-48 overflow-hidden rounded-2xl shadow-inner">
+    <div className={`relative w-full ${height} overflow-hidden rounded-2xl shadow-inner`}>
       {images.map((src, i) => (
-        <div
-          key={i}
-          className="absolute inset-0 transition-opacity duration-700"
-          style={{ opacity: i === current ? 1 : 0 }}
-        >
+        <div key={i} className="absolute inset-0 transition-opacity duration-700" style={{ opacity: i === current ? 1 : 0 }}>
           <Image src={src} fill alt={`Design ${i + 1}`} className="object-cover rounded-2xl" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-2xl" />
         </div>
@@ -165,20 +161,9 @@ export default function Book() {
 
       {/* Booking Section */}
       <div className="flex-grow flex justify-center px-6 py-12 relative z-10">
-        <div className="max-w-6xl w-full grid lg:grid-cols-3 gap-8 items-stretch">
+        <div className="max-w-6xl w-full grid lg:grid-cols-2 gap-8 items-start">
 
-          {/* Left - Popular Designs */}
-          <div className="hidden lg:flex flex-col">
-            <div className="bg-gradient-to-b from-pink-50 to-white p-6 rounded-2xl shadow-lg border border-pink-100 flex flex-col flex-grow">
-              <h3 className="text-pink-600 font-bold text-lg mb-4 flex items-center gap-2">
-                <span>💅</span> Popular Designs
-              </h3>
-              <Carousel images={popularImages} />
-              <p className="text-xs text-gray-400 text-center mt-3">Swipe through our popular styles</p>
-            </div>
-          </div>
-
-          {/* Booking Form */}
+          {/* Left - Booking Form */}
           <div className="bg-white p-8 rounded-2xl shadow-2xl border border-pink-100 flex flex-col">
             <h2 className="text-center font-bold mb-2 text-gray-800 text-3xl">
               Book Your Appointment
@@ -329,25 +314,13 @@ export default function Book() {
             </div>
           </div>
 
-          {/* Right - Why Choose Us + Trending */}
-          <div className="hidden lg:flex flex-col gap-6">
-            <div className="bg-white p-6 rounded-2xl shadow-lg text-black">
-              <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-                <span>💖</span> Why Choose Us
-              </h3>
-              <div className="space-y-3 text-sm">
-                <p className="flex items-start gap-2"><span className="text-pink-500">✓</span><span>Professional Nail Artists</span></p>
-                <p className="flex items-start gap-2"><span className="text-pink-500">✓</span><span>Premium Quality Products</span></p>
-                <p className="flex items-start gap-2"><span className="text-pink-500">✓</span><span>Sanitized Tools & Equipment</span></p>
-                <p className="flex items-start gap-2"><span className="text-pink-500">✓</span><span>Relaxing Atmosphere</span></p>
-              </div>
-            </div>
-
+          {/* Right - Trending Now */}
+          <div className="hidden lg:flex flex-col">
             <div className="bg-gradient-to-b from-pink-50 to-white p-6 rounded-2xl shadow-lg border border-pink-100 flex flex-col flex-grow">
-              <h3 className="text-pink-600 font-bold text-lg mb-4 flex items-center gap-2">
+              <h3 className="text-pink-600 font-bold text-xl mb-4 flex items-center gap-2">
                 <span>🔥</span> Trending Now
               </h3>
-              <Carousel images={trendingImages} />
+              <Carousel images={trendingImages} height="h-96" />
               <p className="text-xs text-gray-400 text-center mt-3">Latest nail trends just for you</p>
             </div>
           </div>

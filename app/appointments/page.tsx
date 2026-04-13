@@ -16,9 +16,16 @@ type Appointment = {
   status: string;
 };
 
+type Payment = {
+  id: string;
+  appointment_id: string;
+  status: string;
+};
+
 export default function Appointments() {
   const router = useRouter();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [payments, setPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,15 +35,23 @@ export default function Appointments() {
   const fetchAppointments = async () => {
     try {
       const user_id = localStorage.getItem("user_id");
-      const res = await fetch(`/api/appointments${user_id ? `?user_id=${user_id}` : ""}`);
-      const data = await res.json();
-      if (res.ok) setAppointments(data);
+      const [apptRes, payRes] = await Promise.all([
+        fetch(`/api/appointments${user_id ? `?user_id=${user_id}` : ""}`),
+        fetch(`/api/payments${user_id ? `?user_id=${user_id}` : ""}`),
+      ]);
+      const apptData = await apptRes.json();
+      const payData = await payRes.json();
+      if (apptRes.ok) setAppointments(apptData);
+      if (payRes.ok) setPayments(payData);
     } catch (e) {
       console.error(e);
     } finally {
       setLoading(false);
     }
   };
+
+  const hasPaid = (apptId: string) =>
+    payments.some((p) => p.appointment_id === apptId && (p.status === "Pending" || p.status === "Verified"));
 
   const handleCancel = async (id: string) => {
     await fetch("/api/appointments", {
@@ -157,12 +172,18 @@ export default function Appointments() {
                         >
                           💳 Pay
                         </Link>
-                        <button
-                          onClick={() => handleCancel(appt.id)}
-                          className="bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-pink-200 transition"
-                        >
-                          Cancel
-                        </button>
+                        {hasPaid(appt.id) ? (
+                          <span className="bg-gray-100 text-gray-400 px-4 py-2 rounded-full text-sm font-semibold cursor-not-allowed" title="No refunds after payment">
+                            🚫 No Refund
+                          </span>
+                        ) : (
+                          <button
+                            onClick={() => handleCancel(appt.id)}
+                            className="bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-pink-200 transition"
+                          >
+                            Cancel
+                          </button>
+                        )}
                       </div>
                     )}
                   </div>

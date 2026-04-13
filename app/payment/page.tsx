@@ -48,7 +48,7 @@ function PaymentContent() {
       .from("payments")
       .upload(fileName, screenshotFile, { upsert: true });
     if (uploadError) {
-      setError("Failed to upload screenshot. Please try again.");
+      setError(`Failed to upload screenshot: ${uploadError.message}`);
       setLoading(false);
       return;
     }

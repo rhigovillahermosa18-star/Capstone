@@ -115,7 +115,8 @@ create table if not exists payments (
   service text not null,
   amount numeric not null,
   payment_type text not null check (payment_type in ('half', 'full')),
-  reference_number text not null,
+  reference_number text,
+  screenshot_url text,
   status text default 'Pending' check (status in ('Pending', 'Verified', 'Rejected')),
   created_at timestamp with time zone default now()
 );

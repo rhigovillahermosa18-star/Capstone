@@ -20,21 +20,41 @@ function PaymentContent() {
   const halfAmount = totalAmount / 2;
 
   const [paymentType, setPaymentType] = useState<"half" | "full">("full");
-  const [refNumber, setRefNumber] = useState("");
+  const [screenshotFile, setScreenshotFile] = useState<File | null>(null);
+  const [screenshotPreview, setScreenshotPreview] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
-
   const [loading, setLoading] = useState(false);
 
   const amountToPay = paymentType === "half" ? halfAmount : totalAmount;
 
   const handleSubmit = async () => {
-    if (!refNumber.trim()) {
-      setError("Please enter your GCash reference number.");
+    if (!screenshotFile) {
+      setError("Please upload a screenshot of your payment.");
       return;
     }
     setError("");
     setLoading(true);
+
+    let screenshotUrl = "";
+    const { createClient } = await import("@supabase/supabase-js");
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
+    );
+    const fileExt = screenshotFile.name.split(".").pop();
+    const fileName = `${Date.now()}.${fileExt}`;
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("payments")
+      .upload(fileName, screenshotFile, { upsert: true });
+    if (uploadError) {
+      setError("Failed to upload screenshot. Please try again.");
+      setLoading(false);
+      return;
+    }
+    const { data: urlData } = supabase.storage.from("payments").getPublicUrl(fileName);
+    screenshotUrl = urlData.publicUrl;
+
     const user_id = localStorage.getItem("user_id");
     const res = await fetch("/api/payments", {
       method: "POST",
@@ -45,7 +65,7 @@ function PaymentContent() {
         service,
         amount: amountToPay,
         payment_type: paymentType,
-        reference_number: refNumber,
+        screenshot_url: screenshotUrl,
       }),
     });
     const data = await res.json();
@@ -64,7 +84,6 @@ function PaymentContent() {
         <div className="bg-white p-10 rounded-2xl shadow-2xl text-center max-w-md w-full border border-pink-100">
           <p className="text-5xl mb-4">🎉</p>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Payment Submitted!</h2>
-          <p className="text-gray-500 text-sm mb-1">Reference #: <span className="font-semibold text-pink-500">{refNumber}</span></p>
           <p className="text-gray-500 text-sm mb-6">Amount: <span className="font-semibold text-pink-500">₱{amountToPay}</span> ({paymentType === "half" ? "Half Payment" : "Full Payment"})</p>
           <p className="text-xs text-gray-400 mb-6">We will verify your payment shortly. Thank you!</p>
           <Link href="/appointments" className="inline-block bg-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-pink-600 transition">
@@ -163,16 +182,29 @@ function PaymentContent() {
               <p className="text-xs text-gray-400">Number: <span className="font-semibold text-gray-600">09XX-XXX-XXXX</span></p>
             </div>
 
-            {/* Reference Number */}
+            {/* Screenshot Upload */}
             <div>
-              <p className="font-semibold text-gray-700 mb-2">Enter GCash Reference Number</p>
-              <input
-                placeholder="e.g. 1234567890"
-                value={refNumber}
-                onChange={(e) => setRefNumber(e.target.value)}
-                className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
-              />
-              <p className="text-xs text-gray-400 mt-1">Found in your GCash transaction history</p>
+              <p className="font-semibold text-gray-700 mb-2">Upload Payment Screenshot</p>
+              <div className="border-2 border-dashed border-pink-300 rounded-xl p-5 bg-pink-50">
+                <p className="text-gray-500 text-sm mb-3">Take a screenshot of your GCash payment confirmation and upload it here (PNG, JPG)</p>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0] || null;
+                    setScreenshotFile(file);
+                    if (file) setScreenshotPreview(URL.createObjectURL(file));
+                    else setScreenshotPreview("");
+                  }}
+                  className="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-pink-400 file:text-white hover:file:bg-pink-500 cursor-pointer"
+                />
+                {screenshotPreview && (
+                  <div className="mt-3">
+                    <p className="text-xs text-gray-500 mb-1">Preview:</p>
+                    <img src={screenshotPreview} alt="Payment screenshot" className="w-full h-48 object-cover rounded-xl" />
+                  </div>
+                )}
+              </div>
             </div>
 
             {error && <p className="text-red-500 text-sm text-center">{error}</p>}

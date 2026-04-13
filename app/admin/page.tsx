@@ -23,12 +23,23 @@ type User = {
   created_at: string;
 };
 
+type Payment = {
+  id: string;
+  service: string;
+  amount: number;
+  payment_type: string;
+  screenshot_url: string;
+  status: string;
+  created_at: string;
+};
+
 export default function Admin() {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [users, setUsers] = useState<User[]>([]);
-  const [activeTab, setActiveTab] = useState<"appointments" | "users">("appointments");
+  const [activeTab, setActiveTab] = useState<"appointments" | "users" | "payments">("appointments");
+  const [payments, setPayments] = useState<Payment[]>([]);
 
   useEffect(() => {
     const role = typeof window !== "undefined" ? localStorage.getItem("role") : null;
@@ -38,6 +49,7 @@ export default function Admin() {
       setAuthorized(true);
       fetchAppointments();
       fetchUsers();
+      fetchPayments();
     }
   }, [router]);
 
@@ -61,6 +73,25 @@ export default function Admin() {
     }
   };
 
+  const fetchPayments = async () => {
+    try {
+      const res = await fetch("/api/payments");
+      const data = await res.json();
+      if (res.ok) setPayments(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const updatePaymentStatus = async (id: string, status: string) => {
+    await fetch("/api/payments", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, status }),
+    });
+    fetchPayments();
+  };
+
   const updateStatus = async (id: string, status: string) => {
     await fetch("/api/appointments", {
       method: "PATCH",
@@ -82,6 +113,8 @@ export default function Admin() {
     { label: "Confirmed", value: appointments.filter(a => a.status === "Confirmed").length, icon: "✅" },
     { label: "Pending", value: appointments.filter(a => a.status === "Pending").length, icon: "⏳" },
     { label: "Total Users", value: users.length, icon: "👥" },
+    { label: "Payments", value: payments.length, icon: "💳" },
+    { label: "Verified", value: payments.filter(p => p.status === "Verified").length, icon: "✔️" },
   ];
 
   if (!authorized) return null;
@@ -130,6 +163,12 @@ export default function Admin() {
               className={`px-6 py-3 rounded-xl font-semibold transition ${activeTab === "appointments" ? "bg-pink-500 text-white shadow-lg" : "bg-white text-gray-600 hover:bg-pink-50"}`}
             >
               📋 Appointments
+            </button>
+            <button
+              onClick={() => setActiveTab("payments")}
+              className={`px-6 py-3 rounded-xl font-semibold transition ${activeTab === "payments" ? "bg-pink-500 text-white shadow-lg" : "bg-white text-gray-600 hover:bg-pink-50"}`}
+            >
+              💳 Payments
             </button>
             <button
               onClick={() => setActiveTab("users")}
@@ -191,6 +230,76 @@ export default function Admin() {
                               Cancel
                             </button>
                           </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* Payments Table */}
+          {activeTab === "payments" && (
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+              <div className="p-6 border-b border-gray-100">
+                <h3 className="text-xl font-bold text-gray-800">Customer Payments</h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead className="bg-pink-50">
+                    <tr>
+                      <th className="text-left p-4 text-gray-700 font-semibold">Service</th>
+                      <th className="text-left p-4 text-gray-700 font-semibold">Amount</th>
+                      <th className="text-left p-4 text-gray-700 font-semibold">Type</th>
+                      <th className="text-left p-4 text-gray-700 font-semibold">Screenshot</th>
+                      <th className="text-left p-4 text-gray-700 font-semibold">Date</th>
+                      <th className="text-left p-4 text-gray-700 font-semibold">Status</th>
+                      <th className="text-left p-4 text-gray-700 font-semibold">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {payments.length === 0 ? (
+                      <tr><td colSpan={7} className="p-8 text-center text-gray-500">No payments yet.</td></tr>
+                    ) : payments.map((payment, i) => (
+                      <tr key={payment.id} className={i % 2 === 0 ? "bg-white" : "bg-pink-50/30"}>
+                        <td className="p-4 font-medium text-gray-800">{payment.service}</td>
+                        <td className="p-4 text-gray-600 font-semibold text-pink-500">₱{payment.amount}</td>
+                        <td className="p-4">
+                          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                            payment.payment_type === "full" ? "bg-green-100 text-green-600" : "bg-yellow-100 text-yellow-600"
+                          }`}>
+                            {payment.payment_type === "full" ? "Full" : "Half"}
+                          </span>
+                        </td>
+                        <td className="p-4">
+                          {payment.screenshot_url ? (
+                            <a href={payment.screenshot_url} target="_blank" rel="noopener noreferrer">
+                              <img src={payment.screenshot_url} alt="Payment screenshot" className="w-16 h-16 object-cover rounded-lg border-2 border-pink-200 hover:scale-105 transition cursor-pointer" />
+                            </a>
+                          ) : <span className="text-gray-400 text-xs">No screenshot</span>}
+                        </td>
+                        <td className="p-4 text-gray-600">{new Date(payment.created_at).toLocaleDateString()}</td>
+                        <td className="p-4">
+                          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                            payment.status === "Verified" ? "bg-green-100 text-green-600"
+                            : payment.status === "Rejected" ? "bg-red-100 text-red-500"
+                            : "bg-yellow-100 text-yellow-600"
+                          }`}>
+                            {payment.status}
+                          </span>
+                        </td>
+                        <td className="p-4">
+                          {payment.status === "Pending" && (
+                            <div className="flex gap-2">
+                              <button onClick={() => updatePaymentStatus(payment.id, "Verified")} className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-semibold hover:bg-green-200 transition">
+                                Verify
+                              </button>
+                              <button onClick={() => updatePaymentStatus(payment.id, "Rejected")} className="bg-red-100 text-red-500 px-3 py-1 rounded-full text-xs font-semibold hover:bg-red-200 transition">
+                                Reject
+                              </button>
+                            </div>
+                          )}
                         </td>
                       </tr>
                     ))}

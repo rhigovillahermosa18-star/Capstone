@@ -374,7 +374,7 @@ export default function Book() {
                   { icon: "🛡️", title: "Base Coat", desc: "Always apply base coat for longer lasting color" },
                   { icon: "☀️", title: "Sun Protection", desc: "UV rays can fade your nail color faster" },
                 ].map((tip) => (
-                  <div key={tip.title} className="bg-white rounded-xl p-3 shadow-sm border border-pink-50">
+                  <div key={tip.title} className="bg-white rounded-xl p-3 shadow-sm border border-white">
                     <p className="text-2xl mb-1">{tip.icon}</p>
                     <p className="font-semibold text-gray-800 text-sm">{tip.title}</p>
                     <p className="text-gray-500 text-xs mt-1">{tip.desc}</p>

@@ -81,7 +81,6 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col items-center gap-4">
-            <Image src="/logo1.png" alt="Marvelously Polished Logo" width={200} height={200} className="rounded-full shadow-2xl border-4 border-white hover:scale-105 transition-transform duration-300" />
             {/* Carousel */}
             <div className="relative w-full max-w-md overflow-hidden rounded-2xl shadow-lg">
               <div

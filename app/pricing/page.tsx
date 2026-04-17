@@ -60,16 +60,12 @@ export default function Pricing() {
                   <span className="text-xl font-bold text-pink-500">₱500</span>
                 </div>
               </div>
-              <Link
-                href="/book?service=Plain+Set"
-                className="mt-6 block w-full bg-pink-100 text-pink-600 py-3 rounded-xl font-semibold text-center hover:bg-pink-200 transition"
-              >
-                Book Now
-              </Link>
+              <Link href="/book?service=Plain+Set" className="mt-6 block w-full bg-pink-100 text-pink-600 py-3 rounded-xl font-semibold text-center hover:bg-pink-200 transition">Book Now</Link>
+            </div>
+
+            {/* Basic Set */}
             <div className="bg-gradient-to-br from-pink-500 to-pink-400 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 relative">
-              <div className="absolute top-4 right-4 bg-white text-pink-500 text-xs font-bold px-3 py-1 rounded-full">
-                POPULAR
-              </div>
+              <div className="absolute top-4 right-4 bg-white text-pink-500 text-xs font-bold px-3 py-1 rounded-full">POPULAR</div>
               <div className="text-center mb-6">
                 <h3 className="font-bold text-2xl mb-2 text-white">Basic Set</h3>
                 <p className="text-pink-100 text-sm">Most Popular Choice</p>
@@ -88,12 +84,10 @@ export default function Pricing() {
                   <span className="text-xl font-bold">₱550</span>
                 </div>
               </div>
-              <Link
-                href="/book?service=Basic+Set"
-                className="mt-6 block w-full bg-white text-pink-500 py-3 rounded-xl font-semibold text-center hover:bg-pink-50 transition"
-              >
-                Book Now
-              </Link>
+              <Link href="/book?service=Basic+Set" className="mt-6 block w-full bg-white text-pink-500 py-3 rounded-xl font-semibold text-center hover:bg-pink-50 transition">Book Now</Link>
+            </div>
+
+            {/* Full Set */}
             <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
               <div className="text-center mb-6">
                 <h3 className="font-bold text-2xl mb-2 text-pink-500">Full Set</h3>
@@ -113,12 +107,7 @@ export default function Pricing() {
                   <span className="text-xl font-bold text-pink-500">₱700</span>
                 </div>
               </div>
-              <Link
-                href="/book?service=Full+Set"
-                className="mt-6 block w-full bg-pink-100 text-pink-600 py-3 rounded-xl font-semibold text-center hover:bg-pink-200 transition"
-              >
-                Book Now
-              </Link>
+              <Link href="/book?service=Full+Set" className="mt-6 block w-full bg-pink-100 text-pink-600 py-3 rounded-xl font-semibold text-center hover:bg-pink-200 transition">Book Now</Link>
             </div>
 
           </div>

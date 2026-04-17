@@ -113,6 +113,7 @@ function BookContent() {
   const searchParams = useSearchParams();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [service, setService] = useState(searchParams.get("service") || "");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -139,6 +140,7 @@ function BookContent() {
     if (res.ok && data) {
       setName(data.username || "");
       setPhone(data.phone || "");
+      setEmail(data.email || "");
     }
   };
 
@@ -205,7 +207,7 @@ function BookContent() {
     const res = await fetch("/api/appointments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, phone, service, date, time, requests, design, design_image: designImageUrl, user_id }),
+      body: JSON.stringify({ name, phone, email, service, date, time, requests, design, design_image: designImageUrl, user_id }),
     });
     const data = await res.json();
     if (!res.ok) {
@@ -252,6 +254,7 @@ function BookContent() {
             <div className="space-y-4 flex-grow">
               <input placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition" />
               <input placeholder="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition" />
+              <input placeholder="Email Address" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition" />
               <select value={service} onChange={(e) => setService(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition">
                 <option value="">Select Service</option>
                 <option>Plain Set</option>

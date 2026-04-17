@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
 function getSupabase() {
   return createClient(
@@ -25,7 +25,7 @@ export async function GET(request) {
 export async function POST(request) {
   const supabase = getSupabase();
   const body = await request.json();
-  const { name, phone, service, date, time, requests, design, design_image, user_id } = body;
+  const { name, phone, email, service, date, time, requests, design, design_image, user_id } = body;
 
   if (!name || !phone || !service || !date || !time) {
     return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
@@ -33,7 +33,7 @@ export async function POST(request) {
 
   const { data, error } = await supabase
     .from("appointments")
-    .insert([{ user_id: user_id ?? null, name, phone, service, date, time, requests: requests ?? "", design: design ?? "", design_image: design_image ?? "", status: "Pending" }])
+    .insert([{ user_id: user_id ?? null, name, phone, email: email ?? "", service, date, time, requests: requests ?? "", design: design ?? "", design_image: design_image ?? "", status: "Pending" }])
     .select()
     .single();
 
@@ -60,21 +60,41 @@ export async function PATCH(request) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   // Send email notification when confirmed
-  if (status === "Confirmed" && data?.user_id) {
+  if (status === "Confirmed") {
     try {
-      const { data: userData } = await supabase
-        .from("users")
-        .select("email, username")
-        .eq("id", data.user_id)
-        .single();
+      let customerEmail = null;
+      let customerName = data.name;
 
-      console.log("User data for email:", userData);
+      // Try to get email from users table if user_id exists
+      if (data?.user_id) {
+        const { data: userData } = await supabase
+          .from("users")
+          .select("email, username")
+          .eq("id", data.user_id)
+          .single();
+        if (userData?.email) {
+          customerEmail = userData.email;
+          customerName = userData.username || data.name;
+        }
+        console.log("User data for email:", userData);
+      }
 
-      if (userData?.email) {
-        const resend = new Resend(process.env.RESEND_API_KEY);
-        const emailResult = await resend.emails.send({
-          from: "onboarding@resend.dev",
-          to: userData.email,
+      // Fallback to email stored in appointment
+      if (!customerEmail && data?.email) {
+        customerEmail = data.email;
+      }
+
+      if (customerEmail) {
+        const transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: process.env.GMAIL_USER,
+            pass: process.env.GMAIL_APP_PASSWORD,
+          },
+        });
+        const emailResult = await transporter.sendMail({
+          from: `"Marvelously Polished" <${process.env.GMAIL_USER}>`,
+          to: customerEmail,
           subject: "Your Appointment is Confirmed! 💅",
           html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #fff; border-radius: 16px; overflow: hidden; border: 1px solid #fce7f3;">
@@ -83,7 +103,7 @@ export async function PATCH(request) {
               </div>
               <div style="padding: 32px;">
                 <h2 style="color: #ec4899;">Your Appointment is Confirmed! 🎉</h2>
-                <p style="color: #374151;">Hi <strong>${userData.username}</strong>,</p>
+                <p style="color: #374151;">Hi <strong>${customerName}</strong>,</p>
                 <p style="color: #374151;">Great news! Your appointment has been confirmed. Here are your details:</p>
                 <div style="background: #fdf2f8; border-radius: 12px; padding: 20px; margin: 20px 0;">
                   <p style="margin: 6px 0; color: #374151;"><strong>Service:</strong> ${data.service}</p>
@@ -100,9 +120,9 @@ export async function PATCH(request) {
             </div>
           `,
         });
-        console.log("Email result:", emailResult);
+        console.log("Email sent:", emailResult.messageId);
       } else {
-        console.log("No email found for user_id:", data.user_id);
+        console.log("No email found for appointment:", data.id);
       }
     } catch (emailError) {
       console.error("Email error:", emailError);

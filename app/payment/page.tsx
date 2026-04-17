@@ -118,108 +118,109 @@ function PaymentContent() {
       </div>
 
       {/* Payment Content */}
-      <div className="flex-grow flex justify-center items-start px-6 py-12 relative z-10">
-        <div className="max-w-2xl w-full">
+      <div className="flex-grow flex justify-center items-start px-6 py-8 relative z-10">
+        <div className="max-w-5xl w-full">
           <h2 className="text-3xl font-bold text-gray-800 text-center mb-2">Payment</h2>
-          <p className="text-center text-pink-400 text-sm mb-8">💳 Pay via GCash to confirm your appointment</p>
+          <p className="text-center text-pink-400 text-sm mb-6">💳 Pay via GCash to confirm your appointment</p>
 
-          <div className="bg-white rounded-2xl shadow-2xl border border-pink-100 p-8 space-y-6">
+          <div className="grid lg:grid-cols-2 gap-6 items-start">
 
-            {/* Service Summary */}
-            <div className="bg-pink-50 rounded-xl p-4 flex justify-between items-center">
+            {/* Left - QR Code (sticky) */}
+            <div className="lg:sticky lg:top-6">
+              <div className="bg-white rounded-2xl shadow-2xl border border-pink-100 p-8 flex flex-col items-center text-center space-y-4">
+                <p className="font-semibold text-gray-700 text-lg">Scan GCash QR Code</p>
+                <div className="inline-flex flex-col items-center bg-white border-4 border-pink-300 rounded-2xl p-4 shadow-lg">
+                  <Image src="/qrcode.jpg" alt="GCash QR" width={220} height={220} className="rounded-xl" />
+                </div>
+                <div className="bg-pink-50 rounded-xl p-4 w-full">
+                  <p className="text-sm text-gray-500">Service</p>
+                  <p className="font-bold text-gray-800 text-lg">{service}</p>
+                  <p className="text-sm text-gray-500 mt-2">Amount to Pay</p>
+                  <p className="font-bold text-pink-500 text-3xl">₱{amountToPay}</p>
+                  <p className="text-xs text-gray-400 mt-1">({paymentType === "half" ? "Half Payment" : "Full Payment"})</p>
+                </div>
+                <p className="text-xs text-gray-400">Account Name: <span className="font-semibold text-gray-600">Marvelous Felaine Villahermosa</span></p>
+                <p className="text-xs text-gray-400">Number: <span className="font-semibold text-gray-600">0906-445-5283</span></p>
+              </div>
+            </div>
+
+            {/* Right - Payment Details */}
+            <div className="bg-white rounded-2xl shadow-2xl border border-pink-100 p-8 space-y-5">
+
+              {/* Payment Type */}
               <div>
-                <p className="text-sm text-gray-500">Service</p>
-                <p className="font-bold text-gray-800 text-lg">{service}</p>
+                <p className="font-semibold text-gray-700 mb-3">Select Payment Option</p>
+                <div className="grid grid-cols-2 gap-4">
+                  <button
+                    onClick={() => setPaymentType("half")}
+                    className={`p-4 rounded-xl border-2 text-left transition ${paymentType === "half" ? "border-pink-500 bg-pink-50" : "border-gray-200 hover:border-pink-300"}`}
+                  >
+                    <p className="font-bold text-gray-800">Half Payment</p>
+                    <p className="text-pink-500 text-xl font-bold mt-1">₱{halfAmount}</p>
+                    <p className="text-xs text-gray-400 mt-1">Pay 50% now, rest on appointment day</p>
+                  </button>
+                  <button
+                    onClick={() => setPaymentType("full")}
+                    className={`p-4 rounded-xl border-2 text-left transition ${paymentType === "full" ? "border-pink-500 bg-pink-50" : "border-gray-200 hover:border-pink-300"}`}
+                  >
+                    <p className="font-bold text-gray-800">Full Payment</p>
+                    <p className="text-pink-500 text-xl font-bold mt-1">₱{totalAmount}</p>
+                    <p className="text-xs text-gray-400 mt-1">Pay the full amount now</p>
+                  </button>
+                </div>
               </div>
-              <div className="text-right">
-                <p className="text-sm text-gray-500">Total Amount</p>
-                <p className="font-bold text-pink-500 text-2xl">₱{totalAmount}</p>
-              </div>
-            </div>
 
-            {/* Payment Type */}
-            <div>
-              <p className="font-semibold text-gray-700 mb-3">Select Payment Option</p>
-              <div className="grid grid-cols-2 gap-4">
-                <button
-                  onClick={() => setPaymentType("half")}
-                  className={`p-4 rounded-xl border-2 text-left transition ${paymentType === "half" ? "border-pink-500 bg-pink-50" : "border-gray-200 hover:border-pink-300"}`}
-                >
-                  <p className="font-bold text-gray-800">Half Payment</p>
-                  <p className="text-pink-500 text-xl font-bold mt-1">₱{halfAmount}</p>
-                  <p className="text-xs text-gray-400 mt-1">Pay 50% now, rest on appointment day</p>
-                </button>
-                <button
-                  onClick={() => setPaymentType("full")}
-                  className={`p-4 rounded-xl border-2 text-left transition ${paymentType === "full" ? "border-pink-500 bg-pink-50" : "border-gray-200 hover:border-pink-300"}`}
-                >
-                  <p className="font-bold text-gray-800">Full Payment</p>
-                  <p className="text-pink-500 text-xl font-bold mt-1">₱{totalAmount}</p>
-                  <p className="text-xs text-gray-400 mt-1">Pay the full amount now</p>
-                </button>
-              </div>
-            </div>
-
-            {/* GCash QR */}
-            <div className="text-center">
-              <p className="font-semibold text-gray-700 mb-3">Scan GCash QR Code</p>
-              <div className="inline-flex flex-col items-center bg-white border-4 border-pink-300 rounded-2xl p-4 shadow-lg">
-                <Image src="/qrcode.jpg" alt="GCash QR" width={200} height={200} className="rounded-xl" />
-              </div>
-              <p className="text-sm text-gray-500 mt-3">Send <span className="font-bold text-pink-500">₱{amountToPay}</span> to this GCash account</p>
-              <p className="text-xs text-gray-400 mt-1">Account Name: <span className="font-semibold text-gray-600">Marvelous Felaine Villahermosa</span></p>
-              <p className="text-xs text-gray-400">Number: <span className="font-semibold text-gray-600">0906-445-5283</span></p>
-            </div>
-
-            {/* Customer Name */}
-            <div>
-              <p className="font-semibold text-gray-700 mb-2">Your Name</p>
-              <input
-                placeholder="Enter your full name"
-                value={customerName}
-                onChange={(e) => setCustomerName(e.target.value)}
-                className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
-              />
-            </div>
-
-            {/* Screenshot Upload */}
-            <div>
-              <p className="font-semibold text-gray-700 mb-2">Upload Payment Screenshot</p>
-              <div className="border-2 border-dashed border-pink-300 rounded-xl p-5 bg-pink-50">
-                <p className="text-gray-500 text-sm mb-3">Take a screenshot of your GCash payment confirmation and upload it here (PNG, JPG)</p>
+              {/* Customer Name */}
+              <div>
+                <p className="font-semibold text-gray-700 mb-2">Your Name</p>
                 <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0] || null;
-                    setScreenshotFile(file);
-                    if (file) setScreenshotPreview(URL.createObjectURL(file));
-                    else setScreenshotPreview("");
-                  }}
-                  className="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-pink-400 file:text-white hover:file:bg-pink-500 cursor-pointer"
+                  placeholder="Enter your full name"
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
                 />
-                {screenshotPreview && (
-                  <div className="mt-3">
-                    <p className="text-xs text-gray-500 mb-1">Preview:</p>
-                    <img src={screenshotPreview} alt="Payment screenshot" className="w-full h-48 object-cover rounded-xl" />
-                  </div>
-                )}
               </div>
+
+              {/* Screenshot Upload */}
+              <div>
+                <p className="font-semibold text-gray-700 mb-2">Upload Payment Screenshot</p>
+                <div className="border-2 border-dashed border-pink-300 rounded-xl p-5 bg-pink-50">
+                  <p className="text-gray-500 text-sm mb-3">Take a screenshot of your GCash payment confirmation and upload it here (PNG, JPG)</p>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0] || null;
+                      setScreenshotFile(file);
+                      if (file) setScreenshotPreview(URL.createObjectURL(file));
+                      else setScreenshotPreview("");
+                    }}
+                    className="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-pink-400 file:text-white hover:file:bg-pink-500 cursor-pointer"
+                  />
+                  {screenshotPreview && (
+                    <div className="mt-3">
+                      <p className="text-xs text-gray-500 mb-1">Preview:</p>
+                      <img src={screenshotPreview} alt="Payment screenshot" className="w-full h-48 object-cover rounded-xl" />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
+              <button
+                onClick={handleSubmit}
+                disabled={loading}
+                className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300 disabled:opacity-50"
+              >
+                {loading ? "Submitting..." : `Confirm Payment — ₱${amountToPay}`}
+              </button>
+
+              <p className="text-xs text-gray-400 text-center">
+                Your appointment will be confirmed once payment is verified by our team.
+              </p>
             </div>
 
-            {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-
-            <button
-              onClick={handleSubmit}
-              disabled={loading}
-              className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300 disabled:opacity-50"
-            >
-              {loading ? "Submitting..." : `Confirm Payment — ₱${amountToPay}`}
-            </button>
-
-            <p className="text-xs text-gray-400 text-center">
-              Your appointment will be confirmed once payment is verified by our team.
-            </p>
           </div>
         </div>
       </div>

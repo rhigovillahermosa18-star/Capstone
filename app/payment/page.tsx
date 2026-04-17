@@ -130,7 +130,7 @@ function PaymentContent() {
               <div className="bg-white rounded-2xl shadow-2xl border border-pink-100 p-8 flex flex-col items-center text-center space-y-4">
                 <p className="font-semibold text-gray-700 text-lg">Scan GCash QR Code</p>
                 <div className="inline-flex flex-col items-center bg-white border-4 border-pink-300 rounded-2xl p-4 shadow-lg">
-                  <Image src="/qrcode.jpg" alt="GCash QR" width={220} height={220} className="rounded-xl" />
+                  <Image src="/qrcode.jpg" alt="GCash QR" width={320} height={320} className="rounded-xl" />
                 </div>
                 <div className="bg-pink-50 rounded-xl p-4 w-full">
                   <p className="text-sm text-gray-500">Service</p>

@@ -8,7 +8,7 @@ export async function POST(request) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   );
   const body = await request.json();
-  const { username, email, password } = body;
+  const { username, email, password, phone } = body;
 
   if (!username || !email || !password) {
     return NextResponse.json({ error: "Username, email, and password are required." }, { status: 400 });
@@ -35,7 +35,7 @@ export async function POST(request) {
   // Insert into users table
   const { data, error } = await supabase
     .from("users")
-    .insert([{ username, email, password: hashedPassword, role: "customer" }])
+    .insert([{ username, email, password: hashedPassword, phone: phone ?? "", role: "customer" }])
     .select()
     .single();
 

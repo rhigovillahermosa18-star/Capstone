@@ -126,7 +126,21 @@ function BookContent() {
   const [bookedSlots, setBookedSlots] = useState<Record<string, string[]>>({});
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  useEffect(() => { fetchBookedDates(); }, []);
+  useEffect(() => {
+    fetchBookedDates();
+    fetchUserProfile();
+  }, []);
+
+  const fetchUserProfile = async () => {
+    const user_id = localStorage.getItem("user_id");
+    if (!user_id) return;
+    const res = await fetch(`/api/users?id=${user_id}`);
+    const data = await res.json();
+    if (res.ok && data) {
+      setName(data.username || "");
+      setPhone(data.phone || "");
+    }
+  };
 
   const fetchBookedDates = async () => {
     const res = await fetch("/api/appointments");

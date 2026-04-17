@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 export default function Register() {
   const router = useRouter();
   const [username, setUsername] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -18,7 +19,7 @@ export default function Register() {
   const [showConfirm, setShowConfirm] = useState(false);
 
   const handleRegister = async () => {
-    if (!username || !email || !password || !confirmPassword) {
+    if (!username || !email || !phone || !password || !confirmPassword) {
       setError("Please fill in all fields.");
       return;
     }
@@ -36,7 +37,7 @@ export default function Register() {
     const res = await fetch("/api/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
+      body: JSON.stringify({ username, email, phone, password }),
     });
 
     const data = await res.json();
@@ -88,6 +89,17 @@ export default function Register() {
                   placeholder="Choose a username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                <input
+                  type="tel"
+                  placeholder="Enter your phone number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                   className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"
                 />
               </div>

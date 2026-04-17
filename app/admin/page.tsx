@@ -127,57 +127,63 @@ export default function Admin() {
       <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl"></div>
 
       {/* Header */}
-      <div className="bg-[#FFD3DF] py-6 text-center shadow-sm relative z-10">
-        <span className="text-3xl tracking-widest font-semibold text-black">MARVELOUSLY POLISHED</span>
-      </div>
-
-      {/* Navigation */}
-      <div className="py-4 flex justify-center gap-4 relative z-10 flex-wrap">
-        <span className="bg-pink-500 px-5 py-2 rounded-full text-white font-semibold">Admin Panel</span>
+      <div className="bg-[#FFD3DF] py-4 px-6 shadow-sm relative z-10 flex items-center justify-between">
+        <span className="text-2xl tracking-widest font-semibold text-black">MARVELOUSLY POLISHED</span>
         <button onClick={handleLogout} className="bg-gray-200 px-5 py-2 rounded-full text-gray-700 hover:bg-gray-300 transition">
-          Logout
+          🚪 Logout
         </button>
       </div>
 
-      {/* Content */}
-      <div className="flex-grow px-6 py-12 relative z-10">
-        <div className="max-w-6xl mx-auto">
+      {/* Body */}
+      <div className="flex flex-grow relative z-10">
 
-          <h2 className="text-4xl font-bold text-gray-800 mb-2 text-center">Admin Panel</h2>
-          <p className="text-center text-gray-600 mb-10">Manage all appointments and users</p>
+        {/* Left Sidebar */}
+        <div className="w-56 bg-white shadow-lg flex flex-col py-8 px-4 gap-3 sticky top-0 h-screen">
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 px-2">Admin Panel</p>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+          <div className="space-y-2 mb-4">
             {stats.map((stat) => (
-              <div key={stat.label} className="bg-white p-6 rounded-2xl shadow-lg text-center hover:shadow-xl transition">
-                <div className="text-4xl mb-2">{stat.icon}</div>
-                <p className="text-3xl font-bold text-pink-500">{stat.value}</p>
-                <p className="text-gray-600 text-sm mt-1">{stat.label}</p>
+              <div key={stat.label} className="bg-pink-50 rounded-xl px-3 py-2 flex items-center gap-2">
+                <span className="text-lg">{stat.icon}</span>
+                <div>
+                  <p className="text-pink-500 font-bold text-sm">{stat.value}</p>
+                  <p className="text-gray-500 text-xs">{stat.label}</p>
+                </div>
               </div>
             ))}
           </div>
 
-          {/* Tabs */}
-          <div className="flex gap-4 mb-6">
+          <div className="border-t border-pink-100 pt-4 flex flex-col gap-2">
             <button
               onClick={() => setActiveTab("appointments")}
-              className={`px-6 py-3 rounded-xl font-semibold transition ${activeTab === "appointments" ? "bg-pink-500 text-white shadow-lg" : "bg-white text-gray-600 hover:bg-pink-50"}`}
+              className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition text-sm ${
+                activeTab === "appointments" ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
+              }`}
             >
               📋 Appointments
             </button>
             <button
               onClick={() => setActiveTab("payments")}
-              className={`px-6 py-3 rounded-xl font-semibold transition ${activeTab === "payments" ? "bg-pink-500 text-white shadow-lg" : "bg-white text-gray-600 hover:bg-pink-50"}`}
+              className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition text-sm ${
+                activeTab === "payments" ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
+              }`}
             >
               💳 Payments
             </button>
             <button
               onClick={() => setActiveTab("users")}
-              className={`px-6 py-3 rounded-xl font-semibold transition ${activeTab === "users" ? "bg-pink-500 text-white shadow-lg" : "bg-white text-gray-600 hover:bg-pink-50"}`}
+              className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition text-sm ${
+                activeTab === "users" ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
+              }`}
             >
               👥 Users
             </button>
           </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="flex-grow px-6 py-8 overflow-auto">
 
           {/* Appointments Table */}
           {activeTab === "appointments" && (
@@ -358,8 +364,8 @@ export default function Admin() {
           )}
 
         </div>
-      </div>
 
+      </div>
     </div>
   );
 }

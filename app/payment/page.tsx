@@ -15,12 +15,13 @@ function PaymentContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const service = searchParams.get("service") || "Basic Set";
+  const nameFromUrl = searchParams.get("name") || "";
 
   const totalAmount = SERVICE_PRICES[service] ?? 450;
   const halfAmount = totalAmount / 2;
 
   const [paymentType, setPaymentType] = useState<"half" | "full">("full");
-  const [customerName, setCustomerName] = useState("");
+  const [customerName, setCustomerName] = useState(nameFromUrl);
   const [screenshotFile, setScreenshotFile] = useState<File | null>(null);
   const [screenshotPreview, setScreenshotPreview] = useState("");
   const [submitted, setSubmitted] = useState(false);

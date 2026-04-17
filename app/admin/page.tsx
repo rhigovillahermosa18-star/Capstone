@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 type Appointment = {
   id: string;
@@ -39,7 +40,7 @@ export default function Admin() {
   const [authorized, setAuthorized] = useState(false);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [users, setUsers] = useState<User[]>([]);
-  const [activeTab, setActiveTab] = useState<"appointments" | "users" | "payments">("appointments");
+  const [activeTab, setActiveTab] = useState<"appointments" | "users" | "payments" | "chart">("appointments");
   const [payments, setPayments] = useState<Payment[]>([]);
 
   useEffect(() => {
@@ -165,6 +166,14 @@ export default function Admin() {
               }`}
             >
               👥 Users
+            </button>
+            <button
+              onClick={() => setActiveTab("chart")}
+              className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition text-sm ${
+                activeTab === "chart" ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
+              }`}
+            >
+              📊 Sales Chart
             </button>
           </div>
         </div>
@@ -363,6 +372,31 @@ export default function Admin() {
               </div>
             </div>
           )}
+
+          {/* Sales Chart */}
+          {activeTab === "chart" && (() => {
+            const monthlyData = Array.from({ length: 12 }, (_, i) => {
+              const month = new Date(0, i).toLocaleString("default", { month: "short" });
+              const total = payments
+                .filter((p) => new Date(p.created_at).getMonth() === i && p.status === "Verified")
+                .reduce((sum, p) => sum + Number(p.amount), 0);
+              return { month, total };
+            });
+            return (
+              <div className="bg-white rounded-2xl shadow-lg p-6">
+                <h3 className="text-xl font-bold text-gray-800 mb-6">📊 Monthly Sales</h3>
+                <ResponsiveContainer width="100%" height={350}>
+                  <BarChart data={monthlyData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#fce7f3" />
+                    <XAxis dataKey="month" tick={{ fill: "#6b7280", fontSize: 13 }} />
+                    <YAxis tick={{ fill: "#6b7280", fontSize: 13 }} tickFormatter={(v) => `₱${v}`} />
+                    <Tooltip formatter={(value: number) => [`₱${value}`, "Sales"]} />
+                    <Bar dataKey="total" fill="#ec4899" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            );
+          })()}
 
         </div>
 

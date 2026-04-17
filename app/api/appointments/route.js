@@ -68,10 +68,12 @@ export async function PATCH(request) {
         .eq("id", data.user_id)
         .single();
 
+      console.log("User data for email:", userData);
+
       if (userData?.email) {
         const resend = new Resend(process.env.RESEND_API_KEY);
-        await resend.emails.send({
-          from: "Marvelously Polished <onboarding@resend.dev>",
+        const emailResult = await resend.emails.send({
+          from: "onboarding@resend.dev",
           to: userData.email,
           subject: "Your Appointment is Confirmed! 💅",
           html: `
@@ -98,6 +100,9 @@ export async function PATCH(request) {
             </div>
           `,
         });
+        console.log("Email result:", emailResult);
+      } else {
+        console.log("No email found for user_id:", data.user_id);
       }
     } catch (emailError) {
       console.error("Email error:", emailError);

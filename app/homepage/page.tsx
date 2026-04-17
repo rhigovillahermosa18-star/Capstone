@@ -34,7 +34,6 @@ export default function Home() {
       <div className="bg-[#FFD3DF] px-6 py-3 shadow-sm relative z-10 flex items-center justify-between flex-wrap gap-3">
         <Link href="/homepage" className="flex items-center gap-3">
           <Image src="/logo1.png" alt="Logo" width={55} height={55} className="rounded-full border-2 border-white shadow" />
-          <span className="text-lg font-semibold tracking-[0.3em] text-black hidden md:block">MARVELOUSLY POLISHED</span>
         </Link>
         <div className="flex flex-wrap gap-2">
           <Link href="/homepage" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🏠 Home</Link>
@@ -52,7 +51,7 @@ export default function Home() {
         <div className="max-w-6xl w-full grid lg:grid-cols-2 gap-8 items-center">
           
           <div className="text-center lg:text-left space-y-3">
-            <h2 className="text-5xl md:text-7xl font-bold text-gray-800 leading-tight">
+            <h2 className="text-5xl md:text-7xl font-bold text-gray-800 leading-tight tracking-[0.15em]">
               Marvelously<br/>Polished
             </h2>
             <p className="text-2xl text-pink-600 font-medium">

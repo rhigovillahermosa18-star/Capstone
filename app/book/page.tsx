@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const TOTAL_SLOTS = 4;
 const trendingImages = ["/nail5.jpg","/nail6.jpg","/nail7.jpg","/nail8.jpg","/nail9.jpg","/nail10.jpg","/nail11.jpg","/nail1.jpg"];
@@ -108,11 +108,12 @@ function CustomerReviews() {
   );
 }
 
-export default function Book() {
+function BookContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [service, setService] = useState("");
+  const [service, setService] = useState(searchParams.get("service") || "");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [requests, setRequests] = useState("");
@@ -419,5 +420,13 @@ export default function Book() {
       </footer>
 
     </div>
+  );
+}
+
+export default function Book() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#FFE4EF] flex items-center justify-center"><p className="text-pink-500">Loading...</p></div>}>
+      <BookContent />
+    </Suspense>
   );
 }

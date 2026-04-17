@@ -51,13 +51,13 @@ export default function Home() {
         <div className="max-w-6xl w-full grid lg:grid-cols-2 gap-8 items-center">
           
           <div className="text-center lg:text-left space-y-3">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">
+            <h2 className="text-5xl md:text-7xl font-bold text-gray-800 leading-tight">
               Marvelously<br/>Polished
             </h2>
-            <p className="text-xl text-pink-600 font-medium">
+            <p className="text-2xl text-pink-600 font-medium">
               Beauty Starts From Tips to Toes 💅
             </p>
-            <p className="text-gray-700 leading-relaxed">
+            <p className="text-gray-700 leading-relaxed text-lg">
               Experience luxury nail care in Santa Ana. Our artists use premium products to create stunning designs that express your unique style.
             </p>
             <div className="flex gap-4 flex-wrap justify-center lg:justify-start">
@@ -82,14 +82,14 @@ export default function Home() {
 
           <div className="flex flex-col items-center gap-4">
             {/* Carousel */}
-            <div className="relative w-full max-w-md overflow-hidden rounded-2xl shadow-lg">
+            <div className="relative w-full max-w-xl overflow-hidden rounded-2xl shadow-lg">
               <div
                 className="flex transition-transform duration-700 ease-in-out"
                 style={{ transform: `translateX(-${current * 100}%)` }}
               >
                 {nailImages.map((src, i) => (
                   <div key={i} className="min-w-full">
-                    <Image src={src} width={400} height={200} alt={`Nail ${i + 1}`} className="w-full h-56 object-cover" />
+                    <Image src={src} width={600} height={400} alt={`Nail ${i + 1}`} className="w-full h-80 object-cover" />
                   </div>
                 ))}
               </div>

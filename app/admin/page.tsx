@@ -141,20 +141,7 @@ export default function Admin() {
         <div className="w-56 bg-white shadow-lg flex flex-col py-8 px-4 gap-3 sticky top-0 h-screen">
           <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 px-2">Admin Panel</p>
 
-          {/* Stats */}
-          <div className="space-y-2 mb-4">
-            {stats.map((stat) => (
-              <div key={stat.label} className="bg-pink-50 rounded-xl px-3 py-2 flex items-center gap-2">
-                <span className="text-lg">{stat.icon}</span>
-                <div>
-                  <p className="text-pink-500 font-bold text-sm">{stat.value}</p>
-                  <p className="text-gray-500 text-xs">{stat.label}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="border-t border-pink-100 pt-4 flex flex-col gap-2">
+          <div className="flex flex-col gap-2">
             <button
               onClick={() => setActiveTab("appointments")}
               className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition text-sm ${

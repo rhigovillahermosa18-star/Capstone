@@ -359,7 +359,7 @@ function BookContent() {
               <p className="text-xs text-gray-400 text-center mt-3">Latest nail trends just for you</p>
             </div>
             {/* Design Tips Section */}
-            <div className="bg-gradient-to-br from-pink-100 to-white p-6 rounded-2xl shadow-lg border border-white-100">
+            <div className="bg-gradient-to-br from-white-100 to-white p-6 rounded-2xl shadow-lg border border-white-100">
               <h3 className="text-pink-600 font-bold text-xl mb-4 flex items-center gap-2">
                 <span>✨</span> Nail Care Tips
               </h3>

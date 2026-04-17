@@ -32,8 +32,9 @@ export default function Home() {
 
       {/* Header + Navigation */}
       <div className="bg-[#FFD3DF] px-6 py-3 shadow-sm relative z-10 flex items-center justify-between flex-wrap gap-3">
-        <Link href="/homepage">
+        <Link href="/homepage" className="flex items-center gap-3">
           <Image src="/logo1.png" alt="Logo" width={55} height={55} className="rounded-full border-2 border-white shadow" />
+          <span className="text-lg font-semibold tracking-widest text-black hidden md:block">MARVELOUSLY POLISHED</span>
         </Link>
         <div className="flex flex-wrap gap-2">
           <Link href="/homepage" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🏠 Home</Link>

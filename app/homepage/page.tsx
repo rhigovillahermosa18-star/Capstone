@@ -52,12 +52,9 @@ export default function Home() {
         <div className="max-w-6xl w-full grid lg:grid-cols-2 gap-8 items-center">
           
           <div className="text-center lg:text-left space-y-3">
-            <h2 className="text-5xl md:text-7xl font-bold text-gray-800 leading-tight tracking-[0.15em]">
-              Marvelously<br/>Polished
+            <h2 className="text-5xl md:text-7xl font-bold text-pink-600 leading-tight tracking-[0.05em]">
+              Beauty Starts From<br/>Tips to Toes 💅
             </h2>
-            <p className="text-2xl text-pink-600 font-medium">
-              Beauty Starts From Tips to Toes 💅
-            </p>
             <p className="text-gray-700 leading-relaxed text-lg">
               Experience luxury nail care in Santa Ana. Our artists use premium products to create stunning designs that express your unique style.
             </p>

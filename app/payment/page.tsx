@@ -97,7 +97,7 @@ function PaymentContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">
+    <div className="h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">
       <div className="absolute top-20 left-[-120px] w-80 h-80 bg-pink-300 rounded-full opacity-30 blur-3xl" />
       <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl" />
 
@@ -118,7 +118,7 @@ function PaymentContent() {
       </div>
 
       {/* Payment Content */}
-      <div className="flex-grow flex justify-center items-start px-6 py-8 relative z-10">
+      <div className="flex-grow flex justify-center items-start px-6 py-4 relative z-10 overflow-hidden">
         <div className="max-w-5xl w-full">
           <h2 className="text-3xl font-bold text-gray-800 text-center mb-2">Payment</h2>
           <p className="text-center text-pink-400 text-sm mb-6">💳 Pay via GCash to confirm your appointment</p>
@@ -126,11 +126,11 @@ function PaymentContent() {
           <div className="grid lg:grid-cols-2 gap-6 items-start">
 
             {/* Left - QR Code (sticky) */}
-            <div className="lg:sticky lg:top-6">
-              <div className="bg-white rounded-2xl shadow-2xl border border-pink-100 p-8 flex flex-col items-center text-center space-y-4">
+            <div className="lg:sticky lg:top-6 h-fit">
+              <div className="bg-white rounded-2xl shadow-2xl border border-pink-100 p-6 flex flex-col items-center text-center space-y-3">
                 <p className="font-semibold text-gray-700 text-lg">Scan GCash QR Code</p>
                 <div className="inline-flex flex-col items-center bg-white border-4 border-pink-300 rounded-2xl p-4 shadow-lg">
-                  <Image src="/qrcode.jpg" alt="GCash QR" width={320} height={320} className="rounded-xl" />
+                  <Image src="/qrcode.jpg" alt="GCash QR" width={240} height={240} className="rounded-xl" />
                 </div>
                 <div className="bg-pink-50 rounded-xl p-4 w-full">
                   <p className="text-sm text-gray-500">Service</p>
@@ -145,7 +145,7 @@ function PaymentContent() {
             </div>
 
             {/* Right - Payment Details */}
-            <div className="bg-white rounded-2xl shadow-2xl border border-pink-100 p-8 space-y-5">
+            <div className="bg-white rounded-2xl shadow-2xl border border-pink-100 p-6 space-y-4">
 
               {/* Payment Type */}
               <div>
@@ -225,38 +225,10 @@ function PaymentContent() {
         </div>
       </div>
 
-      <footer className="bg-[#FFD3DF] relative z-10 pt-12 pb-6 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 mb-10">
-            <div className="space-y-3">
-              <h3 className="text-xl font-bold text-gray-800 tracking-widest">MARVELOUSLY POLISHED</h3>
-              <p className="text-gray-700 text-sm leading-relaxed">Premium nail care in Santa Ana. Where beauty meets artistry.</p>
-              <p className="text-pink-600 font-medium text-sm">Beauty Starts From Tips to Toes 💅</p>
-            </div>
-            <div className="space-y-3">
-              <h4 className="font-bold text-gray-800 text-lg">Quick Links</h4>
-              <div className="space-y-2 text-sm">
-                <Link href="/homepage" className="block text-gray-700 hover:text-pink-600 transition">Home</Link>
-                <Link href="/book" className="block text-gray-700 hover:text-pink-600 transition">Book Appointment</Link>
-                <Link href="/pricing" className="block text-gray-700 hover:text-pink-600 transition">Pricing</Link>
-                <Link href="/gallery" className="block text-gray-700 hover:text-pink-600 transition">Gallery</Link>
-                <Link href="/payment" className="block text-gray-700 hover:text-pink-600 transition">Payment</Link>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <h4 className="font-bold text-gray-800 text-lg">Contact Us</h4>
-              <div className="space-y-2 text-sm text-gray-700">
-                <p>📍 Santa Ana, CA</p>
-                <p>📞 (714) 000-0000</p>
-                <p>📧 hello@marvelouslypolished.com</p>
-                <p>⏰ Mon–Sat: 9AM – 7PM</p>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-pink-300 pt-6 flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-gray-700">
-            <p>© 2026 Marvelously Polished. All rights reserved.</p>
-            <p>Santa Ana | Book Your Glam Today 💅</p>
-          </div>
+      <footer className="bg-[#FFD3DF] relative z-10 py-3 px-6">
+        <div className="max-w-6xl mx-auto border-t border-pink-300 pt-3 flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-gray-700">
+          <p>© 2026 Marvelously Polished. All rights reserved.</p>
+          <p>Santa Ana | Book Your Glam Today 💅</p>
         </div>
       </footer>
     </div>

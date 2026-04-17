@@ -172,6 +172,20 @@ export default function Admin() {
         {/* Main Content */}
         <div className="flex-grow px-6 py-8 overflow-auto">
 
+          <h2 className="text-3xl font-bold text-gray-800 mb-2">Admin Panel</h2>
+          <p className="text-gray-600 mb-6">Manage all appointments, payments and users</p>
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+            {stats.map((stat) => (
+              <div key={stat.label} className="bg-white p-4 rounded-2xl shadow-lg text-center hover:shadow-xl transition">
+                <div className="text-3xl mb-1">{stat.icon}</div>
+                <p className="text-2xl font-bold text-pink-500">{stat.value}</p>
+                <p className="text-gray-600 text-xs mt-1">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+
           {/* Appointments Table */}
           {activeTab === "appointments" && (
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">

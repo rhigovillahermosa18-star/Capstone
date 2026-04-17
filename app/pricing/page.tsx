@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Pricing() {
   return (
@@ -13,22 +14,20 @@ export default function Pricing() {
       <div className="absolute top-0 right-0 w-60 h-60 bg-pink-100 rounded-full opacity-50 blur-2xl"></div>
       <div className="absolute bottom-0 left-0 w-60 h-60 bg-pink-200 rounded-full opacity-50 blur-2xl"></div>
 
-      {/* Header */}
-      <div className="bg-[#FFD3DF] py-6 text-center shadow-sm relative z-10">
-        <h1 className="text-3xl tracking-widest font-semibold text-black">
-          MARVELOUSLY POLISHED
-        </h1>
-      </div>
-
-      {/* Navigation */}
-      <div className="py-4 flex justify-center gap-4 relative z-10 flex-wrap">
-        <Link href="/homepage" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">🏠 Home</Link>
-        <Link href="/book" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">📅 Book Appointment</Link>
-        <Link href="/pricing" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">💰 Pricing</Link>
-        <Link href="/gallery" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">🖼️ Gallery</Link>
-        <Link href="/appointments" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">📋 My Appointments</Link>
-        <Link href="/payment" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">💳 Payment</Link>
-        <Link href="/login" onClick={() => localStorage.removeItem("role")} className="bg-gray-200 px-5 py-2 rounded-full text-gray-700 hover:bg-gray-300 transition">🚪 Logout</Link>
+      {/* Header + Navigation */}
+      <div className="bg-[#FFD3DF] px-6 py-3 shadow-sm relative z-10 flex items-center justify-between flex-wrap gap-3">
+        <Link href="/homepage">
+          <Image src="/logo1.png" alt="Logo" width={55} height={55} className="rounded-full border-2 border-white shadow" />
+        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link href="/homepage" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🏠 Home</Link>
+          <Link href="/book" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">📅 Book</Link>
+          <Link href="/pricing" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">💰 Pricing</Link>
+          <Link href="/gallery" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🖼️ Gallery</Link>
+          <Link href="/appointments" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">📋 My Appointments</Link>
+          <Link href="/payment" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">💳 Payment</Link>
+          <Link href="/login" onClick={() => localStorage.removeItem("role")} className="bg-gray-200 px-4 py-2 rounded-full text-gray-700 text-sm hover:bg-gray-300 transition">🚪 Logout</Link>
+        </div>
       </div>
 
       {/* Pricing Content */}

@@ -208,22 +208,20 @@ export default function Book() {
       <div className="absolute top-20 left-[-120px] w-80 h-80 bg-pink-300 rounded-full opacity-30 blur-3xl"></div>
       <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl"></div>
 
-      {/* Header */}
-      <div className="bg-[#FFD3DF] py-6 text-center shadow-sm relative z-10">
-        <Link href="/homepage" className="text-3xl tracking-widest font-semibold text-black">
-          MARVELOUSLY POLISHED
+      {/* Header + Navigation */}
+      <div className="bg-[#FFD3DF] px-6 py-3 shadow-sm relative z-10 flex items-center justify-between flex-wrap gap-3">
+        <Link href="/homepage">
+          <Image src="/logo1.png" alt="Logo" width={55} height={55} className="rounded-full border-2 border-white shadow" />
         </Link>
-      </div>
-
-      {/* Navigation */}
-      <div className="py-4 flex justify-center gap-4 relative z-10 flex-wrap">
-        <Link href="/homepage" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">🏠 Home</Link>
-        <Link href="/book" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">📅 Book Appointment</Link>
-        <Link href="/pricing" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">💰 Pricing</Link>
-        <Link href="/gallery" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">🖼️ Gallery</Link>
-        <Link href="/appointments" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">📋 My Appointments</Link>
-        <Link href="/payment" className="bg-[#FFB6C9] px-5 py-2 rounded-full text-black hover:bg-pink-400 transition">💳 Payment</Link>
-        <button onClick={async () => { await fetch("/api/logout", { method: "POST" }); localStorage.removeItem("role"); localStorage.removeItem("user_id"); router.push("/login"); }} className="bg-gray-200 px-5 py-2 rounded-full text-gray-700 hover:bg-gray-300 transition">🚪 Logout</button>
+        <div className="flex flex-wrap gap-2">
+          <Link href="/homepage" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🏠 Home</Link>
+          <Link href="/book" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">📅 Book</Link>
+          <Link href="/pricing" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">💰 Pricing</Link>
+          <Link href="/gallery" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🖼️ Gallery</Link>
+          <Link href="/appointments" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">📋 My Appointments</Link>
+          <Link href="/payment" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">💳 Payment</Link>
+          <button onClick={async () => { await fetch("/api/logout", { method: "POST" }); localStorage.removeItem("role"); localStorage.removeItem("user_id"); router.push("/login"); }} className="bg-gray-200 px-4 py-2 rounded-full text-gray-700 text-sm hover:bg-gray-300 transition">🚪 Logout</button>
+        </div>
       </div>
 
       {/* Booking Section */}

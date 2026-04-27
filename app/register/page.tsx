@@ -48,9 +48,8 @@ export default function Register() {
       return;
     }
 
-    setSuccess("Account created! Redirecting to login...");
+    setSuccess(data.message || "Account created! Please check your email to verify your account.");
     setLoading(false);
-    setTimeout(() => router.push("/login"), 2000);
   };
 
   return (

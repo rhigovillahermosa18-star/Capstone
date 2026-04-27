@@ -11,6 +11,8 @@ create table if not exists users (
   username text unique not null,
   email text unique not null,
   role text default 'customer' check (role in ('admin', 'customer')),
+  email_verified boolean default false,
+  verification_token text,
   created_at timestamp with time zone default now()
 );
 

@@ -28,6 +28,12 @@ export default function Appointments() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [payments, setPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
+  const [reviewAppt, setReviewAppt] = useState<Appointment | null>(null);
+  const [reviewName, setReviewName] = useState("");
+  const [reviewRating, setReviewRating] = useState(5);
+  const [reviewComment, setReviewComment] = useState("");
+  const [reviewSubmitted, setReviewSubmitted] = useState(false);
+  const [reviewLoading, setReviewLoading] = useState(false);
 
   useEffect(() => {
     fetchAppointments();
@@ -68,6 +74,19 @@ export default function Appointments() {
     localStorage.removeItem("role");
     localStorage.removeItem("user_id");
     router.push("/login");
+  };
+
+  const handleReviewSubmit = async () => {
+    if (!reviewComment.trim()) return;
+    setReviewLoading(true);
+    await fetch("/api/reviews", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: reviewName || reviewAppt?.name, rating: reviewRating, comment: reviewComment }),
+    });
+    setReviewLoading(false);
+    setReviewSubmitted(true);
+    setTimeout(() => { setReviewAppt(null); setReviewSubmitted(false); setReviewComment(""); setReviewRating(5); }, 2000);
   };
 
   return (
@@ -144,11 +163,20 @@ export default function Appointments() {
                     <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
                       appt.status === "Confirmed" ? "bg-green-100 text-green-600"
                       : appt.status === "Cancelled" ? "bg-red-100 text-red-500"
+                      : appt.status === "Done" ? "bg-blue-100 text-blue-600"
                       : "bg-yellow-100 text-yellow-600"
                     }`}>
                       {appt.status}
                     </span>
-                    {appt.status !== "Cancelled" && (
+                    {appt.status === "Done" && (
+                      <button
+                        onClick={() => { setReviewAppt(appt); setReviewName(appt.name); }}
+                        className="bg-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-pink-600 transition"
+                      >
+                        ⭐ Leave a Review
+                      </button>
+                    )}
+                    {appt.status !== "Cancelled" && appt.status !== "Done" && (
                       <div className="flex gap-2">
                         {!hasPaid(appt.id) && (
                           <Link
@@ -221,6 +249,46 @@ export default function Appointments() {
           </div>
         </div>
       </footer>
+
+      {/* Review Modal */}
+      {reviewAppt && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full space-y-4">
+            {reviewSubmitted ? (
+              <div className="text-center py-6">
+                <p className="text-4xl mb-3">🎉</p>
+                <p className="text-xl font-bold text-gray-800">Thank you for your review!</p>
+              </div>
+            ) : (
+              <>
+                <h3 className="text-xl font-bold text-gray-800">⭐ Leave a Review</h3>
+                <p className="text-gray-500 text-sm">How was your experience with <span className="font-semibold text-pink-500">{reviewAppt.service}</span>?</p>
+                <div className="flex gap-2 items-center">
+                  <p className="text-sm text-gray-600">Rating:</p>
+                  {[1,2,3,4,5].map((star) => (
+                    <button key={star} onClick={() => setReviewRating(star)} className={`text-2xl transition ${star <= reviewRating ? "text-yellow-400" : "text-gray-300"}`}>★</button>
+                  ))}
+                </div>
+                <textarea
+                  placeholder="Share your experience..."
+                  rows={3}
+                  value={reviewComment}
+                  onChange={(e) => setReviewComment(e.target.value)}
+                  className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none"
+                />
+                <div className="flex gap-3">
+                  <button onClick={handleReviewSubmit} disabled={reviewLoading} className="flex-1 bg-pink-500 text-white py-3 rounded-xl font-semibold hover:bg-pink-600 transition disabled:opacity-50">
+                    {reviewLoading ? "Submitting..." : "Submit Review"}
+                  </button>
+                  <button onClick={() => setReviewAppt(null)} className="flex-1 bg-gray-100 text-gray-600 py-3 rounded-xl font-semibold hover:bg-gray-200 transition">
+                    Cancel
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
 
     </div>
   );

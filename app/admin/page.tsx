@@ -230,6 +230,7 @@ export default function Admin() {
                           <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                             appt.status === "Confirmed" ? "bg-green-100 text-green-600"
                             : appt.status === "Cancelled" ? "bg-red-100 text-red-500"
+                            : appt.status === "Done" ? "bg-blue-100 text-blue-600"
                             : "bg-yellow-100 text-yellow-600"
                           }`}>
                             {appt.status}
@@ -240,6 +241,11 @@ export default function Admin() {
                             <button onClick={() => updateStatus(appt.id, "Confirmed")} className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-semibold hover:bg-green-200 transition">
                               Confirm
                             </button>
+                            {appt.status === "Confirmed" && (
+                              <button onClick={() => updateStatus(appt.id, "Done")} className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-semibold hover:bg-blue-200 transition">
+                                Done
+                              </button>
+                            )}
                             <button onClick={() => updateStatus(appt.id, "Cancelled")} className="bg-red-100 text-red-500 px-3 py-1 rounded-full text-xs font-semibold hover:bg-red-200 transition">
                               Cancel
                             </button>

@@ -102,7 +102,7 @@ export default function Reviews() {
           )}
 
           <div className="text-center mt-8">
-            <Link href="/login" className="inline-block bg-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-pink-600 hover:scale-105 transition-all duration-300 shadow-lg">
+            <Link href={isLoggedIn ? "/book" : "/login"} className="inline-block bg-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-pink-600 hover:scale-105 transition-all duration-300 shadow-lg">
               💅 Book Your Appointment
             </Link>
           </div>

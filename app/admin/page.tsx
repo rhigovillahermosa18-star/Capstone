@@ -98,11 +98,16 @@ export default function Admin() {
   };
 
   const updateReviewStatus = async (id: string, status: string) => {
-    await fetch("/api/reviews", {
+    const res = await fetch("/api/reviews", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, status }),
     });
+    const data = await res.json();
+    if (!res.ok) {
+      alert("Failed to update review: " + (data.error || "Unknown error"));
+      return;
+    }
     fetchReviews();
   };
 

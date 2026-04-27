@@ -181,6 +181,7 @@ export default function Settings() {
                 <Link href="/book" className="block text-gray-700 hover:text-pink-600 transition">Book Appointment</Link>
                 <Link href="/pricing" className="block text-gray-700 hover:text-pink-600 transition">Pricing</Link>
                 <Link href="/gallery" className="block text-gray-700 hover:text-pink-600 transition">Gallery</Link>
+                <Link href="/reviews" className="block text-gray-700 hover:text-pink-600 transition">Reviews</Link>
                 <Link href="/payment" className="block text-gray-700 hover:text-pink-600 transition">Payment</Link>
               </div>
             </div>

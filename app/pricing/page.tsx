@@ -15,20 +15,20 @@ export default function Pricing() {
       <div className="absolute bottom-0 left-0 w-60 h-60 bg-pink-200 rounded-full opacity-50 blur-2xl"></div>
 
       {/* Header + Navigation */}
-      <div className="bg-[#FFD3DF] px-6 py-3 shadow-sm relative z-10 flex items-center justify-between flex-wrap gap-3">
-        <Link href="/homepage" className="flex items-center gap-3">
-          <Image src="/logo1.png" alt="Logo" width={55} height={55} className="rounded-full border-2 border-white shadow" />
-          <span className="text-black font-bold tracking-[0.3em] text-lg hidden md:block">MARVELOUSLY POLISHED</span>
+      <div className="bg-[#FFD3DF] px-4 py-2 shadow-sm relative z-10 flex items-center justify-between gap-2">
+        <Link href="/homepage" className="flex items-center gap-2 flex-shrink-0">
+          <Image src="/logo1.png" alt="Logo" width={45} height={45} className="rounded-full border-2 border-white shadow" />
+          <span className="text-black font-bold tracking-[0.2em] text-sm hidden xl:block">MARVELOUSLY POLISHED</span>
         </Link>
-        <div className="flex flex-wrap gap-2">
-          <Link href="/homepage" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🏠 Home</Link>
-          <Link href="/book" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">📅 Book</Link>
-          <Link href="/pricing" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">💰 Pricing</Link>
-          <Link href="/gallery" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🖼️ Gallery</Link>
-          <Link href="/appointments" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">📋 My Appointments</Link>
-          <Link href="/payment" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">💳 Payment</Link>
-          <Link href="/settings" className="bg-[#FFB6C9] px-4 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">⚙️ Settings</Link>
-          <Link href="/login" onClick={() => localStorage.removeItem("role")} className="bg-gray-200 px-4 py-2 rounded-full text-gray-700 text-sm hover:bg-gray-300 transition">🚪 Logout</Link>
+        <div className="flex items-center gap-1 flex-wrap justify-end">
+          <Link href="/homepage" className="bg-[#FFB6C9] px-3 py-1.5 rounded-full text-black text-xs hover:bg-pink-400 transition">🏠 Home</Link>
+          <Link href="/book" className="bg-[#FFB6C9] px-3 py-1.5 rounded-full text-black text-xs hover:bg-pink-400 transition">📅 Book</Link>
+          <Link href="/pricing" className="bg-[#FFB6C9] px-3 py-1.5 rounded-full text-black text-xs hover:bg-pink-400 transition">💰 Pricing</Link>
+          <Link href="/gallery" className="bg-[#FFB6C9] px-3 py-1.5 rounded-full text-black text-xs hover:bg-pink-400 transition">🖼️ Gallery</Link>
+          <Link href="/appointments" className="bg-[#FFB6C9] px-3 py-1.5 rounded-full text-black text-xs hover:bg-pink-400 transition">📋 Appointments</Link>
+          <Link href="/payment" className="bg-[#FFB6C9] px-3 py-1.5 rounded-full text-black text-xs hover:bg-pink-400 transition">💳 Payment</Link>
+          <Link href="/settings" className="bg-[#FFB6C9] px-3 py-1.5 rounded-full text-black text-xs hover:bg-pink-400 transition">⚙️ Settings</Link>
+          <Link href="/login" onClick={() => localStorage.removeItem("role")} className="bg-gray-200 px-3 py-1.5 rounded-full text-gray-700 text-xs hover:bg-gray-300 transition">🚪 Logout</Link>
         </div>
       </div>
 

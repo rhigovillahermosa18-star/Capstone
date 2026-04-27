@@ -91,7 +91,7 @@ export default function Admin() {
     try {
       const res = await fetch("/api/reviews?all=true");
       const data = await res.json();
-      if (res.ok) setReviews(data);
+      if (res.ok) setReviews(Array.isArray(data) ? data : []);
     } catch (e) {
       console.error(e);
     }

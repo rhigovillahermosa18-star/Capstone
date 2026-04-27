@@ -56,51 +56,52 @@ export default function Reviews() {
       </div>
 
       {/* Content */}
-      <div className="flex-grow px-6 py-12 relative z-10">
+      <div className="flex-grow px-6 py-6 relative z-10">
         <div className="max-w-5xl mx-auto">
 
-          <h2 className="text-4xl font-bold text-gray-800 text-center mb-2">⭐ Customer Reviews</h2>
+          <h2 className="text-4xl font-bold text-pink-600 text-center mb-1">⭐ Customer Reviews</h2>
           <p className="text-center text-gray-500 text-sm mb-4">What our clients say about us</p>
 
           {/* Summary */}
           {reviews.length > 0 && (
-            <div className="flex justify-center mb-10">
-              <div className="bg-white rounded-2xl px-10 py-6 shadow-lg border border-pink-100 text-center">
+            <div className="flex justify-center mb-6">
+              <div className="bg-white rounded-2xl px-12 py-4 shadow-lg border border-pink-100 text-center">
                 <p className="text-5xl font-bold text-pink-500">{avgRating}</p>
-                <p className="text-yellow-400 text-2xl mt-1">{"★".repeat(Math.round(Number(avgRating)))}{"☆".repeat(5 - Math.round(Number(avgRating)))}</p>
-                <p className="text-gray-500 text-sm mt-1">Based on {reviews.length} review{reviews.length !== 1 ? "s" : ""}</p>
+                <p className="text-yellow-400 text-2xl mt-1 tracking-widest">{"★".repeat(Math.round(Number(avgRating)))}{"☆".repeat(5 - Math.round(Number(avgRating)))}</p>
+                <p className="text-gray-400 text-sm mt-1">Based on {reviews.length} review{reviews.length !== 1 ? "s" : ""}</p>
               </div>
             </div>
           )}
 
           {loading ? (
-            <p className="text-center text-gray-400">Loading reviews...</p>
+            <p className="text-center text-gray-400 py-12">Loading reviews...</p>
           ) : reviews.length === 0 ? (
-            <p className="text-center text-gray-400 py-12">No reviews yet. Be the first after your appointment!</p>
+            <div className="text-center py-16">
+              <p className="text-5xl mb-4">💅</p>
+              <p className="text-gray-400 text-lg">No reviews yet. Be the first after your appointment!</p>
+            </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {reviews.map((r) => (
-                <div key={r.id} className="bg-white rounded-2xl p-6 shadow-lg border border-pink-100 hover:shadow-xl transition">
-                  <div className="flex justify-between items-center mb-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-9 h-9 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-sm">
-                        {r.name?.charAt(0).toUpperCase()}
-                      </div>
-                      <p className="font-bold text-gray-800">{r.name}</p>
+                <div key={r.id} className="bg-white rounded-2xl p-6 shadow-lg border border-pink-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-base flex-shrink-0">
+                      {r.name?.charAt(0).toUpperCase()}
                     </div>
-                    <span className="text-yellow-400 text-sm">{"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}</span>
+                    <div>
+                      <p className="font-bold text-gray-800 text-sm">{r.name}</p>
+                      {r.created_at && <p className="text-gray-300 text-xs">{new Date(r.created_at).toLocaleDateString()}</p>}
+                    </div>
+                    <span className="ml-auto text-yellow-400 text-base tracking-wide">{"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}</span>
                   </div>
-                  <p className="text-gray-600 text-sm leading-relaxed">{r.comment}</p>
-                  {r.created_at && (
-                    <p className="text-gray-300 text-xs mt-3">{new Date(r.created_at).toLocaleDateString()}</p>
-                  )}
+                  <p className="text-gray-600 text-sm leading-relaxed border-t border-pink-50 pt-3">{r.comment}</p>
                 </div>
               ))}
             </div>
           )}
 
-          <div className="text-center mt-12">
-            <Link href="/login" className="inline-block bg-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-pink-600 transition shadow-lg">
+          <div className="text-center mt-6">
+            <Link href="/login" className="inline-block bg-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-pink-600 hover:scale-105 transition-all duration-300 shadow-lg">
               Book Your Appointment
             </Link>
           </div>

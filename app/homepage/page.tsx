@@ -56,7 +56,7 @@ export default function Home() {
               Beauty Starts From<br/>Tips to Toes 💅
             </h2>
             <p className="text-gray-700 leading-relaxed text-lg">
-              Experience luxury nail care in Santa Ana. Our artists use premium products to create stunning designs that express your unique style.
+              Experience luxury nail care in Ylaya, Barili. Our artists use premium products to create stunning designs that express your unique style.
             </p>
             <p className="text-gray-700 leading-relaxed text-lg">
               Whether you're looking for a simple elegant set or a bold artistic design, we bring your vision to life with precision and care. Every appointment is a personalized experience crafted just for you.

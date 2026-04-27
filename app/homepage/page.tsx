@@ -58,6 +58,9 @@ export default function Home() {
             <p className="text-gray-700 leading-relaxed text-lg">
               Experience luxury nail care in Santa Ana. Our artists use premium products to create stunning designs that express your unique style.
             </p>
+            <p className="text-gray-700 leading-relaxed text-lg">
+              Whether you're looking for a simple elegant set or a bold artistic design, we bring your vision to life with precision and care. Every appointment is a personalized experience crafted just for you.
+            </p>
             <div className="flex gap-4 flex-wrap justify-center lg:justify-start">
               <Link href="/book" className="bg-pink-500 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-pink-600 hover:scale-105 transition-all duration-300">
                 Book Now

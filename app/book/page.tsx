@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
+const TOTAL_SLOTS = 4;
+
 function BookContent() {
   const router = useRouter();
   const searchParams = useSearchParams();

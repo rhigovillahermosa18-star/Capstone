@@ -49,7 +49,7 @@ export async function PATCH(request) {
   }
 
   // Update profile
-  const updates: any = {};
+  const updates = {};
   if (username) updates.username = username;
   if (phone !== undefined) updates.phone = phone;
   const { data, error } = await supabase.from("users").update(updates).eq("id", id).select().single();

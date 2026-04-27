@@ -199,5 +199,6 @@ export default function Settings() {
           </div>
         </div>
       </footer>
+    </div>
   );
 }

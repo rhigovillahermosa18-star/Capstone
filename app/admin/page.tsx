@@ -108,7 +108,8 @@ export default function Admin() {
       alert("Failed to update review: " + (data.error || "Unknown error"));
       return;
     }
-    fetchReviews();
+    // Optimistically update UI
+    setReviews(prev => prev.map(r => r.id === id ? { ...r, status } : r));
   };
 
   const updatePaymentStatus = async (id: string, status: string) => {

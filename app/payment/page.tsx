@@ -103,20 +103,20 @@ function PaymentContent() {
       <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl" />
 
       {/* Header + Navigation */}
-      <div className="bg-[#FFD3DF] px-4 py-2 shadow-sm relative z-10 flex items-center justify-between gap-2">
+      <div className="bg-[#FFD3DF] px-5 py-3 shadow-sm relative z-10 flex items-center justify-between gap-2">
         <Link href="/homepage" className="flex items-center gap-2 flex-shrink-0">
-          <Image src="/logo1.png" alt="Logo" width={45} height={45} className="rounded-full border-2 border-white shadow" />
+          <Image src="/logo1.png" alt="Logo" width={50} height={50} className="rounded-full border-2 border-white shadow" />
           <span className="text-black font-bold tracking-[0.2em] text-sm hidden xl:block">MARVELOUSLY POLISHED</span>
         </Link>
-        <div className="flex items-center gap-1 flex-wrap justify-end">
-          <Link href="/homepage" className="bg-[#FFB6C9] px-3 py-1.5 rounded-full text-black text-xs hover:bg-pink-400 transition">🏠 Home</Link>
-          <Link href="/book" className="bg-[#FFB6C9] px-3 py-1.5 rounded-full text-black text-xs hover:bg-pink-400 transition">📅 Book</Link>
-          <Link href="/pricing" className="bg-[#FFB6C9] px-3 py-1.5 rounded-full text-black text-xs hover:bg-pink-400 transition">💰 Pricing</Link>
-          <Link href="/gallery" className="bg-[#FFB6C9] px-3 py-1.5 rounded-full text-black text-xs hover:bg-pink-400 transition">🖼️ Gallery</Link>
-          <Link href="/appointments" className="bg-[#FFB6C9] px-3 py-1.5 rounded-full text-black text-xs hover:bg-pink-400 transition">📋 Appointments</Link>
-          <Link href="/payment" className="bg-[#FFB6C9] px-3 py-1.5 rounded-full text-black text-xs hover:bg-pink-400 transition">💳 Payment</Link>
-          <Link href="/settings" className="bg-[#FFB6C9] px-3 py-1.5 rounded-full text-black text-xs hover:bg-pink-400 transition">⚙️ Settings</Link>
-          <button onClick={async () => { await fetch("/api/logout", { method: "POST" }); localStorage.removeItem("role"); localStorage.removeItem("user_id"); router.push("/login"); }} className="bg-gray-200 px-3 py-1.5 rounded-full text-gray-700 text-xs hover:bg-gray-300 transition">🚪 Logout</button>
+        <div className="flex items-center gap-1.5 flex-wrap justify-end">
+          <Link href="/homepage" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🏠 Home</Link>
+          <Link href="/book" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">📅 Book</Link>
+          <Link href="/pricing" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">💰 Pricing</Link>
+          <Link href="/gallery" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🖼️ Gallery</Link>
+          <Link href="/appointments" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">📋 Appointments</Link>
+          <Link href="/payment" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">💳 Payment</Link>
+          <Link href="/settings" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">⚙️ Settings</Link>
+          <button onClick={async () => { await fetch("/api/logout", { method: "POST" }); localStorage.removeItem("role"); localStorage.removeItem("user_id"); router.push("/login"); }} className="bg-gray-200 px-3.5 py-2 rounded-full text-gray-700 text-sm hover:bg-gray-300 transition">🚪 Logout</button>
         </div>
       </div>
 

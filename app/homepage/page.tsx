@@ -76,7 +76,7 @@ export default function Home() {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-pink-500 text-xl">✓</span>
-                <span>Santa Ana</span>
+                <span>Ylaya, Barili</span>
               </div>
             </div>
           </div>

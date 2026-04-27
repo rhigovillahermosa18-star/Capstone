@@ -5,109 +5,6 @@ import Image from "next/image";
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const TOTAL_SLOTS = 4;
-const trendingImages = ["/nail5.jpg","/nail6.jpg","/nail7.jpg","/nail8.jpg","/nail9.jpg","/nail10.jpg","/nail11.jpg","/nail1.jpg"];
-
-function Carousel({ images, height = "h-48" }: { images: string[]; height?: string }) {
-  const [current, setCurrent] = useState(0);
-  useEffect(() => {
-    const timer = setInterval(() => setCurrent((prev) => (prev + 1) % images.length), 3000);
-    return () => clearInterval(timer);
-  }, [images.length]);
-  return (
-    <div className={`relative w-full ${height} overflow-hidden rounded-2xl shadow-inner`}>
-      {images.map((src, i) => (
-        <div key={i} className="absolute inset-0 transition-opacity duration-700" style={{ opacity: i === current ? 1 : 0 }}>
-          <Image src={src} fill alt={`Design ${i + 1}`} className="object-cover rounded-2xl" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-2xl" />
-        </div>
-      ))}
-      <button onClick={() => setCurrent((prev) => (prev - 1 + images.length) % images.length)} className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-pink-500 rounded-full w-7 h-7 flex items-center justify-center shadow-md z-10 font-bold">‹</button>
-      <button onClick={() => setCurrent((prev) => (prev + 1) % images.length)} className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-pink-500 rounded-full w-7 h-7 flex items-center justify-center shadow-md z-10 font-bold">›</button>
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
-        {images.map((_, i) => (
-          <button key={i} onClick={() => setCurrent(i)} className={`rounded-full transition-all duration-300 ${i === current ? "bg-pink-400 w-4 h-2" : "bg-white/60 w-2 h-2"}`} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function CustomerReviews() {
-  const [reviews, setReviews] = useState<{ id: string; name: string; rating: number; comment: string }[]>([]);
-  const [name, setName] = useState("");
-  const [rating, setRating] = useState(5);
-  const [comment, setComment] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
-  useEffect(() => {
-    fetch("/api/reviews").then((r) => r.json()).then((d) => setReviews(d));
-  }, []);
-
-  const handleSubmit = async () => {
-    if (!name || !comment) return;
-    const res = await fetch("/api/reviews", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, rating, comment }),
-    });
-    if (res.ok) {
-      const newReview = await res.json();
-      setReviews((prev) => [newReview, ...prev]);
-      setName(""); setComment(""); setRating(5);
-      setSubmitted(true);
-      setTimeout(() => setSubmitted(false), 3000);
-    }
-  };
-
-  return (
-    <div className="bg-white p-6 rounded-2xl shadow-lg border border-pink-100">
-      <h3 className="text-pink-600 font-bold text-xl mb-4 flex items-center gap-2">
-        <span>⭐</span> Customer Reviews
-      </h3>
-      <div className="space-y-3 mb-5 max-h-64 overflow-y-auto pr-1">
-        {reviews.length === 0 ? (
-          <p className="text-gray-400 text-sm text-center py-4">No reviews yet. Be the first!</p>
-        ) : reviews.map((r) => (
-          <div key={r.id} className="bg-pink-50 rounded-xl p-3">
-            <div className="flex justify-between items-center mb-1">
-              <p className="font-semibold text-gray-800 text-sm">{r.name}</p>
-              <span className="text-yellow-400 text-sm">{"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}</span>
-            </div>
-            <p className="text-gray-600 text-xs">{r.comment}</p>
-          </div>
-        ))}
-      </div>
-      <div className="border-t border-pink-100 pt-4 space-y-3">
-        <p className="text-sm font-semibold text-gray-700">Leave a Review</p>
-        <input
-          placeholder="Your name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="w-full p-3 border-2 border-gray-200 rounded-xl text-black text-sm focus:outline-none focus:border-pink-400 transition"
-        />
-        <div className="flex gap-2 items-center">
-          <p className="text-sm text-gray-600">Rating:</p>
-          {[1,2,3,4,5].map((star) => (
-            <button key={star} onClick={() => setRating(star)} className={`text-xl transition ${star <= rating ? "text-yellow-400" : "text-gray-300"}`}>★</button>
-          ))}
-        </div>
-        <textarea
-          placeholder="Share your experience..."
-          rows={2}
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          className="w-full p-3 border-2 border-gray-200 rounded-xl text-black text-sm focus:outline-none focus:border-pink-400 transition resize-none"
-        />
-        {submitted && <p className="text-green-500 text-xs text-center">✓ Review submitted!</p>}
-        <button onClick={handleSubmit} className="w-full bg-pink-500 text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-pink-600 transition">
-          Submit Review
-        </button>
-      </div>
-    </div>
-  );
-}
-
 function BookContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -336,30 +233,6 @@ function BookContent() {
 
               <textarea placeholder="Special Requests (optional)" rows={2} value={requests} onChange={(e) => setRequests(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none" />
 
-              <div className="border-2 border-dashed border-pink-300 rounded-xl p-5 bg-pink-50">
-                <p className="text-black font-semibold mb-1">💅 Upload Your Desired Design</p>
-                <p className="text-gray-500 text-sm mb-3">Share a photo of the nail design you want (PNG, JPG)</p>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0] || null;
-                    setDesignFile(file);
-                    if (file) setDesignPreview(URL.createObjectURL(file));
-                    else setDesignPreview("");
-                  }}
-                  className="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-pink-400 file:text-white hover:file:bg-pink-500 cursor-pointer"
-                />
-                {designPreview && (
-                  <div className="mt-3">
-                    <p className="text-xs text-gray-500 mb-1">Preview:</p>
-                    <img src={designPreview} alt="Design preview" className="w-full h-40 object-cover rounded-xl" />
-                  </div>
-                )}
-              </div>
-
-              <textarea placeholder="Describe your dream design (e.g. French tips, glitter, floral, color preferences...)" rows={2} value={design} onChange={(e) => setDesign(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none" />
-
               {error && <p className="text-red-500 text-sm text-center">{error}</p>}
               <button onClick={handleSubmit} disabled={loading} className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300 disabled:opacity-50">
                 {loading ? "Submitting..." : "Confirm Appointment"}
@@ -367,37 +240,44 @@ function BookContent() {
             </div>
           </div>
 
-          {/* Right - Trending Now + Reviews */}
+          {/* Right - Design Upload */}
           <div className="hidden lg:flex flex-col gap-6">
-            <div className="bg-gradient-to-b from-pink-50 to-white p-6 rounded-2xl shadow-lg border border-pink-100 flex flex-col">
-              <h3 className="text-pink-600 font-bold text-xl mb-4 flex items-center gap-2">
-                <span>🔥</span> Trending Now
-              </h3>
-              <Carousel images={trendingImages} height="h-96" />
-              <p className="text-xs text-gray-400 text-center mt-3">Latest nail trends just for you</p>
-            </div>
-            {/* Design Tips Section */}
-            <div className="bg-gradient-to-br from-white-100 to-white p-6 rounded-2xl shadow-lg border border-white-100">
-              <h3 className="text-pink-600 font-bold text-xl mb-4 flex items-center gap-2">
-                <span>✨</span> Nail Care Tips
-              </h3>
-              <div className="grid grid-cols-2 gap-3">
-                {[
-                  { icon: "💧", title: "Stay Hydrated", desc: "Moisturize cuticles daily for healthy nails" },
-                  { icon: "🌸", title: "Gentle Filing", desc: "File in one direction to prevent breakage" },
-                  { icon: "🛡️", title: "Base Coat", desc: "Always apply base coat for longer lasting color" },
-                  { icon: "☀️", title: "Sun Protection", desc: "UV rays can fade your nail color faster" },
-                ].map((tip) => (
-                  <div key={tip.title} className="bg-white rounded-xl p-3 shadow-sm border border-white">
-                    <p className="text-2xl mb-1">{tip.icon}</p>
-                    <p className="font-semibold text-gray-800 text-sm">{tip.title}</p>
-                    <p className="text-gray-500 text-xs mt-1">{tip.desc}</p>
-                  </div>
-                ))}
+            <div className="bg-white p-8 rounded-2xl shadow-2xl border border-pink-100 flex flex-col gap-6">
+              <div>
+                <h3 className="text-pink-600 font-bold text-xl mb-1 flex items-center gap-2">💅 Upload Your Desired Design</h3>
+                <p className="text-gray-500 text-sm mb-4">Share a photo of the nail design you want (PNG, JPG)</p>
+                <div className="border-2 border-dashed border-pink-300 rounded-xl p-6 bg-pink-50 flex flex-col items-center justify-center gap-3">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0] || null;
+                      setDesignFile(file);
+                      if (file) setDesignPreview(URL.createObjectURL(file));
+                      else setDesignPreview("");
+                    }}
+                    className="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-pink-400 file:text-white hover:file:bg-pink-500 cursor-pointer"
+                  />
+                  {designPreview ? (
+                    <img src={designPreview} alt="Design preview" className="w-full h-64 object-cover rounded-xl mt-2" />
+                  ) : (
+                    <div className="w-full h-64 bg-pink-100 rounded-xl flex items-center justify-center">
+                      <p className="text-gray-400 text-sm">Preview will appear here</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div>
+                <h3 className="text-pink-600 font-bold text-xl mb-2 flex items-center gap-2">✨ Describe Your Design</h3>
+                <textarea
+                  placeholder="Describe your dream design (e.g. French tips, glitter, floral, color preferences...)"
+                  rows={5}
+                  value={design}
+                  onChange={(e) => setDesign(e.target.value)}
+                  className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none"
+                />
               </div>
             </div>
-
-            <CustomerReviews />
           </div>
 
         </div>

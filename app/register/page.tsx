@@ -17,6 +17,11 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [step, setStep] = useState<"register" | "verify">("register");
+  const [userId, setUserId] = useState("");
+  const [code, setCode] = useState("");
+  const [verifyError, setVerifyError] = useState("");
+  const [verifyLoading, setVerifyLoading] = useState(false);
 
   const handleRegister = async () => {
     if (!username || !email || !phone || !password || !confirmPassword) {
@@ -48,8 +53,25 @@ export default function Register() {
       return;
     }
 
-    setSuccess(data.message || "Account created! Please check your email to verify your account.");
+    setSuccess("Verification code sent to your email!");
+    setUserId(data.userId);
     setLoading(false);
+    setStep("verify");
+  };
+
+  const handleVerify = async () => {
+    if (!code.trim()) { setVerifyError("Please enter the verification code."); return; }
+    setVerifyLoading(true);
+    setVerifyError("");
+    const res = await fetch("/api/verify-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, code }),
+    });
+    const data = await res.json();
+    if (!res.ok) { setVerifyError(data.error || "Invalid code."); setVerifyLoading(false); return; }
+    setVerifyLoading(false);
+    router.push("/login");
   };
 
   return (
@@ -73,8 +95,33 @@ export default function Register() {
             </div>
           </div>
 
-          {/* Right Side - Register Form */}
+          {/* Right Side */}
           <div className="bg-white p-10 rounded-2xl shadow-2xl w-full max-w-md mx-auto">
+
+            {step === "verify" ? (
+              <div className="text-center space-y-5">
+                <div className="text-5xl">📧</div>
+                <h2 className="text-2xl font-bold text-gray-800">Check Your Email</h2>
+                <p className="text-gray-500 text-sm">We sent a 6-digit code to <span className="font-semibold text-pink-500">{email}</span></p>
+                <input
+                  type="text"
+                  maxLength={6}
+                  placeholder="Enter 6-digit code"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  className="w-full p-4 border-2 border-gray-200 rounded-xl text-black text-center text-2xl tracking-widest focus:outline-none focus:border-pink-400 transition"
+                />
+                {verifyError && <p className="text-red-500 text-sm">{verifyError}</p>}
+                <button
+                  onClick={handleVerify}
+                  disabled={verifyLoading}
+                  className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 transition disabled:opacity-50"
+                >
+                  {verifyLoading ? "Verifying..." : "Verify Email"}
+                </button>
+              </div>
+            ) : (
+              <>
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-800 mb-2">Create Account</h2>
               <p className="text-gray-600">Join us for exclusive beauty experiences</p>
@@ -166,6 +213,8 @@ export default function Register() {
                 </Link>
               </p>
             </div>
+            </>
+            )}
           </div>
 
         </div>

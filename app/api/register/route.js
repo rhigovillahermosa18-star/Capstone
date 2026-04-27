@@ -2,7 +2,6 @@ import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
-import crypto from "crypto";
 
 export async function POST(request) {
   const supabase = createClient(
@@ -31,7 +30,7 @@ export async function POST(request) {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  const verificationToken = crypto.randomBytes(32).toString("hex");
+  const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
 
   const { data, error } = await supabase
     .from("users")
@@ -42,7 +41,7 @@ export async function POST(request) {
       phone: phone ?? "",
       role: "customer",
       email_verified: false,
-      verification_token: verificationToken,
+      verification_token: verificationCode,
     }])
     .select()
     .single();
@@ -50,9 +49,6 @@ export async function POST(request) {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
-
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  const verifyUrl = `${baseUrl}/verify-email?token=${verificationToken}`;
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -65,18 +61,18 @@ export async function POST(request) {
   await transporter.sendMail({
     from: `"Marvelously Polished" <${process.env.GMAIL_USER}>`,
     to: email,
-    subject: "Verify your email – Marvelously Polished",
+    subject: "Your Verification Code – Marvelously Polished",
     html: `
       <div style="font-family:sans-serif;max-width:480px;margin:auto;padding:32px;border:1px solid #fce7f3;border-radius:16px;">
         <h2 style="color:#ec4899;">Welcome, ${username}! 💅</h2>
-        <p style="color:#374151;">Please verify your email address to activate your account.</p>
-        <a href="${verifyUrl}" style="display:inline-block;margin-top:16px;padding:12px 28px;background:#ec4899;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">
-          Verify Email
-        </a>
-        <p style="color:#9ca3af;font-size:12px;margin-top:24px;">If you didn't create this account, you can ignore this email.</p>
+        <p style="color:#374151;">Enter this 6-digit code to verify your email:</p>
+        <div style="font-size:40px;font-weight:bold;letter-spacing:12px;color:#ec4899;text-align:center;padding:24px;background:#fdf2f8;border-radius:12px;margin:20px 0;">
+          ${verificationCode}
+        </div>
+        <p style="color:#9ca3af;font-size:12px;">This code expires in 10 minutes. If you didn't create this account, ignore this email.</p>
       </div>
     `,
   });
 
-  return NextResponse.json({ message: "Account created. Please check your email to verify your account." }, { status: 201 });
+  return NextResponse.json({ message: "Verification code sent to your email.", userId: data.id }, { status: 201 });
 }

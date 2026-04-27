@@ -122,13 +122,10 @@ export default function Admin() {
   if (!authorized) return null;
 
   return (
-    <div className="min-h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">
-
-      <div className="absolute top-20 left-[-120px] w-80 h-80 bg-pink-300 rounded-full opacity-30 blur-3xl"></div>
-      <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl"></div>
+    <div className="h-screen bg-[#FFE4EF] flex flex-col overflow-hidden">
 
       {/* Header */}
-      <div className="bg-[#FFD3DF] py-4 px-6 shadow-sm relative z-10 flex items-center justify-between">
+      <div className="bg-[#FFD3DF] py-4 px-6 shadow-sm z-10 flex items-center justify-between flex-shrink-0">
         <span className="text-2xl tracking-widest font-semibold text-black">MARVELOUSLY POLISHED</span>
         <button onClick={handleLogout} className="bg-gray-200 px-5 py-2 rounded-full text-gray-700 hover:bg-gray-300 transition">
           🚪 Logout
@@ -136,10 +133,10 @@ export default function Admin() {
       </div>
 
       {/* Body */}
-      <div className="flex flex-grow relative z-10">
+      <div className="flex flex-1 overflow-hidden">
 
         {/* Left Sidebar */}
-        <div className="w-56 bg-white shadow-lg flex flex-col py-8 px-4 gap-3 sticky top-0 h-screen">
+        <div className="w-56 bg-white shadow-lg flex flex-col py-8 px-4 gap-3 flex-shrink-0 overflow-y-auto sticky top-0 self-start h-[calc(100vh-64px)]">
           <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 px-2">Admin Panel</p>
 
           <div className="flex flex-col gap-2">
@@ -179,7 +176,7 @@ export default function Admin() {
         </div>
 
         {/* Main Content */}
-        <div className="flex-grow px-6 py-8 overflow-auto">
+        <div className="flex-1 px-6 py-8 overflow-y-auto">
 
           <h2 className="text-3xl font-bold text-gray-800 mb-2">Admin Panel</h2>
           <p className="text-gray-600 mb-6">Manage all appointments, payments and users</p>

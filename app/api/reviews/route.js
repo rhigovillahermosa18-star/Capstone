@@ -58,13 +58,11 @@ export async function PATCH(request) {
 
   const { id, status } = await request.json();
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("reviews")
     .update({ status })
-    .eq("id", id)
-    .select()
-    .single();
+    .eq("id", id);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json(data);
+  return NextResponse.json({ success: true });
 }

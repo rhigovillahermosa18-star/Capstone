@@ -73,7 +73,10 @@ export default function Appointments() {
     await fetch("/api/logout", { method: "POST" });
     localStorage.removeItem("role");
     localStorage.removeItem("user_id");
-    router.push("/"); = async () => {
+    router.push("/");
+  };
+
+  const handleReviewSubmit = async () => {
     if (!reviewComment.trim()) return;
     setReviewLoading(true);
     await fetch("/api/reviews", {

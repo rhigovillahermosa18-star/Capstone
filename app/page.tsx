@@ -9,14 +9,18 @@ const nailImages = ["/nail1.jpg","/nail2.jpg","/nail3.jpg","/nail4.jpg","/nail5.
 
 export default function LandingPage() {
   const [current, setCurrent] = useState(0);
+  const [ready, setReady] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     const user_id = localStorage.getItem("user_id");
     if (user_id) { router.replace("/homepage"); return; }
+    setReady(true);
     const timer = setInterval(() => setCurrent((prev) => (prev + 1) % nailImages.length), 3000);
     return () => clearInterval(timer);
   }, []);
+
+  if (!ready) return null;
 
   return (
     <div className="min-h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">

@@ -84,7 +84,7 @@ export default function Settings() {
       <div className="bg-[#FFD3DF] px-5 py-3 shadow-sm relative z-10 flex items-center justify-between gap-2">
         <Link href="/homepage" className="flex items-center gap-2 flex-shrink-0">
           <Image src="/logo1.png" alt="Logo" width={50} height={50} className="rounded-full border-2 border-white shadow" />
-          <span className="text-black font-bold tracking-[0.2em] text-sm hidden xl:block">MARVELOUSLY POLISHED</span>
+          <span className="text-black font-bold tracking-[0.2em] text-base hidden lg:block">MARVELOUSLY POLISHED</span>
         </Link>
         <div className="flex items-center gap-1.5 flex-wrap justify-end">
           <Link href="/homepage" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🏠 Home</Link>

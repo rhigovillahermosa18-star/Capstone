@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const protectedRoutes = ["/homepage", "/book", "/appointments", "/gallery", "/pricing", "/admin"];
+const protectedRoutes = ["/homepage", "/book", "/appointments", "/admin"];
 const adminRoutes = ["/admin"];
 
 export function middleware(request) {
@@ -23,5 +23,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/homepage/:path*", "/book/:path*", "/appointments/:path*", "/gallery/:path*", "/pricing/:path*", "/admin/:path*"],
+  matcher: ["/homepage/:path*", "/book/:path*", "/appointments/:path*", "/admin/:path*"],
 };

@@ -22,6 +22,8 @@ export default function Reviews() {
     <div className="min-h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">
       <div className="absolute top-20 left-[-120px] w-80 h-80 bg-pink-300 rounded-full opacity-30 blur-3xl" />
       <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl" />
+      <div className="absolute top-1/2 left-10 w-40 h-40 bg-pink-200 rounded-full opacity-40 blur-2xl" />
+      <div className="absolute top-1/3 right-10 w-32 h-32 bg-pink-300 rounded-full opacity-30 blur-2xl" />
 
       {/* Header + Nav */}
       <div className="bg-[#FFD3DF] px-5 py-3 shadow-sm relative z-10 flex items-center justify-between gap-2">
@@ -55,24 +57,23 @@ export default function Reviews() {
         </div>
       </div>
 
+      {/* Hero Banner */}
+      <div className="bg-gradient-to-r from-pink-500 to-pink-400 relative z-10 py-10 px-6 text-center">
+        <p className="text-white text-5xl mb-2">⭐</p>
+        <h2 className="text-3xl font-bold text-white mb-1">Customer Reviews</h2>
+        <p className="text-pink-100 text-sm">What our clients say about us</p>
+        {reviews.length > 0 && (
+          <div className="mt-4 inline-flex items-center gap-3 bg-white/20 rounded-full px-6 py-2">
+            <span className="text-white font-bold text-2xl">{avgRating}</span>
+            <span className="text-yellow-300 text-lg">{"★".repeat(Math.round(Number(avgRating)))}{"☆".repeat(5 - Math.round(Number(avgRating)))}</span>
+            <span className="text-pink-100 text-sm">{reviews.length} review{reviews.length !== 1 ? "s" : ""}</span>
+          </div>
+        )}
+      </div>
+
       {/* Content */}
-      <div className="flex-grow px-6 py-6 relative z-10">
+      <div className="flex-grow px-6 py-8 relative z-10">
         <div className="max-w-5xl mx-auto">
-
-          <h2 className="text-4xl font-bold text-pink-600 text-center mb-1">⭐ Customer Reviews</h2>
-          <p className="text-center text-gray-500 text-sm mb-4">What our clients say about us</p>
-
-          {/* Summary */}
-          {reviews.length > 0 && (
-            <div className="flex justify-center mb-6">
-              <div className="bg-white rounded-2xl px-12 py-4 shadow-lg border border-pink-100 text-center">
-                <p className="text-5xl font-bold text-pink-500">{avgRating}</p>
-                <p className="text-yellow-400 text-2xl mt-1 tracking-widest">{"★".repeat(Math.round(Number(avgRating)))}{"☆".repeat(5 - Math.round(Number(avgRating)))}</p>
-                <p className="text-gray-400 text-sm mt-1">Based on {reviews.length} review{reviews.length !== 1 ? "s" : ""}</p>
-              </div>
-            </div>
-          )}
-
           {loading ? (
             <p className="text-center text-gray-400 py-12">Loading reviews...</p>
           ) : reviews.length === 0 ? (
@@ -83,9 +84,9 @@ export default function Reviews() {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {reviews.map((r) => (
-                <div key={r.id} className="bg-white rounded-2xl p-6 shadow-lg border border-pink-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col gap-3">
+                <div key={r.id} className="bg-white rounded-2xl p-5 shadow-lg border border-pink-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col gap-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-base flex-shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center text-white font-bold text-base flex-shrink-0 shadow">
                       {r.name?.charAt(0).toUpperCase()}
                     </div>
                     <div>
@@ -94,15 +95,15 @@ export default function Reviews() {
                     </div>
                     <span className="ml-auto text-yellow-400 text-base tracking-wide">{"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}</span>
                   </div>
-                  <p className="text-gray-600 text-sm leading-relaxed border-t border-pink-50 pt-3">{r.comment}</p>
+                  <p className="text-gray-600 text-sm leading-relaxed border-t border-pink-50 pt-3 italic">&ldquo;{r.comment}&rdquo;</p>
                 </div>
               ))}
             </div>
           )}
 
-          <div className="text-center mt-6">
+          <div className="text-center mt-8">
             <Link href="/login" className="inline-block bg-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-pink-600 hover:scale-105 transition-all duration-300 shadow-lg">
-              Book Your Appointment
+              💅 Book Your Appointment
             </Link>
           </div>
 

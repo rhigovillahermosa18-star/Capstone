@@ -3,13 +3,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const nailImages = ["/nail1.jpg","/nail2.jpg","/nail3.jpg","/nail4.jpg","/nail5.jpg","/nail6.jpg","/nail7.jpg","/nail8.jpg","/nail9.jpg","/nail10.jpg","/nail11.jpg"];
 
 export default function LandingPage() {
   const [current, setCurrent] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
+    const user_id = localStorage.getItem("user_id");
+    if (user_id) { router.replace("/homepage"); return; }
     const timer = setInterval(() => setCurrent((prev) => (prev + 1) % nailImages.length), 3000);
     return () => clearInterval(timer);
   }, []);

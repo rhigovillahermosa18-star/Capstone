@@ -40,8 +40,9 @@ export default function Admin() {
   const [authorized, setAuthorized] = useState(false);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [users, setUsers] = useState<User[]>([]);
-  const [activeTab, setActiveTab] = useState<"appointments" | "users" | "payments" | "chart">("appointments");
+  const [activeTab, setActiveTab] = useState<"appointments" | "users" | "payments" | "chart" | "reviews">("appointments");
   const [payments, setPayments] = useState<Payment[]>([]);
+  const [reviews, setReviews] = useState<{ id: string; name: string; rating: number; comment: string; created_at: string; status: string }[]>([]);
 
   useEffect(() => {
     const role = typeof window !== "undefined" ? localStorage.getItem("role") : null;
@@ -52,6 +53,7 @@ export default function Admin() {
       fetchAppointments();
       fetchUsers();
       fetchPayments();
+      fetchReviews();
     }
   }, [router]);
 
@@ -83,6 +85,25 @@ export default function Admin() {
     } catch (e) {
       console.error(e);
     }
+  };
+
+  const fetchReviews = async () => {
+    try {
+      const res = await fetch("/api/reviews?all=true");
+      const data = await res.json();
+      if (res.ok) setReviews(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const updateReviewStatus = async (id: string, status: string) => {
+    await fetch("/api/reviews", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, status }),
+    });
+    fetchReviews();
   };
 
   const updatePaymentStatus = async (id: string, status: string) => {
@@ -171,6 +192,14 @@ export default function Admin() {
               }`}
             >
               📊 Sales Chart
+            </button>
+            <button
+              onClick={() => setActiveTab("reviews")}
+              className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition text-sm ${
+                activeTab === "reviews" ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
+              }`}
+            >
+              ⭐ Reviews
             </button>
           </div>
         </div>
@@ -400,6 +429,58 @@ export default function Admin() {
               </div>
             );
           })()}
+
+          {/* Reviews Table */}
+          {activeTab === "reviews" && (
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+              <div className="p-6 border-b border-gray-100">
+                <h3 className="text-xl font-bold text-gray-800">Customer Reviews</h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead className="bg-pink-50">
+                    <tr>
+                      <th className="text-left p-4 text-gray-700 font-semibold">Customer</th>
+                      <th className="text-left p-4 text-gray-700 font-semibold">Rating</th>
+                      <th className="text-left p-4 text-gray-700 font-semibold">Comment</th>
+                      <th className="text-left p-4 text-gray-700 font-semibold">Date</th>
+                      <th className="text-left p-4 text-gray-700 font-semibold">Status</th>
+                      <th className="text-left p-4 text-gray-700 font-semibold">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {reviews.length === 0 ? (
+                      <tr><td colSpan={6} className="p-8 text-center text-gray-500">No reviews yet.</td></tr>
+                    ) : reviews.map((review, i) => (
+                      <tr key={review.id} className={i % 2 === 0 ? "bg-white" : "bg-pink-50/30"}>
+                        <td className="p-4 font-medium text-gray-800">{review.name}</td>
+                        <td className="p-4 text-yellow-400">{"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}</td>
+                        <td className="p-4 text-gray-600 max-w-xs">{review.comment}</td>
+                        <td className="p-4 text-gray-600">{new Date(review.created_at).toLocaleDateString()}</td>
+                        <td className="p-4">
+                          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                            review.status === "approved" ? "bg-green-100 text-green-600"
+                            : review.status === "rejected" ? "bg-red-100 text-red-500"
+                            : "bg-yellow-100 text-yellow-600"
+                          }`}>
+                            {review.status}
+                          </span>
+                        </td>
+                        <td className="p-4">
+                          {review.status === "pending" && (
+                            <div className="flex gap-2">
+                              <button onClick={() => updateReviewStatus(review.id, "approved")} className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-semibold hover:bg-green-200 transition">Approve</button>
+                              <button onClick={() => updateReviewStatus(review.id, "rejected")} className="bg-red-100 text-red-500 px-3 py-1 rounded-full text-xs font-semibold hover:bg-red-200 transition">Reject</button>
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
 
         </div>
 

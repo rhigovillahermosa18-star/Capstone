@@ -129,16 +129,16 @@ export default function Home() {
             <div className="space-y-3">
               <h4 className="font-bold text-gray-800 text-lg">Contact Us</h4>
               <div className="space-y-2 text-sm text-gray-700">
-                <p>📍 Santa Ana, CA</p>
-                <p>📞 (714) 000-0000</p>
-                <p>📧 hello@marvelouslypolished.com</p>
+                <p>📍 Ylaya, Barili, Cebu</p>
+                <p>📞 09064455283</p>
+                <p>📸 Instagram: marvelously.polished</p>
                 <p>⏰ Mon–Sat: 9AM – 7PM</p>
               </div>
             </div>
           </div>
           <div className="border-t border-pink-300 pt-6 flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-gray-700">
             <p>© 2026 Marvelously Polished. All rights reserved.</p>
-            <p>Santa Ana | Book Your Glam Today 💅</p>
+            <p>Ylaya, Barili, Cebu | Book Your Glam Today 💅</p>
           </div>
         </div>
       </footer>

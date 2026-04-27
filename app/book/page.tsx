@@ -280,6 +280,27 @@ function BookContent() {
                 />
               </div>
             </div>
+
+            {/* Nail Care Tips */}
+            <div className="bg-gradient-to-br from-pink-100 to-white p-6 rounded-2xl shadow-lg border border-pink-100">
+              <h3 className="text-pink-600 font-bold text-xl mb-4 flex items-center gap-2">
+                <span>✨</span> Nail Care Tips
+              </h3>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { icon: "💧", title: "Stay Hydrated", desc: "Moisturize cuticles daily for healthy nails" },
+                  { icon: "🌸", title: "Gentle Filing", desc: "File in one direction to prevent breakage" },
+                  { icon: "🛡️", title: "Base Coat", desc: "Always apply base coat for longer lasting color" },
+                  { icon: "☀️", title: "Sun Protection", desc: "UV rays can fade your nail color faster" },
+                ].map((tip) => (
+                  <div key={tip.title} className="bg-white rounded-xl p-3 shadow-sm border border-white">
+                    <p className="text-2xl mb-1">{tip.icon}</p>
+                    <p className="font-semibold text-gray-800 text-sm">{tip.title}</p>
+                    <p className="text-gray-500 text-xs mt-1">{tip.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
         </div>

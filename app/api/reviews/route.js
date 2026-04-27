@@ -15,15 +15,7 @@ export async function GET(request) {
 
   const { data, error } = await query;
 
-  if (error) {
-    // Fallback: if status column doesn't exist, return all reviews
-    const { data: fallback, error: fallbackError } = await supabase
-      .from("reviews")
-      .select("*")
-      .order("created_at", { ascending: false });
-    if (fallbackError) return NextResponse.json([], { status: 200 });
-    return NextResponse.json(fallback ?? []);
-  }
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json(data ?? []);
 }
 

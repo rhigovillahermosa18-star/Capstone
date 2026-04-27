@@ -73,7 +73,14 @@ export default function Settings() {
     localStorage.removeItem("role");
     localStorage.removeItem("user_id");
     router.push("/");
-      <div className="bg-[#FFD3DF] px-5 py-3 shadow-sm relative z-10 flex items-center justify-between gap-2">
+  };
+
+  return (
+    <div className="min-h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">
+      <div className="absolute top-20 left-[-120px] w-80 h-80 bg-pink-300 rounded-full opacity-30 blur-3xl" />
+      <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl" />
+
+      {/* Header */} px-5 py-3 shadow-sm relative z-10 flex items-center justify-between gap-2">
         <Link href="/homepage" className="flex items-center gap-2 flex-shrink-0">
           <Image src="/logo1.png" alt="Logo" width={50} height={50} className="rounded-full border-2 border-white shadow" />
           <span className="text-black font-bold tracking-[0.2em] text-base hidden lg:block">MARVELOUSLY POLISHED</span>

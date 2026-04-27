@@ -107,7 +107,10 @@ export default function Admin() {
     await fetch("/api/logout", { method: "POST" });
     localStorage.removeItem("role");
     localStorage.removeItem("user_id");
-    router.push("/"); = [
+    router.push("/");
+  };
+
+  const stats = [
     { label: "Total Bookings", value: appointments.length, icon: "📋" },
     { label: "Confirmed", value: appointments.filter(a => a.status === "Confirmed").length, icon: "✅" },
     { label: "Pending", value: appointments.filter(a => a.status === "Pending").length, icon: "⏳" },

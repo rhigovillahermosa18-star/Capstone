@@ -104,6 +104,7 @@ export default function LandingPage() {
                 <Link href="/" className="block text-gray-700 hover:text-pink-600 transition">Home</Link>
                 <Link href="/pricing" className="block text-gray-700 hover:text-pink-600 transition">Pricing</Link>
                 <Link href="/gallery" className="block text-gray-700 hover:text-pink-600 transition">Gallery</Link>
+                <Link href="/reviews" className="block text-gray-700 hover:text-pink-600 transition">Reviews</Link>
                 <Link href="/login" className="block text-gray-700 hover:text-pink-600 transition">Log In</Link>
                 <Link href="/register" className="block text-gray-700 hover:text-pink-600 transition">Sign Up</Link>
               </div>

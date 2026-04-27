@@ -87,7 +87,7 @@ export default function Gallery() {
             <div className="space-y-3">
               <h3 className="text-xl font-bold text-gray-800 tracking-widest">MARVELOUSLY POLISHED</h3>
               <p className="text-gray-700 text-sm leading-relaxed">
-                Premium nail care in Santa Ana. Where beauty meets artistry.
+                Premium nail care in Ylaya, Barili. Where beauty meets artistry.
               </p>
               <p className="text-pink-600 font-medium text-sm">Beauty Starts From Tips to Toes 💅</p>
             </div>

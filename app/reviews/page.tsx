@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 export default function Reviews() {
   const [reviews, setReviews] = useState<{ id: string; name: string; rating: number; comment: string; created_at: string }[]>([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function Reviews() {
           <span className="text-black font-bold tracking-[0.2em] text-base hidden lg:block">MARVELOUSLY POLISHED</span>
         </Link>
         <div className="flex items-center gap-1.5 flex-wrap justify-end">
-          {isLoggedIn ? (
+          {isLoggedIn === null ? null : isLoggedIn ? (
             <>
               <Link href="/homepage" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🏠 Home</Link>
               <Link href="/book" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">📅 Book</Link>

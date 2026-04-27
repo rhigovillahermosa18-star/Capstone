@@ -11,7 +11,7 @@ export default function Reviews() {
 
   useEffect(() => {
     setIsLoggedIn(!!localStorage.getItem("user_id"));
-    fetch("/api/reviews").then(r => r.json()).then(d => { setReviews(d); setLoading(false); });
+    fetch("/api/reviews", { cache: "no-store" }).then(r => r.json()).then(d => { setReviews(Array.isArray(d) ? d : []); setLoading(false); });
   }, []);
 
   const avgRating = reviews.length > 0

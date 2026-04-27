@@ -8,15 +8,10 @@ const nailImages = ["/nail1.jpg","/nail2.jpg","/nail3.jpg","/nail4.jpg","/nail5.
 
 export default function LandingPage() {
   const [current, setCurrent] = useState(0);
-  const [reviews, setReviews] = useState<{ id: string; name: string; rating: number; comment: string }[]>([]);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrent((prev) => (prev + 1) % nailImages.length), 3000);
     return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    fetch("/api/reviews").then(r => r.json()).then(d => setReviews(d));
   }, []);
 
   return (
@@ -70,7 +65,6 @@ export default function LandingPage() {
           </div>
 
           <div className="flex flex-col items-center gap-4">
-            <Image src="/logo1.png" alt="Logo" width={160} height={160} className="rounded-full shadow-2xl border-4 border-white" />
             <div className="relative w-full max-w-xl overflow-hidden rounded-2xl shadow-lg">
               <div className="flex transition-transform duration-700 ease-in-out" style={{ transform: `translateX(-${current * 100}%)` }}>
                 {nailImages.map((src, i) => (
@@ -84,34 +78,6 @@ export default function LandingPage() {
             </div>
           </div>
 
-        </div>
-      </div>
-
-      {/* Reviews Section */}
-      <div id="reviews" className="relative z-10 px-6 py-16 bg-white/50">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-800 text-center mb-2">⭐ Customer Reviews</h2>
-          <p className="text-center text-gray-500 text-sm mb-10">What our clients say about us</p>
-          {reviews.length === 0 ? (
-            <p className="text-center text-gray-400">No reviews yet. Be the first!</p>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {reviews.map((r) => (
-                <div key={r.id} className="bg-white rounded-2xl p-6 shadow-lg border border-pink-100">
-                  <div className="flex justify-between items-center mb-3">
-                    <p className="font-bold text-gray-800">{r.name}</p>
-                    <span className="text-yellow-400">{"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}</span>
-                  </div>
-                  <p className="text-gray-600 text-sm leading-relaxed">{r.comment}</p>
-                </div>
-              ))}
-            </div>
-          )}
-          <div className="text-center mt-10">
-            <Link href="/register" className="inline-block bg-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-pink-600 transition shadow-lg">
-              Book Your Appointment
-            </Link>
-          </div>
         </div>
       </div>
 

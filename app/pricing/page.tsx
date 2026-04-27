@@ -2,8 +2,21 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Pricing() {
+  const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem("user_id"));
+  }, []);
+
+  const handleBook = (service: string) => {
+    if (isLoggedIn) router.push(`/book?service=${encodeURIComponent(service)}`);
+    else router.push("/login");
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#FFE4EF] to-[#FFD3DF] flex flex-col relative overflow-hidden">
 
@@ -16,19 +29,23 @@ export default function Pricing() {
 
       {/* Header + Navigation */}
       <div className="bg-[#FFD3DF] px-5 py-3 shadow-sm relative z-10 flex items-center justify-between gap-2">
-        <Link href="/homepage" className="flex items-center gap-2 flex-shrink-0">
+        <Link href="/" className="flex items-center gap-2 flex-shrink-0">
           <Image src="/logo1.png" alt="Logo" width={50} height={50} className="rounded-full border-2 border-white shadow" />
           <span className="text-black font-bold tracking-[0.2em] text-base hidden lg:block">MARVELOUSLY POLISHED</span>
         </Link>
         <div className="flex items-center gap-1.5 flex-wrap justify-end">
-          <Link href="/homepage" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🏠 Home</Link>
-          <Link href="/book" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">📅 Book</Link>
+          <Link href="/" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🏠 Home</Link>
           <Link href="/pricing" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">💰 Pricing</Link>
           <Link href="/gallery" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🖼️ Gallery</Link>
-          <Link href="/appointments" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">📋 Appointments</Link>
-          <Link href="/payment" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">💳 Payment</Link>
-          <Link href="/settings" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">⚙️ Settings</Link>
-          <Link href="/login" onClick={() => localStorage.removeItem("role")} className="bg-gray-200 px-3.5 py-2 rounded-full text-gray-700 text-sm hover:bg-gray-300 transition">🚪 Logout</Link>
+          <Link href="/#reviews" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">⭐ Reviews</Link>
+          {isLoggedIn ? (
+            <Link href="/homepage" className="bg-pink-500 text-white px-3.5 py-2 rounded-full text-sm hover:bg-pink-600 transition">💅 Dashboard</Link>
+          ) : (
+            <>
+              <Link href="/login" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🔑 Log In</Link>
+              <Link href="/register" className="bg-pink-500 text-white px-3.5 py-2 rounded-full text-sm hover:bg-pink-600 transition">✨ Sign Up</Link>
+            </>
+          )}
         </div>
       </div>
 
@@ -62,7 +79,7 @@ export default function Pricing() {
                   <span className="text-xl font-bold text-pink-500">₱500</span>
                 </div>
               </div>
-              <Link href="/book?service=Plain+Set" className="mt-6 block w-full bg-pink-100 text-pink-600 py-3 rounded-xl font-semibold text-center hover:bg-pink-200 transition">Book Now</Link>
+              <button onClick={() => handleBook("Plain Set")} className="mt-6 block w-full bg-pink-100 text-pink-600 py-3 rounded-xl font-semibold text-center hover:bg-pink-200 transition">Book Now</button>
             </div>
 
             {/* Basic Set */}
@@ -86,7 +103,7 @@ export default function Pricing() {
                   <span className="text-xl font-bold">₱550</span>
                 </div>
               </div>
-              <Link href="/book?service=Basic+Set" className="mt-6 block w-full bg-white text-pink-500 py-3 rounded-xl font-semibold text-center hover:bg-pink-50 transition">Book Now</Link>
+              <button onClick={() => handleBook("Basic Set")} className="mt-6 block w-full bg-white text-pink-500 py-3 rounded-xl font-semibold text-center hover:bg-pink-50 transition">Book Now</button>
             </div>
 
             {/* Full Set */}
@@ -109,7 +126,7 @@ export default function Pricing() {
                   <span className="text-xl font-bold text-pink-500">₱700</span>
                 </div>
               </div>
-              <Link href="/book?service=Full+Set" className="mt-6 block w-full bg-pink-100 text-pink-600 py-3 rounded-xl font-semibold text-center hover:bg-pink-200 transition">Book Now</Link>
+              <button onClick={() => handleBook("Full Set")} className="mt-6 block w-full bg-pink-100 text-pink-600 py-3 rounded-xl font-semibold text-center hover:bg-pink-200 transition">Book Now</button>
             </div>
 
           </div>

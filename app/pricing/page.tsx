@@ -165,9 +165,13 @@ export default function Pricing() {
               <h4 className="font-bold text-gray-800 text-lg">Quick Links</h4>
               <div className="space-y-2 text-sm">
                 <Link href="/homepage" className="block text-gray-700 hover:text-pink-600 transition">Home</Link>
+                {isLoggedIn && <Link href="/book" className="block text-gray-700 hover:text-pink-600 transition">Book Appointment</Link>}
                 <Link href="/pricing" className="block text-gray-700 hover:text-pink-600 transition">Pricing</Link>
                 <Link href="/gallery" className="block text-gray-700 hover:text-pink-600 transition">Gallery</Link>
+                {isLoggedIn && <Link href="/appointments" className="block text-gray-700 hover:text-pink-600 transition">Appointments</Link>}
                 <Link href="/reviews" className="block text-gray-700 hover:text-pink-600 transition">Reviews</Link>
+                {isLoggedIn && <Link href="/payment" className="block text-gray-700 hover:text-pink-600 transition">Payment</Link>}
+                {isLoggedIn && <Link href="/settings" className="block text-gray-700 hover:text-pink-600 transition">Settings</Link>}
                 {!isLoggedIn && (
                   <>
                     <Link href="/login" className="block text-gray-700 hover:text-pink-600 transition">Log In</Link>

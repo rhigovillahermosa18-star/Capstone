@@ -14,7 +14,9 @@ export default function LandingPage() {
 
   useEffect(() => {
     const user_id = localStorage.getItem("user_id");
-    if (user_id) { router.replace("/homepage"); return; }
+    const role = document.cookie.split(";").find(c => c.trim().startsWith("role="));
+    if (user_id && role) { router.replace("/homepage"); return; }
+    if (user_id && !role) { localStorage.removeItem("user_id"); localStorage.removeItem("role"); }
     setReady(true);
     const timer = setInterval(() => setCurrent((prev) => (prev + 1) % nailImages.length), 3000);
     return () => clearInterval(timer);

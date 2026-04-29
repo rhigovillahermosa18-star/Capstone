@@ -70,7 +70,6 @@ export default function LandingPage() {
             <div className="flex gap-6 justify-center lg:justify-start text-sm text-gray-600 flex-wrap">
               <div className="flex items-center gap-2"><span className="text-pink-500 text-xl">✓</span><span>Premium Products</span></div>
               <div className="flex items-center gap-2"><span className="text-pink-500 text-xl">✓</span><span>Ylaya, Barili</span></div>
-              <div className="flex items-center gap-2"><span className="text-pink-500 text-xl">✓</span><span>Expert Artists</span></div>
             </div>
           </div>
 

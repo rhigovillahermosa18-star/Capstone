@@ -108,7 +108,7 @@ export default function Login() {
                 {loading ? "Logging in..." : "Login"}
               </button>
 
-              <div className="text-right">
+              <div className="text-center">
                 <Link href="/forgot-password" className="text-sm text-pink-500 hover:text-pink-600">Forgot Password?</Link>
               </div>
             </div>

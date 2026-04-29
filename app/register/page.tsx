@@ -129,10 +129,10 @@ export default function Register() {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
                 <input
                   type="text"
-                  placeholder="Choose a username"
+                  placeholder="Enter your full name"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition"

@@ -36,7 +36,7 @@ export default function Settings() {
   }, [router]);
 
   const handleUpdateProfile = async () => {
-    if (!username.trim()) { setError("Username is required."); return; }
+    if (!username.trim()) { setError("Full name is required."); return; }
     setLoading(true); setError(""); setSuccess("");
     const res = await fetch("/api/users", {
       method: "PATCH",
@@ -112,7 +112,7 @@ export default function Settings() {
             <div className="bg-white rounded-2xl shadow-lg border border-pink-100 p-8 space-y-4">
               <h3 className="text-xl font-bold text-gray-800 mb-4">👤 Profile Information</h3>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
                 <input value={username} onChange={(e) => setUsername(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition" />
               </div>
               <div>

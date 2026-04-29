@@ -100,10 +100,6 @@ export default function Login() {
 
               {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
-              <div className="text-right">
-                <Link href="/forgot-password" className="text-sm text-pink-500 hover:text-pink-600">Forgot Password?</Link>
-              </div>
-
               <button
                 onClick={handleLogin}
                 disabled={loading}
@@ -111,6 +107,10 @@ export default function Login() {
               >
                 {loading ? "Logging in..." : "Login"}
               </button>
+
+              <div className="text-right">
+                <Link href="/forgot-password" className="text-sm text-pink-500 hover:text-pink-600">Forgot Password?</Link>
+              </div>
             </div>
 
             <div className="mt-6 text-center">

@@ -119,7 +119,7 @@ export default function Home() {
             </div>
             <div className="space-y-3">
               <h4 className="font-bold text-gray-800 text-lg">Quick Links</h4>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+              <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
                 <Link href="/homepage" className="text-gray-700 hover:text-pink-600 transition">Home</Link>
                 <Link href="/appointments" className="text-gray-700 hover:text-pink-600 transition">Appointments</Link>
                 <Link href="/book" className="text-gray-700 hover:text-pink-600 transition">Book</Link>

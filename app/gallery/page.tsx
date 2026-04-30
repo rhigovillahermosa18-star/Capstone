@@ -104,7 +104,7 @@ export default function Gallery() {
     <footer className="bg-[#FFD3DF] relative z-10 pt-12 pb-6 px-6">
         <div className="max-w-6xl mx-auto">
 
-          <div className="grid md:grid-cols-4 gap-8 mb-10">
+          <div className="grid md:grid-cols-3 gap-8 mb-10">
 
             {/* Brand */}
             <div className="space-y-3">
@@ -117,17 +117,19 @@ export default function Gallery() {
 
             {/* Quick Links */}
             <div className="space-y-3">
-              <h4 className="font-bold text-gray-800 text-lg">Quick Links</h4>
+              <h4 className="font-bold text-gray-800 text-lg text-center">Quick Links</h4>
               {isLoggedIn ? (
-                <div className="grid grid-cols-2 gap-x-4 gap-y-0.5 text-sm">
-                  <Link href="/homepage" className="text-gray-700 hover:text-pink-600 transition">Home</Link>
-                  <Link href="/appointments" className="text-gray-700 hover:text-pink-600 transition">Appointments</Link>
-                  <Link href="/book" className="text-gray-700 hover:text-pink-600 transition">Book</Link>
-                  <Link href="/reviews" className="text-gray-700 hover:text-pink-600 transition">Reviews</Link>
-                  <Link href="/pricing" className="text-gray-700 hover:text-pink-600 transition">Pricing</Link>
-                  <Link href="/payment" className="text-gray-700 hover:text-pink-600 transition">Payment</Link>
-                  <Link href="/gallery" className="text-gray-700 hover:text-pink-600 transition">Gallery</Link>
-                  <Link href="/settings" className="text-gray-700 hover:text-pink-600 transition">Settings</Link>
+                <div className="flex justify-center">
+                <div className="grid grid-cols-2 gap-x-2 gap-y-0.5 text-sm">
+                  <Link href="/homepage" className="text-gray-700 hover:text-pink-600 transition">🏠 Home</Link>
+                  <Link href="/appointments" className="text-gray-700 hover:text-pink-600 transition">📋 Appointments</Link>
+                  <Link href="/book" className="text-gray-700 hover:text-pink-600 transition">📅 Book</Link>
+                  <Link href="/reviews" className="text-gray-700 hover:text-pink-600 transition">⭐ Reviews</Link>
+                  <Link href="/pricing" className="text-gray-700 hover:text-pink-600 transition">💰 Pricing</Link>
+                  <Link href="/payment" className="text-gray-700 hover:text-pink-600 transition">💳 Payment</Link>
+                  <Link href="/gallery" className="text-gray-700 hover:text-pink-600 transition">🖼️ Gallery</Link>
+                  <Link href="/settings" className="text-gray-700 hover:text-pink-600 transition">⚙️ Settings</Link>
+                </div>
                 </div>
               ) : (
                 <div className="space-y-1 text-sm">

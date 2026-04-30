@@ -119,15 +119,15 @@ export default function Home() {
             </div>
             <div className="space-y-3">
               <h4 className="font-bold text-gray-800 text-lg">Quick Links</h4>
-              <div className="space-y-2 text-sm">
-                <Link href="/homepage" className="block text-gray-700 hover:text-pink-600 transition">Home</Link>
-                <Link href="/book" className="block text-gray-700 hover:text-pink-600 transition">Book Appointment</Link>
-                <Link href="/pricing" className="block text-gray-700 hover:text-pink-600 transition">Pricing</Link>
-                <Link href="/gallery" className="block text-gray-700 hover:text-pink-600 transition">Gallery</Link>
-                <Link href="/appointments" className="block text-gray-700 hover:text-pink-600 transition">Appointments</Link>
-                <Link href="/reviews" className="block text-gray-700 hover:text-pink-600 transition">Reviews</Link>
-                <Link href="/payment" className="block text-gray-700 hover:text-pink-600 transition">Payment</Link>
-                <Link href="/settings" className="block text-gray-700 hover:text-pink-600 transition">Settings</Link>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                <Link href="/homepage" className="text-gray-700 hover:text-pink-600 transition">Home</Link>
+                <Link href="/appointments" className="text-gray-700 hover:text-pink-600 transition">Appointments</Link>
+                <Link href="/book" className="text-gray-700 hover:text-pink-600 transition">Book</Link>
+                <Link href="/reviews" className="text-gray-700 hover:text-pink-600 transition">Reviews</Link>
+                <Link href="/pricing" className="text-gray-700 hover:text-pink-600 transition">Pricing</Link>
+                <Link href="/payment" className="text-gray-700 hover:text-pink-600 transition">Payment</Link>
+                <Link href="/gallery" className="text-gray-700 hover:text-pink-600 transition">Gallery</Link>
+                <Link href="/settings" className="text-gray-700 hover:text-pink-600 transition">Settings</Link>
               </div>
             </div>
             <div className="space-y-3">

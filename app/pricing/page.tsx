@@ -161,7 +161,7 @@ export default function Pricing() {
             </div>
 
             {/* Quick Links */}
-            <div className="md:col-span-2 space-y-3">
+            <div className="space-y-3">
               <h4 className="font-bold text-gray-800 text-lg">Quick Links</h4>
               {isLoggedIn ? (
                 <div className="grid grid-cols-2 gap-x-4 gap-y-0.5 text-sm">

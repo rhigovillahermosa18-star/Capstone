@@ -174,7 +174,7 @@ export default function Settings() {
               <p className="text-gray-700 text-sm leading-relaxed">Premium nail care in Ylaya, Barili. Where beauty meets artistry.</p>
               <p className="text-pink-600 font-medium text-sm">Beauty Starts From Tips to Toes 💅</p>
             </div>
-            <div className="md:col-span-2 space-y-3">
+            <div className="space-y-3">
               <h4 className="font-bold text-gray-800 text-lg">Quick Links</h4>
               <div className="grid grid-cols-2 gap-x-6 gap-y-0.5 text-sm">
                 <Link href="/homepage" className="text-gray-700 hover:text-pink-600 transition">Home</Link>

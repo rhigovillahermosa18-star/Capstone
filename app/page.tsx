@@ -101,7 +101,7 @@ export default function LandingPage() {
             </div>
             <div className="space-y-3">
               <h4 className="font-bold text-gray-800 text-lg">Quick Links</h4>
-              <div className="space-y-2 text-sm">
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
                 <Link href="/" className="block text-gray-700 hover:text-pink-600 transition">Home</Link>
                 <Link href="/pricing" className="block text-gray-700 hover:text-pink-600 transition">Pricing</Link>
                 <Link href="/gallery" className="block text-gray-700 hover:text-pink-600 transition">Gallery</Link>

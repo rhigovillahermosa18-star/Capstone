@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const TOTAL_SLOTS = 4;
 
@@ -119,44 +121,35 @@ function BookContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#FFF0F5] via-[#FFE4EF] to-[#FFD3DF] flex flex-col relative overflow-hidden">
 
-      <div className="absolute top-20 left-[-120px] w-80 h-80 bg-pink-300 rounded-full opacity-30 blur-3xl"></div>
-      <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl"></div>
+      <div className="absolute top-[-60px] left-[-100px] w-96 h-96 bg-pink-200 rounded-full opacity-40 blur-3xl" />
+      <div className="absolute bottom-0 right-[-100px] w-96 h-96 bg-pink-300 rounded-full opacity-30 blur-3xl" />
 
-      {/* Header + Navigation */}
-      <div className="bg-[#FFD3DF] px-5 py-3 shadow-sm relative z-10 flex items-center justify-between gap-2">
-        <Link href="/homepage" className="flex items-center gap-2 flex-shrink-0">
-          <Image src="/logo1.png" alt="Logo" width={50} height={50} className="rounded-full border-2 border-white shadow" />
-          <span className="text-black font-bold tracking-[0.2em] text-base hidden lg:block">MARVELOUSLY POLISHED</span>
-        </Link>
-        <div className="flex items-center gap-1.5 flex-wrap justify-end">
-          <Link href="/homepage" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Home</Link>
-          <Link href="/book" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Book</Link>
-          <Link href="/pricing" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Pricing</Link>
-          <Link href="/gallery" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Gallery</Link>
-          <Link href="/appointments" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Appointments</Link>
-          <Link href="/reviews" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Reviews</Link>
-          <Link href="/payment" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Payment</Link>
-          <Link href="/settings" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Settings</Link>
-          <button onClick={async () => { await fetch("/api/logout", { method: "POST" }); localStorage.removeItem("role"); localStorage.removeItem("user_id"); router.push("/"); }} className="bg-gray-200 px-3.5 py-2 rounded-full text-gray-700 text-sm hover:bg-gray-300 transition">Logout</button>
-        </div>
-      </div>
+      <Navbar active="Book" mode="auth" />
 
       {/* Booking Section */}
-      <div className="flex-grow flex justify-center px-6 py-12 relative z-10">
-        <div className="max-w-6xl w-full grid lg:grid-cols-2 gap-8 items-start">
+      <div className="flex-grow flex justify-center px-6 py-10 relative z-10">
+        <div className="max-w-6xl w-full">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center gap-2 bg-pink-100 text-pink-600 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide mb-3">
+              <span>💅</span> Book an Appointment
+            </div>
+            <h1 className="text-3xl font-extrabold text-gray-800">Book Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-pink-400">Appointment</span></h1>
+            <p className="text-gray-500 text-sm mt-1">Fill in the details below to schedule your visit</p>
+          </div>
+          <div className="grid lg:grid-cols-2 gap-8 items-start">
 
           {/* Left - Booking Form */}
-          <div className="bg-white p-8 rounded-2xl shadow-2xl border border-pink-100 flex flex-col">
-            <h2 className="text-center font-bold mb-2 text-gray-800 text-3xl">Book Your Appointment</h2>
-            <p className="text-center text-pink-400 text-sm mb-6">💅 Fill in the details below</p>
+          <div className="bg-white/90 backdrop-blur p-8 rounded-3xl shadow-xl border border-pink-100 flex flex-col">
+            <h2 className="text-center font-extrabold mb-1 text-gray-800 text-2xl">Your Details</h2>
+            <p className="text-center text-gray-400 text-sm mb-6">Fill in your info to book</p>
 
-            <div className="space-y-4 flex-grow">
-              <input placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition" />
-              <input placeholder="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition" />
-              <input placeholder="Email Address" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition" />
-              <select value={service} onChange={(e) => setService(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition">
+            <div className="space-y-3 flex-grow">
+              <input placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-800 text-sm focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition bg-gray-50" />
+              <input placeholder="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-800 text-sm focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition bg-gray-50" />
+              <input placeholder="Email Address" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-800 text-sm focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition bg-gray-50" />
+              <select value={service} onChange={(e) => setService(e.target.value)} className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-800 text-sm focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition bg-gray-50">
                 <option value="">Select Service</option>
                 <option>Plain Set</option>
                 <option>Basic Set</option>
@@ -234,126 +227,72 @@ function BookContent() {
                 {!date && <p className="text-xs text-gray-400 mt-2">Please select a date first</p>}
               </div>
 
-              <textarea placeholder="Special Requests (optional)" rows={2} value={requests} onChange={(e) => setRequests(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none" />
+              <textarea placeholder="Special Requests (optional)" rows={2} value={requests} onChange={(e) => setRequests(e.target.value)} className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-800 text-sm focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition resize-none bg-gray-50" />
 
-              {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-              <button onClick={handleSubmit} disabled={loading} className="w-full bg-pink-500 text-white py-4 rounded-xl font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300 disabled:opacity-50">
-                {loading ? "Submitting..." : "Confirm Appointment"}
+              {error && <div className="bg-red-50 border border-red-200 text-red-500 text-sm px-4 py-2.5 rounded-xl">{error}</div>}
+              <button onClick={handleSubmit} disabled={loading} className="w-full bg-gradient-to-r from-pink-500 to-pink-400 text-white py-3 rounded-xl font-semibold text-sm hover:shadow-lg hover:shadow-pink-200 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50">
+                {loading ? "Submitting..." : "Confirm Appointment 💅"}
               </button>
             </div>
           </div>
 
           {/* Right - Design Upload */}
           <div className="hidden lg:flex flex-col gap-6">
-            <div className="bg-white p-8 rounded-2xl shadow-2xl border border-pink-100 flex flex-col gap-6">
+            <div className="bg-white/90 backdrop-blur p-8 rounded-3xl shadow-xl border border-pink-100 flex flex-col gap-5">
               <div>
-                <h3 className="text-pink-600 font-bold text-xl mb-1 flex items-center gap-2">💅 Upload Your Desired Design</h3>
-                <p className="text-gray-500 text-sm mb-4">Share a photo of the nail design you want (PNG, JPG)</p>
-                <div className="border-2 border-dashed border-pink-300 rounded-xl p-6 bg-pink-50 flex flex-col items-center justify-center gap-3">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0] || null;
-                      setDesignFile(file);
-                      if (file) setDesignPreview(URL.createObjectURL(file));
-                      else setDesignPreview("");
-                    }}
-                    className="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-pink-400 file:text-white hover:file:bg-pink-500 cursor-pointer"
-                  />
+                <h3 className="text-pink-600 font-bold text-lg mb-1 flex items-center gap-2">💅 Upload Your Desired Design</h3>
+                <p className="text-gray-400 text-sm mb-3">Share a photo of the nail design you want (PNG, JPG)</p>
+                <div className="border-2 border-dashed border-pink-200 rounded-2xl p-5 bg-pink-50/50 flex flex-col items-center gap-3">
+                  <input type="file" accept="image/*" onChange={(e) => { const file = e.target.files?.[0] || null; setDesignFile(file); if (file) setDesignPreview(URL.createObjectURL(file)); else setDesignPreview(""); }} className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-gradient-to-r file:from-pink-500 file:to-pink-400 file:text-white hover:file:shadow-md cursor-pointer" />
                   {designPreview ? (
-                    <img src={designPreview} alt="Design preview" className="w-full h-64 object-cover rounded-xl mt-2" />
+                    <img src={designPreview} alt="Design preview" className="w-full h-56 object-cover rounded-xl mt-1 shadow-md" />
                   ) : (
-                    <div className="w-full h-64 bg-pink-100 rounded-xl flex items-center justify-center">
+                    <div className="w-full h-56 bg-pink-100/50 rounded-xl flex flex-col items-center justify-center gap-2">
+                      <span className="text-3xl">🖼️</span>
                       <p className="text-gray-400 text-sm">Preview will appear here</p>
                     </div>
                   )}
                 </div>
               </div>
               <div>
-                <h3 className="text-pink-600 font-bold text-xl mb-2 flex items-center gap-2">✨ Describe Your Design</h3>
-                <textarea
-                  placeholder="Describe your dream design (e.g. French tips, glitter, floral, color preferences...)"
-                  rows={5}
-                  value={design}
-                  onChange={(e) => setDesign(e.target.value)}
-                  className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition resize-none"
-                />
+                <h3 className="text-pink-600 font-bold text-lg mb-2 flex items-center gap-2">✨ Describe Your Design</h3>
+                <textarea placeholder="Describe your dream design (e.g. French tips, glitter, floral, color preferences...)" rows={4} value={design} onChange={(e) => setDesign(e.target.value)} className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-800 text-sm focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition resize-none bg-gray-50" />
               </div>
             </div>
 
             {/* Nail Care Tips */}
-            <div className="bg-gradient-to-br from-pink-100 to-white p-6 rounded-2xl shadow-lg border border-pink-100">
-              <h3 className="text-pink-600 font-bold text-xl mb-4 flex items-center gap-2">
-                <span>✨</span> Nail Care Tips
-              </h3>
+            <div className="bg-white/90 backdrop-blur p-6 rounded-3xl shadow-xl border border-pink-100">
+              <h3 className="text-pink-600 font-bold text-lg mb-4 flex items-center gap-2">✨ Nail Care Tips</h3>
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  { icon: "💧", title: "Stay Hydrated", desc: "Moisturize cuticles daily for healthy nails" },
-                  { icon: "🌸", title: "Gentle Filing", desc: "File in one direction to prevent breakage" },
-                  { icon: "🛡️", title: "Base Coat", desc: "Always apply base coat for longer lasting color" },
-                  { icon: "☀️", title: "Sun Protection", desc: "UV rays can fade your nail color faster" },
+                  { icon: "💧", title: "Stay Hydrated", desc: "Moisturize cuticles daily" },
+                  { icon: "🌸", title: "Gentle Filing", desc: "File in one direction" },
+                  { icon: "🛡️", title: "Base Coat", desc: "Always apply base coat" },
+                  { icon: "☀️", title: "Sun Protection", desc: "UV rays fade nail color" },
                 ].map((tip) => (
-                  <div key={tip.title} className="bg-white rounded-xl p-3 shadow-sm border border-white">
+                  <div key={tip.title} className="bg-gradient-to-br from-pink-50 to-white rounded-2xl p-3 border border-pink-100">
                     <p className="text-2xl mb-1">{tip.icon}</p>
                     <p className="font-semibold text-gray-800 text-sm">{tip.title}</p>
-                    <p className="text-gray-500 text-xs mt-1">{tip.desc}</p>
+                    <p className="text-gray-400 text-xs mt-0.5">{tip.desc}</p>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
+          </div>
+
         </div>
       </div>
 
-      <footer className="bg-[#FFD3DF] relative z-10 pt-12 pb-6 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 mb-10">
-            <div className="space-y-3">
-              <h3 className="text-xl font-bold text-gray-800 tracking-widest">MARVELOUSLY POLISHED</h3>
-              <p className="text-gray-700 text-sm leading-relaxed">Premium nail care in Ylaya, Barili. Where beauty meets artistry.</p>
-              <p className="text-pink-600 font-medium text-sm">Beauty Starts From Tips to Toes 💅</p>
-            </div>
-            <div className="space-y-3">
-              <h4 className="font-bold text-gray-800 text-lg text-center">Quick Links</h4>
-              <div className="flex justify-center">
-              <div className="grid grid-cols-2 gap-x-2 gap-y-0.5 text-sm">
-                <Link href="/homepage" className="text-gray-700 hover:text-pink-600 transition">Home</Link>
-                <Link href="/appointments" className="text-gray-700 hover:text-pink-600 transition">Appointments</Link>
-                <Link href="/book" className="text-gray-700 hover:text-pink-600 transition">Book</Link>
-                <Link href="/reviews" className="text-gray-700 hover:text-pink-600 transition">Reviews</Link>
-                <Link href="/pricing" className="text-gray-700 hover:text-pink-600 transition">Pricing</Link>
-                <Link href="/payment" className="text-gray-700 hover:text-pink-600 transition">Payment</Link>
-                <Link href="/gallery" className="text-gray-700 hover:text-pink-600 transition">Gallery</Link>
-                <Link href="/settings" className="text-gray-700 hover:text-pink-600 transition">Settings</Link>
-              </div>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <h4 className="font-bold text-gray-800 text-lg">Contact Us</h4>
-              <div className="space-y-2 text-sm text-gray-700">
-                <p>📍 Ylaya, Barili, Cebu</p>
-                <p>📞 09064455283</p>
-                <p>📸 Instagram: marvelously.polished</p>
-                <p>⏰ Mon–Sat: 9AM – 7PM</p>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-pink-300 pt-6 flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-gray-700">
-            <p>© 2026 Marvelously Polished. All rights reserved.</p>
-            <p>Ylaya, Barili, Cebu | Book Your Glam Today 💅</p>
-          </div>
-        </div>
-      </footer>
-
+      <Footer isLoggedIn={true} />
     </div>
   );
 }
 
 export default function Book() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#FFE4EF] flex items-center justify-center"><p className="text-pink-500">Loading...</p></div>}>
+    <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-[#FFF0F5] via-[#FFE4EF] to-[#FFD3DF] flex items-center justify-center"><p className="text-pink-500 font-medium">Loading...</p></div>}>
       <BookContent />
     </Suspense>
   );

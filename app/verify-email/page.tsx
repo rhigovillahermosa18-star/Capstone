@@ -47,7 +47,7 @@ function VerifyContent() {
             <div className="text-5xl">✅</div>
             <h2 className="text-2xl font-bold text-gray-800">Email Verified!</h2>
             <p className="text-gray-600">{message}</p>
-            <Link href="/login" className="inline-block mt-4 bg-pink-500 text-white px-8 py-3 rounded-xl font-semibold hover:bg-pink-600 transition">
+            <Link href="/login?verified=true" className="inline-block mt-4 bg-pink-500 text-white px-8 py-3 rounded-xl font-semibold hover:bg-pink-600 transition">
               Go to Login
             </Link>
           </>

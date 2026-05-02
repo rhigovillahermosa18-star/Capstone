@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 type Appointment = {
   id: string;
@@ -90,117 +92,106 @@ export default function Appointments() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#FFF0F5] via-[#FFE4EF] to-[#FFD3DF] flex flex-col relative overflow-hidden">
 
-      <div className="absolute top-20 left-[-120px] w-80 h-80 bg-pink-300 rounded-full opacity-30 blur-3xl"></div>
-      <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl"></div>
+      <div className="absolute top-[-60px] left-[-100px] w-96 h-96 bg-pink-200 rounded-full opacity-40 blur-3xl" />
+      <div className="absolute bottom-0 right-[-100px] w-96 h-96 bg-pink-300 rounded-full opacity-30 blur-3xl" />
 
-      {/* Header + Navigation */}
-      <div className="bg-[#FFD3DF] px-5 py-3 shadow-sm relative z-10 flex items-center justify-between gap-2">
-        <Link href="/homepage" className="flex items-center gap-2 flex-shrink-0">
-          <Image src="/logo1.png" alt="Logo" width={50} height={50} className="rounded-full border-2 border-white shadow" />
-          <span className="text-black font-bold tracking-[0.2em] text-base hidden lg:block">MARVELOUSLY POLISHED</span>
-        </Link>
-        <div className="flex items-center gap-1.5 flex-wrap justify-end">
-          <Link href="/homepage" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Home</Link>
-          <Link href="/book" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Book</Link>
-          <Link href="/pricing" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Pricing</Link>
-          <Link href="/gallery" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Gallery</Link>
-          <Link href="/appointments" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Appointments</Link>
-          <Link href="/reviews" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Reviews</Link>
-          <Link href="/payment" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Payment</Link>
-          <Link href="/settings" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Settings</Link>
-          <button onClick={handleLogout} className="bg-gray-200 px-3.5 py-2 rounded-full text-gray-700 text-sm hover:bg-gray-300 transition">Logout</button>
-        </div>
-      </div>
+      <Navbar active="Appointments" mode="auth" />
 
       {/* Content */}
-      <div className="flex-grow px-6 py-12 relative z-10">
+      <div className="flex-grow px-6 py-10 relative z-10">
         <div className="max-w-4xl mx-auto">
-
-          <h2 className="text-4xl font-bold text-gray-800 mb-2 text-center">My Appointments</h2>
-          <p className="text-center text-gray-600 mb-10">View and manage your upcoming nail appointments</p>
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center gap-2 bg-pink-100 text-pink-600 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide mb-3">
+              <span>📋</span> My Appointments
+            </div>
+            <h2 className="text-3xl font-extrabold text-gray-800">My <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-pink-400">Appointments</span></h2>
+            <p className="text-gray-500 text-sm mt-1">View and manage your upcoming nail appointments</p>
+          </div>
 
           {loading ? (
-            <div className="bg-white p-12 rounded-2xl shadow-lg text-center">
-              <p className="text-gray-500 text-lg">Loading appointments...</p>
+            <div className="grid gap-4">
+              {[1,2,3].map(i => <div key={i} className="bg-white h-28 rounded-2xl shadow animate-pulse" />)}
             </div>
           ) : appointments.length === 0 ? (
             <div className="bg-white p-12 rounded-2xl shadow-lg text-center">
               <p className="text-5xl mb-4">💅</p>
               <p className="text-gray-600 text-lg mb-6">You have no appointments yet.</p>
-              <Link href="/book" className="inline-block bg-pink-500 text-white px-10 py-4 rounded-full font-semibold text-lg hover:bg-pink-600 transition">
+              <Link href="/book" className="inline-block bg-gradient-to-r from-pink-500 to-pink-400 text-white px-10 py-3 rounded-full font-semibold hover:shadow-lg hover:shadow-pink-200 hover:scale-105 transition-all duration-300">
                 Book Now
               </Link>
             </div>
           ) : (
             <div className="space-y-4">
               {appointments.map((appt) => (
-                <div key={appt.id} className="bg-white p-6 rounded-2xl shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
-                  <div className="flex items-center gap-4">
-                    <div className="bg-pink-100 text-2xl w-14 h-14 rounded-full flex items-center justify-center">💅</div>
-                    <div>
-                      <p className="font-bold text-gray-800 text-lg">{appt.name}</p>
-                      <p className="text-gray-600 text-sm">{appt.service}</p>
-                      {appt.design && <p className="text-pink-500 text-xs mt-1">Design: {appt.design}</p>}
-                      {appt.design_image && (
-                        <img src={appt.design_image} alt="Design" className="mt-2 w-24 h-24 object-cover rounded-xl border-2 border-pink-200" />
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="flex gap-8 text-sm text-gray-600">
-                    <div>
-                      <p className="font-semibold text-gray-800">📅 Date</p>
-                      <p>{appt.date}</p>
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-800">⏰ Time</p>
-                      <p>{appt.time}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                      appt.status === "Confirmed" ? "bg-green-100 text-green-600"
-                      : appt.status === "Cancelled" ? "bg-red-100 text-red-500"
-                      : appt.status === "Done" ? "bg-blue-100 text-blue-600"
-                      : "bg-yellow-100 text-yellow-600"
-                    }`}>
-                      {appt.status}
-                    </span>
-                    {appt.status === "Done" && (
-                      <button
-                        onClick={() => { setReviewAppt(appt); setReviewName(appt.name); }}
-                        className="bg-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-pink-600 transition"
-                      >
-                        ⭐ Leave a Review
-                      </button>
-                    )}
-                    {appt.status !== "Cancelled" && appt.status !== "Done" && (
-                      <div className="flex gap-2">
-                        {!hasPaid(appt.id) && (
-                          <Link
-                            href={`/payment?service=${encodeURIComponent(appt.service)}&id=${appt.id}&name=${encodeURIComponent(appt.name)}`}
-                            className="bg-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-pink-600 transition"
-                          >
-                            💳 Pay
-                          </Link>
-                        )}
-                        {hasPaid(appt.id) ? (
-                          <span className="bg-gray-100 text-gray-400 px-4 py-2 rounded-full text-sm font-semibold cursor-not-allowed" title="No refunds after payment">
-                            🚫 No Refund
-                          </span>
-                        ) : (
-                          <button
-                            onClick={() => handleCancel(appt.id)}
-                            className="bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-pink-200 transition"
-                          >
-                            Cancel
-                          </button>
+                <div key={appt.id} className="bg-white p-5 rounded-2xl shadow-lg border border-pink-50 hover:shadow-xl transition-all duration-300">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="flex items-start gap-4">
+                      <div className="bg-gradient-to-br from-pink-100 to-pink-50 text-2xl w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-sm">💅</div>
+                      <div className="space-y-0.5">
+                        <p className="font-bold text-gray-800 text-base">{appt.name}</p>
+                        <p className="text-pink-500 font-semibold text-sm">{appt.service}</p>
+                        {appt.design && <p className="text-gray-400 text-xs">Design: {appt.design}</p>}
+                        {appt.design_image && (
+                          <img src={appt.design_image} alt="Design" className="mt-2 w-20 h-20 object-cover rounded-xl border-2 border-pink-100 shadow-sm" />
                         )}
                       </div>
-                    )}
+                    </div>
+
+                    <div className="flex gap-6 text-sm">
+                      <div className="text-center">
+                        <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">📅 Date</p>
+                        <p className="font-semibold text-gray-700 mt-0.5">{appt.date}</p>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">⏰ Time</p>
+                        <p className="font-semibold text-gray-700 mt-0.5">{appt.time}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <span className={`px-4 py-1.5 rounded-full text-xs font-bold tracking-wide ${
+                        appt.status === "Confirmed" ? "bg-green-100 text-green-600"
+                        : appt.status === "Cancelled" ? "bg-red-100 text-red-500"
+                        : appt.status === "Done" ? "bg-blue-100 text-blue-600"
+                        : "bg-yellow-100 text-yellow-600"
+                      }`}>
+                        {appt.status === "Confirmed" ? "✅" : appt.status === "Cancelled" ? "❌" : appt.status === "Done" ? "🎉" : "⏳"} {appt.status}
+                      </span>
+                      {appt.status === "Done" && (
+                        <button
+                          onClick={() => { setReviewAppt(appt); setReviewName(appt.name); }}
+                          className="bg-yellow-400 text-white px-4 py-1.5 rounded-full text-xs font-bold hover:bg-yellow-500 transition shadow-sm"
+                        >
+                          ⭐ Review
+                        </button>
+                      )}
+                      {appt.status !== "Cancelled" && appt.status !== "Done" && (
+                        <div className="flex gap-2">
+                          {!hasPaid(appt.id) && (
+                            <Link
+                              href={`/payment?service=${encodeURIComponent(appt.service)}&id=${appt.id}&name=${encodeURIComponent(appt.name)}`}
+                              className="bg-pink-500 text-white px-4 py-1.5 rounded-full text-xs font-bold hover:bg-pink-600 transition shadow-sm"
+                            >
+                              💳 Pay
+                            </Link>
+                          )}
+                          {hasPaid(appt.id) ? (
+                            <span className="bg-gray-100 text-gray-400 px-4 py-1.5 rounded-full text-xs font-semibold cursor-not-allowed" title="No refunds after payment">
+                              🚫 No Refund
+                            </span>
+                          ) : (
+                            <button
+                              onClick={() => handleCancel(appt.id)}
+                              className="bg-pink-50 text-pink-500 border border-pink-200 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-pink-100 transition"
+                            >
+                              Cancel
+                            </button>
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -208,7 +199,7 @@ export default function Appointments() {
           )}
 
           <div className="text-center mt-10">
-            <Link href="/book" className="inline-block bg-pink-500 text-white px-10 py-4 rounded-full font-semibold text-lg hover:bg-pink-600 hover:shadow-lg transition-all duration-300">
+            <Link href="/book" className="inline-block bg-gradient-to-r from-pink-500 to-pink-400 text-white px-10 py-3 rounded-full font-semibold hover:shadow-lg hover:shadow-pink-200 hover:scale-105 transition-all duration-300">
               + Book New Appointment
             </Link>
           </div>
@@ -216,45 +207,7 @@ export default function Appointments() {
         </div>
       </div>
 
-      <footer className="bg-[#FFD3DF] relative z-10 pt-12 pb-6 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 mb-10">
-            <div className="space-y-3">
-              <h3 className="text-xl font-bold text-gray-800 tracking-widest">MARVELOUSLY POLISHED</h3>
-              <p className="text-gray-700 text-sm leading-relaxed">Premium nail care in Ylaya, Barili. Where beauty meets artistry.</p>
-              <p className="text-pink-600 font-medium text-sm">Beauty Starts From Tips to Toes 💅</p>
-            </div>
-            <div className="space-y-3">
-              <h4 className="font-bold text-gray-800 text-lg text-center">Quick Links</h4>
-              <div className="flex justify-center">
-              <div className="grid grid-cols-2 gap-x-2 gap-y-0.5 text-sm">
-                <Link href="/homepage" className="text-gray-700 hover:text-pink-600 transition">Home</Link>
-                <Link href="/appointments" className="text-gray-700 hover:text-pink-600 transition">Appointments</Link>
-                <Link href="/book" className="text-gray-700 hover:text-pink-600 transition">Book</Link>
-                <Link href="/reviews" className="text-gray-700 hover:text-pink-600 transition">Reviews</Link>
-                <Link href="/pricing" className="text-gray-700 hover:text-pink-600 transition">Pricing</Link>
-                <Link href="/payment" className="text-gray-700 hover:text-pink-600 transition">Payment</Link>
-                <Link href="/gallery" className="text-gray-700 hover:text-pink-600 transition">Gallery</Link>
-                <Link href="/settings" className="text-gray-700 hover:text-pink-600 transition">Settings</Link>
-              </div>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <h4 className="font-bold text-gray-800 text-lg">Contact Us</h4>
-              <div className="space-y-2 text-sm text-gray-700">
-                <p>📍 Ylaya, Barili, Cebu</p>
-                <p>📞 09064455283</p>
-                <p>📸 Instagram: marvelously.polished</p>
-                <p>⏰ Mon–Sat: 9AM – 7PM</p>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-pink-300 pt-6 flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-gray-700">
-            <p>© 2026 Marvelously Polished. All rights reserved.</p>
-            <p>Ylaya, Barili, Cebu | Book Your Glam Today 💅</p>
-          </div>
-        </div>
-      </footer>
+      <Footer isLoggedIn={true} />
 
       {/* Review Modal */}
       {reviewAppt && (

@@ -3,6 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function Reviews() {
   const [reviews, setReviews] = useState<{ id: string; name: string; rating: number; comment: string; created_at: string }[]>([]);
@@ -19,55 +21,31 @@ export default function Reviews() {
     : "0";
 
   return (
-    <div className="min-h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">
-      <div className="absolute top-20 left-[-120px] w-80 h-80 bg-pink-300 rounded-full opacity-30 blur-3xl" />
-      <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl" />
-      <div className="absolute top-1/2 left-10 w-40 h-40 bg-pink-200 rounded-full opacity-40 blur-2xl" />
-      <div className="absolute top-1/3 right-10 w-32 h-32 bg-pink-300 rounded-full opacity-30 blur-2xl" />
+    <div className="min-h-screen bg-gradient-to-br from-[#FFF0F5] via-[#FFE4EF] to-[#FFD3DF] flex flex-col relative overflow-hidden">
+      <div className="absolute top-[-60px] left-[-100px] w-96 h-96 bg-pink-200 rounded-full opacity-40 blur-3xl" />
+      <div className="absolute bottom-0 right-[-100px] w-96 h-96 bg-pink-300 rounded-full opacity-30 blur-3xl" />
 
-      {/* Header + Nav */}
-      <div className="bg-[#FFD3DF] px-5 py-3 shadow-sm relative z-10 flex items-center justify-between gap-2">
-        <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-          <Image src="/logo1.png" alt="Logo" width={50} height={50} className="rounded-full border-2 border-white shadow" />
-          <span className="text-black font-bold tracking-[0.2em] text-base hidden lg:block">MARVELOUSLY POLISHED</span>
-        </Link>
-        <div className="flex items-center gap-1.5 flex-wrap justify-end">
-          {isLoggedIn === null ? null : isLoggedIn ? (
-            <>
-              <Link href="/homepage" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Home</Link>
-              <Link href="/book" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Book</Link>
-              <Link href="/pricing" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Pricing</Link>
-              <Link href="/gallery" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Gallery</Link>
-              <Link href="/appointments" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Appointments</Link>
-              <Link href="/reviews" className="bg-pink-500 text-white px-3.5 py-2 rounded-full text-sm transition">Reviews</Link>
-              <Link href="/payment" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Payment</Link>
-              <Link href="/settings" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Settings</Link>
-              <button onClick={() => { localStorage.removeItem("role"); localStorage.removeItem("user_id"); fetch("/api/logout", { method: "POST" }); window.location.href = "/"; }} className="bg-gray-200 px-3.5 py-2 rounded-full text-gray-700 text-sm hover:bg-gray-300 transition">Logout</button>
-            </>
-          ) : (
-            <>
-              <Link href="/" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Home</Link>
-              <Link href="/pricing" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Pricing</Link>
-              <Link href="/gallery" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Gallery</Link>
-              <Link href="/reviews" className="bg-pink-500 text-white px-3.5 py-2 rounded-full text-sm transition">Reviews</Link>
-              <Link href="/login" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Log In</Link>
-            </>
-          )}
-        </div>
-      </div>
+      <Navbar active="Reviews" />
 
       {/* Hero Banner */}
-      <div className="bg-gradient-to-r from-pink-500 to-pink-400 relative z-10 py-10 px-6 text-center">
-        <p className="text-white text-5xl mb-2">⭐</p>
-        <h2 className="text-3xl font-bold text-white mb-1">Customer Reviews</h2>
-        <p className="text-pink-100 text-sm">What our clients say about us</p>
+      <div className="relative z-10 py-12 px-6 text-center">
+        <div className="inline-flex items-center gap-2 bg-pink-100 text-pink-600 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide mb-4">
+          <span>⭐</span> Client Reviews
+        </div>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-2">
+          What Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-pink-400">Clients Say</span>
+        </h1>
+        <p className="text-gray-500 text-base max-w-lg mx-auto mb-4">Real experiences from our happy clients</p>
         {reviews.length > 0 && (
-          <div className="mt-4 inline-flex items-center gap-3 bg-white/20 rounded-full px-6 py-2">
-            <span className="text-white font-bold text-2xl">{avgRating}</span>
-            <span className="text-yellow-300 text-lg">{"★".repeat(Math.round(Number(avgRating)))}{"☆".repeat(5 - Math.round(Number(avgRating)))}</span>
-            <span className="text-pink-100 text-sm">{reviews.length} review{reviews.length !== 1 ? "s" : ""}</span>
+          <div className="inline-flex items-center gap-3 bg-white/80 backdrop-blur border border-pink-100 rounded-2xl px-6 py-3 shadow-sm">
+            <span className="text-pink-500 font-extrabold text-3xl">{avgRating}</span>
+            <div>
+              <div className="text-yellow-400 text-lg">{"★".repeat(Math.round(Number(avgRating)))}{"☆".repeat(5 - Math.round(Number(avgRating)))}</div>
+              <p className="text-gray-400 text-xs">{reviews.length} review{reviews.length !== 1 ? "s" : ""}</p>
+            </div>
           </div>
         )}
+
       </div>
 
       {/* Content */}
@@ -101,7 +79,7 @@ export default function Reviews() {
           )}
 
           <div className="text-center mt-8">
-            <Link href={isLoggedIn ? "/book" : "/login"} className="inline-block bg-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-pink-600 hover:scale-105 transition-all duration-300 shadow-lg">
+            <Link href={isLoggedIn ? "/book" : "/login"} className="inline-block bg-gradient-to-r from-pink-500 to-pink-400 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg hover:shadow-pink-200 hover:scale-105 transition-all duration-300 shadow-md">
               💅 Book Your Appointment
             </Link>
           </div>
@@ -110,54 +88,7 @@ export default function Reviews() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-[#FFD3DF] relative z-10 pt-12 pb-6 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 mb-10">
-            <div className="space-y-3">
-              <h3 className="text-xl font-bold text-gray-800 tracking-widest">MARVELOUSLY POLISHED</h3>
-              <p className="text-gray-700 text-sm leading-relaxed">Premium nail care in Ylaya, Barili. Where beauty meets artistry.</p>
-              <p className="text-pink-600 font-medium text-sm">Beauty Starts From Tips to Toes 💅</p>
-            </div>
-            <div className="space-y-3">
-              <h4 className="font-bold text-gray-800 text-lg text-center">Quick Links</h4>
-              {isLoggedIn ? (
-                <div className="flex justify-center">
-                <div className="grid grid-cols-2 gap-x-2 gap-y-0.5 text-sm">
-                  <Link href="/homepage" className="text-gray-700 hover:text-pink-600 transition">Home</Link>
-                  <Link href="/appointments" className="text-gray-700 hover:text-pink-600 transition">Appointments</Link>
-                  <Link href="/book" className="text-gray-700 hover:text-pink-600 transition">Book</Link>
-                  <Link href="/reviews" className="text-gray-700 hover:text-pink-600 transition">Reviews</Link>
-                  <Link href="/pricing" className="text-gray-700 hover:text-pink-600 transition">Pricing</Link>
-                  <Link href="/payment" className="text-gray-700 hover:text-pink-600 transition">Payment</Link>
-                  <Link href="/gallery" className="text-gray-700 hover:text-pink-600 transition">Gallery</Link>
-                  <Link href="/settings" className="text-gray-700 hover:text-pink-600 transition">Settings</Link>
-                </div>
-                </div>
-              ) : (
-                <div className="flex flex-col items-center gap-2 text-sm">
-                  <Link href="/" className="text-gray-700 hover:text-pink-600 transition">Home</Link>
-                  <Link href="/pricing" className="text-gray-700 hover:text-pink-600 transition">Pricing</Link>
-                  <Link href="/gallery" className="text-gray-700 hover:text-pink-600 transition">Gallery</Link>
-                  <Link href="/reviews" className="text-gray-700 hover:text-pink-600 transition">Reviews</Link>
-                </div>
-              )}
-            </div>
-            <div className="space-y-3">
-              <h4 className="font-bold text-gray-800 text-lg">Contact Us</h4>
-              <div className="space-y-2 text-sm text-gray-700">
-                <p>📍 Ylaya, Barili, Cebu</p>
-                <p>📞 09064455283</p>
-                <p>📸 Instagram: marvelously.polished</p>
-                <p>⏰ Mon–Sat: 9AM – 7PM</p>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-pink-300 pt-6 flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-gray-700">
-            <p>© 2026 Marvelously Polished. All rights reserved.</p>
-            <p>Ylaya, Barili, Cebu | Book Your Glam Today 💅</p>
-          </div>
-        </div>
-      </footer>
+      <Footer isLoggedIn={isLoggedIn} />
     </div>
   );
 }

@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function Settings() {
   const router = useRouter();
@@ -76,35 +78,27 @@ export default function Settings() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">
-      <div className="absolute top-20 left-[-120px] w-80 h-80 bg-pink-300 rounded-full opacity-30 blur-3xl" />
-      <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl" />
+    <div className="min-h-screen bg-gradient-to-br from-[#FFF0F5] via-[#FFE4EF] to-[#FFD3DF] flex flex-col relative overflow-hidden">
+      <div className="absolute top-[-60px] left-[-100px] w-96 h-96 bg-pink-200 rounded-full opacity-40 blur-3xl" />
+      <div className="absolute bottom-0 right-[-100px] w-96 h-96 bg-pink-300 rounded-full opacity-30 blur-3xl" />
 
-      {/* Header */}
-      <div className="bg-[#FFD3DF] px-5 py-3 shadow-sm relative z-10 flex items-center justify-between gap-2">
-        <Link href="/homepage" className="flex items-center gap-2 flex-shrink-0">
-          <Image src="/logo1.png" alt="Logo" width={50} height={50} className="rounded-full border-2 border-white shadow" />
-          <span className="text-black font-bold tracking-[0.2em] text-base hidden lg:block">MARVELOUSLY POLISHED</span>
-        </Link>
-        <div className="flex items-center gap-1.5 flex-wrap justify-end">
-          <Link href="/homepage" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Home</Link>
-          <Link href="/book" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Book</Link>
-          <Link href="/pricing" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Pricing</Link>
-          <Link href="/gallery" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Gallery</Link>
-          <Link href="/appointments" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Appointments</Link>
-          <Link href="/reviews" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Reviews</Link>
-          <Link href="/payment" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Payment</Link>
-          <Link href="/settings" className="bg-pink-500 px-3.5 py-2 rounded-full text-white text-sm transition">Settings</Link>
-          <button onClick={handleLogout} className="bg-gray-200 px-3.5 py-2 rounded-full text-gray-700 text-sm hover:bg-gray-300 transition">Logout</button>
-        </div>
-      </div>
+      <Navbar active="Settings" mode="auth" />
 
       {/* Content */}
-      <div className="flex-grow flex justify-center px-6 py-12 relative z-10">
+      <div className="flex-grow flex justify-center px-6 py-10 relative z-10">
         <div className="max-w-5xl w-full">
-
-          <h2 className="text-3xl font-bold text-gray-800 mb-2">⚙️ Settings</h2>
-          <p className="text-gray-500 text-sm mb-6">Manage your profile and account settings</p>
+          <div className="mb-6 flex items-center gap-5">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center text-white text-2xl font-extrabold shadow-lg flex-shrink-0">
+              {username ? username.charAt(0).toUpperCase() : "?"}
+            </div>
+            <div>
+              <div className="inline-flex items-center gap-2 bg-pink-100 text-pink-600 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide mb-1">
+                <span>⚙️</span> Account Settings
+              </div>
+              <h2 className="text-3xl font-extrabold text-gray-800">Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-pink-400">Profile</span></h2>
+              <p className="text-gray-500 text-sm">{email}</p>
+            </div>
+          </div>
 
           <div className="grid lg:grid-cols-2 gap-6">
 
@@ -113,20 +107,20 @@ export default function Settings() {
               <h3 className="text-xl font-bold text-gray-800 mb-4">👤 Profile Information</h3>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                <input value={username} onChange={(e) => setUsername(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition" />
+                <input value={username} onChange={(e) => setUsername(e.target.value)} className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-800 text-sm focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition bg-gray-50" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                <input value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full p-4 border-2 border-gray-200 rounded-xl text-black focus:outline-none focus:border-pink-400 transition" />
+                <input value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-800 text-sm focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 transition bg-gray-50" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input value={email} disabled className="w-full p-4 border-2 border-gray-100 rounded-xl text-gray-400 bg-gray-50 cursor-not-allowed" />
+                <input value={email} disabled className="w-full px-4 py-3 border border-gray-100 rounded-xl text-gray-400 bg-gray-50 text-sm cursor-not-allowed" />
                 <p className="text-xs text-gray-400 mt-1">Email cannot be changed.</p>
               </div>
-              {error && <p className="text-red-500 text-sm">{error}</p>}
-              {success && <p className="text-green-500 text-sm">{success}</p>}
-              <button onClick={handleUpdateProfile} disabled={loading} className="w-full bg-pink-500 text-white py-3 rounded-xl font-semibold hover:bg-pink-600 transition disabled:opacity-50">
+              {error && <div className="bg-red-50 border border-red-200 text-red-500 text-sm px-4 py-2.5 rounded-xl">{error}</div>}
+              {success && <div className="bg-green-50 border border-green-200 text-green-600 text-sm px-4 py-2.5 rounded-xl">{success}</div>}
+              <button onClick={handleUpdateProfile} disabled={loading} className="w-full bg-gradient-to-r from-pink-500 to-pink-400 text-white py-3 rounded-xl font-semibold text-sm hover:shadow-lg hover:shadow-pink-200 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50">
                 {loading ? "Saving..." : "Save Changes"}
               </button>
             </div>
@@ -155,9 +149,9 @@ export default function Settings() {
                   <button type="button" onClick={() => setShowConfirm(!showConfirm)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-pink-500">{showConfirm ? "🙈" : "👁️"}</button>
                 </div>
               </div>
-              {pwError && <p className="text-red-500 text-sm">{pwError}</p>}
-              {pwSuccess && <p className="text-green-500 text-sm">{pwSuccess}</p>}
-              <button onClick={handleChangePassword} disabled={pwLoading} className="w-full bg-pink-500 text-white py-3 rounded-xl font-semibold hover:bg-pink-600 transition disabled:opacity-50">
+              {pwError && <div className="bg-red-50 border border-red-200 text-red-500 text-sm px-4 py-2.5 rounded-xl">{pwError}</div>}
+              {pwSuccess && <div className="bg-green-50 border border-green-200 text-green-600 text-sm px-4 py-2.5 rounded-xl">{pwSuccess}</div>}
+              <button onClick={handleChangePassword} disabled={pwLoading} className="w-full bg-gradient-to-r from-pink-500 to-pink-400 text-white py-3 rounded-xl font-semibold text-sm hover:shadow-lg hover:shadow-pink-200 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50">
                 {pwLoading ? "Changing..." : "Change Password"}
               </button>
             </div>
@@ -166,45 +160,7 @@ export default function Settings() {
         </div>
       </div>
 
-      <footer className="bg-[#FFD3DF] relative z-10 pt-12 pb-6 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 mb-10">
-            <div className="space-y-3">
-              <h3 className="text-xl font-bold text-gray-800 tracking-widest">MARVELOUSLY POLISHED</h3>
-              <p className="text-gray-700 text-sm leading-relaxed">Premium nail care in Ylaya, Barili. Where beauty meets artistry.</p>
-              <p className="text-pink-600 font-medium text-sm">Beauty Starts From Tips to Toes 💅</p>
-            </div>
-            <div className="space-y-3">
-              <h4 className="font-bold text-gray-800 text-lg text-center">Quick Links</h4>
-              <div className="flex justify-center">
-              <div className="grid grid-cols-2 gap-x-2 gap-y-0.5 text-sm">
-                <Link href="/homepage" className="text-gray-700 hover:text-pink-600 transition">Home</Link>
-                <Link href="/appointments" className="text-gray-700 hover:text-pink-600 transition">Appointments</Link>
-                <Link href="/book" className="text-gray-700 hover:text-pink-600 transition">Book</Link>
-                <Link href="/reviews" className="text-gray-700 hover:text-pink-600 transition">Reviews</Link>
-                <Link href="/pricing" className="text-gray-700 hover:text-pink-600 transition">Pricing</Link>
-                <Link href="/payment" className="text-gray-700 hover:text-pink-600 transition">Payment</Link>
-                <Link href="/gallery" className="text-gray-700 hover:text-pink-600 transition">Gallery</Link>
-                <Link href="/settings" className="text-gray-700 hover:text-pink-600 transition">Settings</Link>
-              </div>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <h4 className="font-bold text-gray-800 text-lg">Contact Us</h4>
-              <div className="space-y-2 text-sm text-gray-700">
-                <p>📍 Ylaya, Barili, Cebu</p>
-                <p>📞 09064455283</p>
-                <p>📸 Instagram: marvelously.polished</p>
-                <p>⏰ Mon–Sat: 9AM – 7PM</p>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-pink-300 pt-6 flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-gray-700">
-            <p>© 2026 Marvelously Polished. All rights reserved.</p>
-            <p>Ylaya, Barili, Cebu | Book Your Glam Today 💅</p>
-          </div>
-        </div>
-      </footer>
+      <Footer isLoggedIn={true} />
     </div>
   );
 }

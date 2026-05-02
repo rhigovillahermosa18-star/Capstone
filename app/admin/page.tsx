@@ -43,6 +43,7 @@ export default function Admin() {
   const [activeTab, setActiveTab] = useState<"appointments" | "users" | "payments" | "chart" | "reviews">("appointments");
   const [payments, setPayments] = useState<Payment[]>([]);
   const [reviews, setReviews] = useState<{ id: string; name: string; rating: number; comment: string; created_at: string; status: string }[]>([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const role = typeof window !== "undefined" ? localStorage.getItem("role") : null;
@@ -143,7 +144,7 @@ export default function Admin() {
     { label: "Pending", value: appointments.filter(a => a.status === "Pending").length, icon: "⏳" },
     { label: "Total Users", value: users.length, icon: "👥" },
     { label: "Payments", value: payments.length, icon: "💳" },
-    { label: "Verified", value: payments.filter(p => p.status === "Verified").length, icon: "✔️" },
+    { label: "Revenue", value: `₱${payments.filter(p => p.status === "Verified").reduce((s, p) => s + Number(p.amount), 0).toLocaleString()}`, icon: "💰" },
   ];
 
   if (!authorized) return null;
@@ -230,8 +231,14 @@ export default function Admin() {
           {/* Appointments Table */}
           {activeTab === "appointments" && (
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-              <div className="p-6 border-b border-gray-100">
+              <div className="p-6 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <h3 className="text-xl font-bold text-gray-800">All Appointments</h3>
+                <input
+                  placeholder="Search by name or service..."
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  className="px-4 py-2 border border-gray-200 rounded-xl text-sm text-gray-700 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-100 bg-gray-50 w-full sm:w-64"
+                />
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
@@ -249,7 +256,9 @@ export default function Admin() {
                   <tbody>
                     {appointments.length === 0 ? (
                       <tr><td colSpan={7} className="p-8 text-center text-gray-500">No appointments yet.</td></tr>
-                    ) : appointments.map((appt, i) => (
+                    ) : appointments.filter(a =>
+                        !search || a.name.toLowerCase().includes(search.toLowerCase()) || a.service.toLowerCase().includes(search.toLowerCase())
+                      ).map((appt, i) => (
                       <tr key={appt.id} className={i % 2 === 0 ? "bg-white" : "bg-pink-50/30"}>
                         <td className="p-4 font-medium text-gray-800">{appt.name}</td>
                         <td className="p-4 text-gray-600">{appt.phone}</td>

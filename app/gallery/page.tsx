@@ -3,164 +3,99 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+
+const allImages = [
+  { src: "/nail1.jpg", category: "Gel" },
+  { src: "/nail2.jpg", category: "Acrylic" },
+  { src: "/nail3.jpg", category: "Gel" },
+  { src: "/nail4.jpg", category: "Nail Art" },
+  { src: "/nail5.jpg", category: "Acrylic" },
+  { src: "/nail6.jpg", category: "Nail Art" },
+  { src: "/nail7.jpg", category: "Gel" },
+  { src: "/nail8.jpg", category: "Acrylic" },
+  { src: "/nail9.jpg", category: "Nail Art" },
+  { src: "/nail10.jpg", category: "Gel" },
+  { src: "/nail11.jpg", category: "Acrylic" },
+  { src: "/nail12.jpg", category: "Nail Art" },
+];
 
 export default function Gallery() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
-  useEffect(() => { setIsLoggedIn(!!localStorage.getItem("user_id")); }, []);
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [lightbox, setLightbox] = useState<string | null>(null);
+
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem("user_id"));
+    const handleKey = (e: KeyboardEvent) => { if (e.key === "Escape") setLightbox(null); };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, []);
+
+  const categories = ["All", "Gel", "Acrylic", "Nail Art"];
+  const filtered = activeCategory === "All" ? allImages : allImages.filter(i => i.category === activeCategory);
+
   return (
-    <div className="min-h-screen bg-[#FFE4EF] flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#FFF0F5] via-[#FFE4EF] to-[#FFD3DF] flex flex-col relative overflow-hidden">
 
-      {/* Decorative Shapes */}
-      <div className="absolute top-20 left-[-120px] w-80 h-80 bg-pink-300 rounded-full opacity-30 blur-3xl"></div>
-      <div className="absolute bottom-10 right-[-120px] w-80 h-80 bg-pink-400 rounded-full opacity-30 blur-3xl"></div>
-      <div className="absolute top-1/2 left-10 w-40 h-40 bg-pink-200 rounded-full opacity-40 blur-2xl"></div>
+      <div className="absolute top-[-60px] left-[-100px] w-96 h-96 bg-pink-200 rounded-full opacity-40 blur-3xl" />
+      <div className="absolute bottom-0 right-[-100px] w-96 h-96 bg-pink-300 rounded-full opacity-30 blur-3xl" />
 
-      {/* Header + Navigation */}
-      <div className="bg-[#FFD3DF] px-5 py-3 shadow-sm relative z-10 flex items-center justify-between gap-2">
-        <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-          <Image src="/logo1.png" alt="Logo" width={50} height={50} className="rounded-full border-2 border-white shadow" />
-          <span className="text-black font-bold tracking-[0.2em] text-base hidden lg:block">MARVELOUSLY POLISHED</span>
-        </Link>
-        <div className="flex items-center gap-1.5 flex-wrap justify-end">
-          {isLoggedIn === null ? (
-            <div className="h-9 w-64 bg-pink-200 rounded-full animate-pulse" />
-          ) : isLoggedIn ? (
-            <>
-              <Link href="/homepage" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Home</Link>
-              <Link href="/book" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Book</Link>
-              <Link href="/pricing" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Pricing</Link>
-              <Link href="/gallery" className="bg-pink-500 text-white px-3.5 py-2 rounded-full text-sm transition">Gallery</Link>
-              <Link href="/appointments" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Appointments</Link>
-              <Link href="/reviews" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Reviews</Link>
-              <Link href="/payment" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Payment</Link>
-              <Link href="/settings" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Settings</Link>
-              <button onClick={() => { localStorage.removeItem("role"); localStorage.removeItem("user_id"); fetch("/api/logout", { method: "POST" }); window.location.href = "/"; }} className="bg-gray-200 px-3.5 py-2 rounded-full text-gray-700 text-sm hover:bg-gray-300 transition">Logout</button>
-            </>
-          ) : (
-            <>
-              <Link href="/" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Home</Link>
-              <Link href="/pricing" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Pricing</Link>
-              <Link href="/gallery" className="bg-pink-500 text-white px-3.5 py-2 rounded-full text-sm transition">Gallery</Link>
-              <Link href="/reviews" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Reviews</Link>
-              <Link href="/login" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Log In</Link>
-            </>
-          )}
-        </div>
-      </div>
+      <Navbar active="Gallery" />
 
       {/* Gallery Content */}
-      <div className="flex-grow relative z-10 py-12 px-6">
+      <div className="flex-grow relative z-10 py-10 px-6">
         <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 bg-pink-100 text-pink-600 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide mb-4">
+              <span>🖼️</span> Our Work
+            </div>
+            <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800">
+              Nail <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-pink-400">Gallery</span>
+            </h1>
+            <p className="text-gray-500 text-base mt-2">Browse our latest nail designs and get inspired</p>
+          </div>
 
-          <h2 className="text-center font-bold mb-12 text-black text-4xl tracking-wide">
-            Our Work 💅
-          </h2>
+          {/* Category Filter */}
+          <div className="flex gap-2 justify-center mb-8 flex-wrap">
+            {categories.map(cat => (
+              <button key={cat} onClick={() => setActiveCategory(cat)}
+                className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
+                  activeCategory === cat ? "bg-pink-500 text-white shadow-md" : "bg-white text-gray-600 hover:bg-pink-50 hover:text-pink-600 border border-pink-100"
+                }`}>
+                {cat}
+              </button>
+            ))}
+          </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <Image src="/nail1.jpg" width={400} height={400} alt="Nail design" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" />
-            </div>
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <Image src="/nail2.jpg" width={400} height={400} alt="Nail design" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" />
-            </div>
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <Image src="/nail3.jpg" width={400} height={400} alt="Nail design" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" />
-            </div>
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <Image src="/nail4.jpg" width={400} height={400} alt="Nail design" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" />
-            </div>
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <Image src="/nail5.jpg" width={400} height={400} alt="Nail design" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" />
-            </div>
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <Image src="/nail6.jpg" width={400} height={400} alt="Nail design" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" />
-            </div>
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <Image src="/nail7.jpg" width={400} height={400} alt="Nail design" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" />
-            </div>
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <Image src="/nail8.jpg" width={400} height={400} alt="Nail design" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" />
-            </div>
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <Image src="/nail9.jpg" width={400} height={400} alt="Nail design" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" />
-            </div>
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <Image src="/nail10.jpg" width={400} height={400} alt="Nail design" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" />
-            </div>
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <Image src="/nail11.jpg" width={400} height={400} alt="Nail design" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" />
-            </div>
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <Image src="/nail12.jpg" width={400} height={400} alt="Nail design" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" />
-            </div>
-
+            {filtered.map((img, i) => (
+              <div key={i} onClick={() => setLightbox(img.src)}
+                className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer">
+                <Image src={img.src} width={400} height={400} alt="Nail design" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                  <span className="text-white text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">🔍</span>
+                </div>
+                <span className="absolute top-2 right-2 bg-white/80 text-pink-600 text-xs font-semibold px-2 py-0.5 rounded-full">{img.category}</span>
+              </div>
+            ))}
           </div>
 
         </div>
       </div>
 
-    <footer className="bg-[#FFD3DF] relative z-10 pt-12 pb-6 px-6">
-        <div className="max-w-6xl mx-auto">
-
-          <div className="grid md:grid-cols-3 gap-8 mb-10">
-
-            {/* Brand */}
-            <div className="space-y-3">
-              <h3 className="text-xl font-bold text-gray-800 tracking-widest">MARVELOUSLY POLISHED</h3>
-              <p className="text-gray-700 text-sm leading-relaxed">
-                Premium nail care in Ylaya, Barili. Where beauty meets artistry.
-              </p>
-              <p className="text-pink-600 font-medium text-sm">Beauty Starts From Tips to Toes 💅</p>
-            </div>
-
-            {/* Quick Links */}
-            <div className="space-y-3">
-              <h4 className="font-bold text-gray-800 text-lg text-center">Quick Links</h4>
-              {isLoggedIn ? (
-                <div className="flex justify-center">
-                <div className="grid grid-cols-2 gap-x-2 gap-y-0.5 text-sm">
-                  <Link href="/homepage" className="text-gray-700 hover:text-pink-600 transition">Home</Link>
-                  <Link href="/appointments" className="text-gray-700 hover:text-pink-600 transition">Appointments</Link>
-                  <Link href="/book" className="text-gray-700 hover:text-pink-600 transition">Book</Link>
-                  <Link href="/reviews" className="text-gray-700 hover:text-pink-600 transition">Reviews</Link>
-                  <Link href="/pricing" className="text-gray-700 hover:text-pink-600 transition">Pricing</Link>
-                  <Link href="/payment" className="text-gray-700 hover:text-pink-600 transition">Payment</Link>
-                  <Link href="/gallery" className="text-gray-700 hover:text-pink-600 transition">Gallery</Link>
-                  <Link href="/settings" className="text-gray-700 hover:text-pink-600 transition">Settings</Link>
-                </div>
-                </div>
-              ) : (
-                <div className="flex flex-col items-center gap-2 text-sm">
-                  <Link href="/" className="text-gray-700 hover:text-pink-600 transition">Home</Link>
-                  <Link href="/pricing" className="text-gray-700 hover:text-pink-600 transition">Pricing</Link>
-                  <Link href="/gallery" className="text-gray-700 hover:text-pink-600 transition">Gallery</Link>
-                  <Link href="/reviews" className="text-gray-700 hover:text-pink-600 transition">Reviews</Link>
-                </div>
-              )}
-            </div>
-
-            {/* Contact */}
-            <div className="space-y-3">
-              <h4 className="font-bold text-gray-800 text-lg">Contact Us</h4>
-              <div className="space-y-2 text-sm text-gray-700">
-                <p>📍 Ylaya, Barili, Cebu</p>
-                <p>📞 09064455283</p>
-                <p>📸 Instagram: marvelously.polished</p>
-                <p>⏰ Mon–Sat: 9AM – 7PM</p>
-              </div>
-            </div>
-
+      {/* Lightbox */}
+      {lightbox && (
+        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" onClick={() => setLightbox(null)}>
+          <div className="relative max-w-2xl w-full" onClick={e => e.stopPropagation()}>
+            <img src={lightbox} alt="Nail design" className="w-full rounded-2xl shadow-2xl" />
+            <button onClick={() => setLightbox(null)} className="absolute top-3 right-3 bg-white/90 text-gray-700 rounded-full w-9 h-9 flex items-center justify-center text-lg font-bold hover:bg-white transition">✕</button>
           </div>
-
-          <div className="border-t border-pink-300 pt-6 flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-gray-700">
-            <p>© 2026 Marvelously Polished. All rights reserved.</p>
-            <p>Ylaya, Barili, Cebu | Book Your Glam Today 💅</p>
-          </div>
-
         </div>
-      </footer>
+      )}
 
+      <Footer isLoggedIn={isLoggedIn} />
     </div>
   );
 }

@@ -36,12 +36,11 @@ export default function LandingPage() {
           <span className="text-black font-bold tracking-[0.2em] text-base hidden lg:block">MARVELOUSLY POLISHED</span>
         </Link>
         <div className="flex items-center gap-1.5 flex-wrap justify-end">
-          <Link href="/" className="bg-pink-500 text-white px-3.5 py-2 rounded-full text-sm transition">🏠 Home</Link>
-          <Link href="/pricing" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">💰 Pricing</Link>
-          <Link href="/gallery" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🖼️ Gallery</Link>
-          <Link href="/reviews" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">⭐ Reviews</Link>
-          <Link href="/login" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🔑 Log In</Link>
-          <Link href="/register" className="bg-pink-500 text-white px-3.5 py-2 rounded-full text-sm hover:bg-pink-600 transition">✨ Sign Up</Link>
+          <Link href="/" className="bg-pink-500 text-white px-3.5 py-2 rounded-full text-sm transition">Home</Link>
+          <Link href="/pricing" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Pricing</Link>
+          <Link href="/gallery" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Gallery</Link>
+          <Link href="/reviews" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Reviews</Link>
+          <Link href="/login" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Log In</Link>
         </div>
       </div>
 
@@ -100,14 +99,12 @@ export default function LandingPage() {
               <p className="text-pink-600 font-medium text-sm">Beauty Starts From Tips to Toes 💅</p>
             </div>
             <div className="space-y-3">
-              <h4 className="font-bold text-gray-800 text-lg">Quick Links</h4>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                <Link href="/" className="block text-gray-700 hover:text-pink-600 transition">Home</Link>
-                <Link href="/pricing" className="block text-gray-700 hover:text-pink-600 transition">Pricing</Link>
-                <Link href="/gallery" className="block text-gray-700 hover:text-pink-600 transition">Gallery</Link>
-                <Link href="/reviews" className="block text-gray-700 hover:text-pink-600 transition">Reviews</Link>
-                <Link href="/login" className="block text-gray-700 hover:text-pink-600 transition">Log In</Link>
-                <Link href="/register" className="block text-gray-700 hover:text-pink-600 transition">Sign Up</Link>
+              <h4 className="font-bold text-gray-800 text-lg text-center">Quick Links</h4>
+              <div className="flex flex-col items-center gap-2 text-sm">
+                <Link href="/" className="text-gray-700 hover:text-pink-600 transition">Home</Link>
+                <Link href="/pricing" className="text-gray-700 hover:text-pink-600 transition">Pricing</Link>
+                <Link href="/gallery" className="text-gray-700 hover:text-pink-600 transition">Gallery</Link>
+                <Link href="/reviews" className="text-gray-700 hover:text-pink-600 transition">Reviews</Link>
               </div>
             </div>
             <div className="space-y-3">

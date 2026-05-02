@@ -131,15 +131,15 @@ function BookContent() {
           <span className="text-black font-bold tracking-[0.2em] text-base hidden lg:block">MARVELOUSLY POLISHED</span>
         </Link>
         <div className="flex items-center gap-1.5 flex-wrap justify-end">
-          <Link href="/homepage" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🏠 Home</Link>
-          <Link href="/book" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">📅 Book</Link>
-          <Link href="/pricing" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">💰 Pricing</Link>
-          <Link href="/gallery" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🖼️ Gallery</Link>
-          <Link href="/appointments" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">📋 Appointments</Link>
-          <Link href="/reviews" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">⭐ Reviews</Link>
-          <Link href="/payment" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">💳 Payment</Link>
-          <Link href="/settings" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">⚙️ Settings</Link>
-          <button onClick={async () => { await fetch("/api/logout", { method: "POST" }); localStorage.removeItem("role"); localStorage.removeItem("user_id"); router.push("/"); }} className="bg-gray-200 px-3.5 py-2 rounded-full text-gray-700 text-sm hover:bg-gray-300 transition">🚪 Logout</button>
+          <Link href="/homepage" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Home</Link>
+          <Link href="/book" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Book</Link>
+          <Link href="/pricing" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Pricing</Link>
+          <Link href="/gallery" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Gallery</Link>
+          <Link href="/appointments" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Appointments</Link>
+          <Link href="/reviews" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Reviews</Link>
+          <Link href="/payment" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Payment</Link>
+          <Link href="/settings" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Settings</Link>
+          <button onClick={async () => { await fetch("/api/logout", { method: "POST" }); localStorage.removeItem("role"); localStorage.removeItem("user_id"); router.push("/"); }} className="bg-gray-200 px-3.5 py-2 rounded-full text-gray-700 text-sm hover:bg-gray-300 transition">Logout</button>
         </div>
       </div>
 
@@ -319,14 +319,14 @@ function BookContent() {
               <h4 className="font-bold text-gray-800 text-lg text-center">Quick Links</h4>
               <div className="flex justify-center">
               <div className="grid grid-cols-2 gap-x-2 gap-y-0.5 text-sm">
-                <Link href="/homepage" className="text-gray-700 hover:text-pink-600 transition">🏠 Home</Link>
-                <Link href="/appointments" className="text-gray-700 hover:text-pink-600 transition">📋 Appointments</Link>
-                <Link href="/book" className="text-gray-700 hover:text-pink-600 transition">📅 Book</Link>
-                <Link href="/reviews" className="text-gray-700 hover:text-pink-600 transition">⭐ Reviews</Link>
-                <Link href="/pricing" className="text-gray-700 hover:text-pink-600 transition">💰 Pricing</Link>
-                <Link href="/payment" className="text-gray-700 hover:text-pink-600 transition">💳 Payment</Link>
-                <Link href="/gallery" className="text-gray-700 hover:text-pink-600 transition">🖼️ Gallery</Link>
-                <Link href="/settings" className="text-gray-700 hover:text-pink-600 transition">⚙️ Settings</Link>
+                <Link href="/homepage" className="text-gray-700 hover:text-pink-600 transition">Home</Link>
+                <Link href="/appointments" className="text-gray-700 hover:text-pink-600 transition">Appointments</Link>
+                <Link href="/book" className="text-gray-700 hover:text-pink-600 transition">Book</Link>
+                <Link href="/reviews" className="text-gray-700 hover:text-pink-600 transition">Reviews</Link>
+                <Link href="/pricing" className="text-gray-700 hover:text-pink-600 transition">Pricing</Link>
+                <Link href="/payment" className="text-gray-700 hover:text-pink-600 transition">Payment</Link>
+                <Link href="/gallery" className="text-gray-700 hover:text-pink-600 transition">Gallery</Link>
+                <Link href="/settings" className="text-gray-700 hover:text-pink-600 transition">Settings</Link>
               </div>
               </div>
             </div>

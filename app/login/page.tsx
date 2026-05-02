@@ -65,6 +65,9 @@ export default function Login() {
 
           {/* Right Side - Login Form */}
           <div className="bg-white p-10 rounded-2xl shadow-2xl w-full max-w-md mx-auto">
+            <div className="mb-4">
+              <Link href="/" className="inline-flex items-center gap-1 text-gray-400 hover:text-pink-500 transition text-sm">← Back</Link>
+            </div>
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-800 mb-2">Welcome Back</h2>
               <p className="text-gray-600">Login to your account</p>

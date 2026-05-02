@@ -26,24 +26,23 @@ export default function Gallery() {
             <div className="h-9 w-64 bg-pink-200 rounded-full animate-pulse" />
           ) : isLoggedIn ? (
             <>
-              <Link href="/homepage" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🏠 Home</Link>
-              <Link href="/book" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">📅 Book</Link>
-              <Link href="/pricing" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">💰 Pricing</Link>
-              <Link href="/gallery" className="bg-pink-500 text-white px-3.5 py-2 rounded-full text-sm transition">🖼️ Gallery</Link>
-              <Link href="/appointments" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">📋 Appointments</Link>
-              <Link href="/reviews" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">⭐ Reviews</Link>
-              <Link href="/payment" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">💳 Payment</Link>
-              <Link href="/settings" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">⚙️ Settings</Link>
-              <button onClick={() => { localStorage.removeItem("role"); localStorage.removeItem("user_id"); fetch("/api/logout", { method: "POST" }); window.location.href = "/"; }} className="bg-gray-200 px-3.5 py-2 rounded-full text-gray-700 text-sm hover:bg-gray-300 transition">🚪 Logout</button>
+              <Link href="/homepage" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Home</Link>
+              <Link href="/book" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Book</Link>
+              <Link href="/pricing" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Pricing</Link>
+              <Link href="/gallery" className="bg-pink-500 text-white px-3.5 py-2 rounded-full text-sm transition">Gallery</Link>
+              <Link href="/appointments" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Appointments</Link>
+              <Link href="/reviews" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Reviews</Link>
+              <Link href="/payment" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Payment</Link>
+              <Link href="/settings" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Settings</Link>
+              <button onClick={() => { localStorage.removeItem("role"); localStorage.removeItem("user_id"); fetch("/api/logout", { method: "POST" }); window.location.href = "/"; }} className="bg-gray-200 px-3.5 py-2 rounded-full text-gray-700 text-sm hover:bg-gray-300 transition">Logout</button>
             </>
           ) : (
             <>
-              <Link href="/" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🏠 Home</Link>
-              <Link href="/pricing" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">💰 Pricing</Link>
-              <Link href="/gallery" className="bg-pink-500 text-white px-3.5 py-2 rounded-full text-sm transition">🖼️ Gallery</Link>
-              <Link href="/reviews" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">⭐ Reviews</Link>
-              <Link href="/login" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">🔑 Log In</Link>
-              <Link href="/register" className="bg-pink-500 text-white px-3.5 py-2 rounded-full text-sm hover:bg-pink-600 transition">✨ Sign Up</Link>
+              <Link href="/" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Home</Link>
+              <Link href="/pricing" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Pricing</Link>
+              <Link href="/gallery" className="bg-pink-500 text-white px-3.5 py-2 rounded-full text-sm transition">Gallery</Link>
+              <Link href="/reviews" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Reviews</Link>
+              <Link href="/login" className="bg-[#FFB6C9] px-3.5 py-2 rounded-full text-black text-sm hover:bg-pink-400 transition">Log In</Link>
             </>
           )}
         </div>
@@ -121,24 +120,22 @@ export default function Gallery() {
               {isLoggedIn ? (
                 <div className="flex justify-center">
                 <div className="grid grid-cols-2 gap-x-2 gap-y-0.5 text-sm">
-                  <Link href="/homepage" className="text-gray-700 hover:text-pink-600 transition">🏠 Home</Link>
-                  <Link href="/appointments" className="text-gray-700 hover:text-pink-600 transition">📋 Appointments</Link>
-                  <Link href="/book" className="text-gray-700 hover:text-pink-600 transition">📅 Book</Link>
-                  <Link href="/reviews" className="text-gray-700 hover:text-pink-600 transition">⭐ Reviews</Link>
-                  <Link href="/pricing" className="text-gray-700 hover:text-pink-600 transition">💰 Pricing</Link>
-                  <Link href="/payment" className="text-gray-700 hover:text-pink-600 transition">💳 Payment</Link>
-                  <Link href="/gallery" className="text-gray-700 hover:text-pink-600 transition">🖼️ Gallery</Link>
-                  <Link href="/settings" className="text-gray-700 hover:text-pink-600 transition">⚙️ Settings</Link>
+                  <Link href="/homepage" className="text-gray-700 hover:text-pink-600 transition">Home</Link>
+                  <Link href="/appointments" className="text-gray-700 hover:text-pink-600 transition">Appointments</Link>
+                  <Link href="/book" className="text-gray-700 hover:text-pink-600 transition">Book</Link>
+                  <Link href="/reviews" className="text-gray-700 hover:text-pink-600 transition">Reviews</Link>
+                  <Link href="/pricing" className="text-gray-700 hover:text-pink-600 transition">Pricing</Link>
+                  <Link href="/payment" className="text-gray-700 hover:text-pink-600 transition">Payment</Link>
+                  <Link href="/gallery" className="text-gray-700 hover:text-pink-600 transition">Gallery</Link>
+                  <Link href="/settings" className="text-gray-700 hover:text-pink-600 transition">Settings</Link>
                 </div>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                  <Link href="/" className="block text-gray-700 hover:text-pink-600 transition">Home</Link>
-                  <Link href="/pricing" className="block text-gray-700 hover:text-pink-600 transition">Pricing</Link>
-                  <Link href="/gallery" className="block text-gray-700 hover:text-pink-600 transition">Gallery</Link>
-                  <Link href="/reviews" className="block text-gray-700 hover:text-pink-600 transition">Reviews</Link>
-                  <Link href="/login" className="block text-gray-700 hover:text-pink-600 transition">Log In</Link>
-                  <Link href="/register" className="block text-gray-700 hover:text-pink-600 transition">Sign Up</Link>
+                <div className="flex flex-col items-center gap-2 text-sm">
+                  <Link href="/" className="text-gray-700 hover:text-pink-600 transition">Home</Link>
+                  <Link href="/pricing" className="text-gray-700 hover:text-pink-600 transition">Pricing</Link>
+                  <Link href="/gallery" className="text-gray-700 hover:text-pink-600 transition">Gallery</Link>
+                  <Link href="/reviews" className="text-gray-700 hover:text-pink-600 transition">Reviews</Link>
                 </div>
               )}
             </div>

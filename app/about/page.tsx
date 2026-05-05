@@ -115,7 +115,9 @@ export default function AboutUs() {
 
           {/* Founder */}
           <div className="bg-gradient-to-br from-pink-500 to-pink-400 rounded-2xl shadow-xl p-8 text-white flex flex-col md:flex-row items-center gap-6">
-            <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center text-5xl flex-shrink-0 shadow-lg">👸</div>
+            <div className="w-24 h-24 rounded-full overflow-hidden flex-shrink-0 shadow-lg border-4 border-white/30">
+              <Image src="/founder.jpg" alt="Marvelous Felaine Villahermosa" width={96} height={96} className="w-full h-full object-cover" />
+            </div>
             <div className="text-center md:text-left">
               <p className="text-xs font-semibold uppercase tracking-widest text-pink-100 mb-1">Founder & Lead Artist</p>
               <h3 className="text-2xl font-extrabold mb-2">Marvelous Felaine Villahermosa</h3>

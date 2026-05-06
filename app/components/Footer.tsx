@@ -71,7 +71,7 @@ export default function Footer({ isLoggedIn }: Props) {
                 </svg>
                 marvelously.polished
               </a>
-              <p className="flex items-center gap-2"><Clock className="w-4 h-4 text-pink-500 flex-shrink-0" /> Mon–Sat: 9AM – 7PM</p>
+              <p className="flex items-center gap-2"><Clock className="w-4 h-4 text-pink-500 flex-shrink-0" /> Mon–Sun: 9AM – 7PM</p>
             </div>
           </div>
 

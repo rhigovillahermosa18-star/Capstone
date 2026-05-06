@@ -103,7 +103,7 @@ export default function AboutUs() {
               <div className="space-y-2">
                 <p className="text-3xl">⏰</p>
                 <h4 className="font-bold text-gray-800">Hours</h4>
-                <p className="text-gray-600 text-sm">Monday – Saturday<br />9:00 AM – 7:00 PM</p>
+                <p className="text-gray-600 text-sm">Monday – Sunday<br />9:00 AM – 7:00 PM</p>
               </div>
               <div className="space-y-2">
                 <p className="text-3xl">📞</p>

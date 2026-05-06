@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { CalendarDays, CreditCard, Users, BarChart2, Star, Image, LogOut, X, ClipboardList, CheckCircle, Clock, UserCircle, Wallet, DollarSign } from "lucide-react";
 
 type Appointment = {
   id: string;
@@ -40,10 +41,15 @@ export default function Admin() {
   const [authorized, setAuthorized] = useState(false);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [users, setUsers] = useState<User[]>([]);
-  const [activeTab, setActiveTab] = useState<"appointments" | "users" | "payments" | "chart" | "reviews">("appointments");
+  const [activeTab, setActiveTab] = useState<"appointments" | "users" | "payments" | "chart" | "reviews" | "gallery">("appointments");
   const [payments, setPayments] = useState<Payment[]>([]);
   const [reviews, setReviews] = useState<{ id: string; name: string; rating: number; comment: string; created_at: string; status: string }[]>([]);
   const [search, setSearch] = useState("");
+  const [galleryItems, setGalleryItems] = useState<{ id: string; image_url: string; category: string; title: string }[]>([]);
+  const [galleryFile, setGalleryFile] = useState<File | null>(null);
+  const [galleryCategory, setGalleryCategory] = useState("General");
+  const [galleryUploading, setGalleryUploading] = useState(false);
+  const [lightbox, setLightbox] = useState<string | null>(null);
 
   useEffect(() => {
     const role = typeof window !== "undefined" ? localStorage.getItem("role") : null;
@@ -55,6 +61,7 @@ export default function Admin() {
       fetchUsers();
       fetchPayments();
       fetchReviews();
+      fetchGallery();
     }
   }, [router]);
 
@@ -98,6 +105,40 @@ export default function Admin() {
     }
   };
 
+  const fetchGallery = async () => {
+    const res = await fetch("/api/gallery");
+    const data = await res.json();
+    if (res.ok) setGalleryItems(Array.isArray(data) ? data : []);
+  };
+
+  const handleGalleryUpload = async () => {
+    if (!galleryFile) return;
+    setGalleryUploading(true);
+    const { createClient } = await import("@supabase/supabase-js");
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
+    );
+    const fileExt = galleryFile.name.split(".").pop();
+    const fileName = `gallery_${Date.now()}.${fileExt}`;
+    const { data: uploadData, error: uploadError } = await supabase.storage.from("designs").upload(fileName, galleryFile, { upsert: true });
+    if (uploadError) { setGalleryUploading(false); alert("Upload failed: " + uploadError.message); return; }
+    const { data: urlData } = supabase.storage.from("designs").getPublicUrl(fileName);
+    await fetch("/api/gallery", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ image_url: urlData.publicUrl, category: galleryCategory }),
+    });
+    setGalleryFile(null);
+    setGalleryUploading(false);
+    fetchGallery();
+  };
+
+  const handleGalleryDelete = async (id: string) => {
+    await fetch(`/api/gallery?id=${id}`, { method: "DELETE" });
+    fetchGallery();
+  };
+
   const updateReviewStatus = async (id: string, status: string) => {
     const res = await fetch("/api/reviews", {
       method: "PATCH",
@@ -139,12 +180,12 @@ export default function Admin() {
   };
 
   const stats = [
-    { label: "Total Bookings", value: appointments.length, icon: "📋" },
-    { label: "Confirmed", value: appointments.filter(a => a.status === "Confirmed").length, icon: "✅" },
-    { label: "Pending", value: appointments.filter(a => a.status === "Pending").length, icon: "⏳" },
-    { label: "Total Users", value: users.length, icon: "👥" },
-    { label: "Payments", value: payments.length, icon: "💳" },
-    { label: "Revenue", value: `₱${payments.filter(p => p.status === "Verified").reduce((s, p) => s + Number(p.amount), 0).toLocaleString()}`, icon: "💰" },
+    { label: "Total Bookings", value: appointments.length, icon: <ClipboardList className="w-8 h-8 text-pink-500" /> },
+    { label: "Confirmed", value: appointments.filter(a => a.status === "Confirmed").length, icon: <CheckCircle className="w-8 h-8 text-green-500" /> },
+    { label: "Pending", value: appointments.filter(a => a.status === "Pending").length, icon: <Clock className="w-8 h-8 text-yellow-500" /> },
+    { label: "Total Users", value: users.length, icon: <UserCircle className="w-8 h-8 text-blue-500" /> },
+    { label: "Payments", value: payments.length, icon: <Wallet className="w-8 h-8 text-purple-500" /> },
+    { label: "Revenue", value: `₱${payments.filter(p => p.status === "Verified").reduce((s, p) => s + Number(p.amount), 0).toLocaleString()}`, icon: <span className="text-2xl font-bold text-pink-500">₱</span> },
   ];
 
   if (!authorized) return null;
@@ -156,7 +197,7 @@ export default function Admin() {
       <div className="bg-[#FFD3DF] py-4 px-6 shadow-sm z-10 flex items-center justify-between flex-shrink-0">
         <span className="text-2xl tracking-widest font-semibold text-black">MARVELOUSLY POLISHED</span>
         <button onClick={handleLogout} className="bg-gray-200 px-5 py-2 rounded-full text-gray-700 hover:bg-gray-300 transition">
-          🚪 Logout
+          <LogOut className="w-4 h-4" /> Logout
         </button>
       </div>
 
@@ -174,7 +215,7 @@ export default function Admin() {
                 activeTab === "appointments" ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
               }`}
             >
-              📋 Appointments
+              <CalendarDays className="w-4 h-4 inline mr-2" />Appointments
             </button>
             <button
               onClick={() => setActiveTab("payments")}
@@ -182,7 +223,7 @@ export default function Admin() {
                 activeTab === "payments" ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
               }`}
             >
-              💳 Payments
+              <CreditCard className="w-4 h-4 inline mr-2" />Payments
             </button>
             <button
               onClick={() => setActiveTab("users")}
@@ -190,7 +231,7 @@ export default function Admin() {
                 activeTab === "users" ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
               }`}
             >
-              👥 Users
+              <Users className="w-4 h-4 inline mr-2" />Users
             </button>
             <button
               onClick={() => setActiveTab("chart")}
@@ -198,7 +239,7 @@ export default function Admin() {
                 activeTab === "chart" ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
               }`}
             >
-              📊 Sales Chart
+              <BarChart2 className="w-4 h-4 inline mr-2" />Sales Chart
             </button>
             <button
               onClick={() => setActiveTab("reviews")}
@@ -206,7 +247,15 @@ export default function Admin() {
                 activeTab === "reviews" ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
               }`}
             >
-              ⭐ Reviews
+              <Star className="w-4 h-4 inline mr-2" />Reviews
+            </button>
+            <button
+              onClick={() => setActiveTab("gallery")}
+              className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition text-sm ${
+                activeTab === "gallery" ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
+              }`}
+            >
+              <Image className="w-4 h-4 inline mr-2" />Gallery
             </button>
           </div>
         </div>
@@ -221,7 +270,7 @@ export default function Admin() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
             {stats.map((stat) => (
               <div key={stat.label} className="bg-white p-4 rounded-2xl shadow-lg text-center hover:shadow-xl transition">
-                <div className="text-3xl mb-1">{stat.icon}</div>
+                <div className="flex justify-center mb-1">{stat.icon}</div>
                 <p className="text-2xl font-bold text-pink-500">{stat.value}</p>
                 <p className="text-gray-600 text-xs mt-1">{stat.label}</p>
               </div>
@@ -266,7 +315,7 @@ export default function Admin() {
                         <td className="p-4 text-gray-600">
                         {appt.design && <p className="text-xs">{appt.design}</p>}
                         {appt.design_image && (
-                          <img src={appt.design_image} alt="Design" className="mt-1 w-16 h-16 object-cover rounded-lg border border-pink-200" />
+                          <img src={appt.design_image} alt="Design" onClick={() => setLightbox(appt.design_image)} className="mt-1 w-16 h-16 object-cover rounded-lg border border-pink-200 cursor-pointer hover:scale-105 transition" />
                         )}
                       </td>
                         <td className="p-4 text-gray-600">{appt.date} {appt.time}</td>
@@ -316,6 +365,7 @@ export default function Admin() {
                       <th className="text-left p-4 text-gray-700 font-semibold">Customer</th>
                       <th className="text-left p-4 text-gray-700 font-semibold">Service</th>
                       <th className="text-left p-4 text-gray-700 font-semibold">Amount</th>
+                      <th className="text-left p-4 text-gray-700 font-semibold">Type</th>
                       <th className="text-left p-4 text-gray-700 font-semibold">Screenshot</th>
                       <th className="text-left p-4 text-gray-700 font-semibold">Date</th>
                       <th className="text-left p-4 text-gray-700 font-semibold">Status</th>
@@ -497,9 +547,63 @@ export default function Admin() {
             </div>
           )}
 
+          {/* Gallery Tab */}
+          {activeTab === "gallery" && (
+            <div className="space-y-6">
+              <div className="bg-white rounded-2xl shadow-lg p-6">
+                <h3 className="text-xl font-bold text-gray-800 mb-4">🖼️ Upload Gallery Image</h3>
+                <div className="flex flex-col sm:flex-row gap-4 items-start">
+                  <input type="file" accept="image/*" onChange={e => setGalleryFile(e.target.files?.[0] || null)}
+                    className="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-pink-500 file:text-white hover:file:bg-pink-600 cursor-pointer" />
+                  <select value={galleryCategory} onChange={e => setGalleryCategory(e.target.value)}
+                    className="px-4 py-2 border border-gray-200 rounded-xl text-sm text-gray-700 focus:outline-none focus:border-pink-400 bg-gray-50">
+                    <option>General</option>
+                    <option>Gel</option>
+                    <option>Acrylic</option>
+                    <option>Nail Art</option>
+                  </select>
+                  <button onClick={handleGalleryUpload} disabled={!galleryFile || galleryUploading}
+                    className="bg-pink-500 text-white px-6 py-2 rounded-xl font-semibold text-sm hover:bg-pink-600 transition disabled:opacity-50">
+                    {galleryUploading ? "Uploading..." : "Upload"}
+                  </button>
+                </div>
+              </div>
+              <div className="bg-white rounded-2xl shadow-lg p-6">
+                <h3 className="text-xl font-bold text-gray-800 mb-4">All Images ({galleryItems.length})</h3>
+                {galleryItems.length === 0 ? (
+                  <p className="text-gray-400 text-center py-10">No images yet. Upload one above.</p>
+                ) : (
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {galleryItems.map(img => (
+                      <div key={img.id} className="relative group rounded-2xl overflow-hidden shadow border border-pink-100">
+                        <img src={img.image_url} alt={img.title} className="w-full h-40 object-cover" />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-200 flex items-center justify-center">
+                          <button onClick={() => handleGalleryDelete(img.id)}
+                            className="opacity-0 group-hover:opacity-100 bg-red-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold transition">
+                            Delete
+                          </button>
+                        </div>
+                        <span className="absolute bottom-2 left-2 bg-white/80 text-pink-600 text-xs font-semibold px-2 py-0.5 rounded-full">{img.category}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
         </div>
 
       </div>
+
+      {lightbox && (
+        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" onClick={() => setLightbox(null)}>
+          <div className="relative max-w-2xl w-full" onClick={e => e.stopPropagation()}>
+            <img src={lightbox} alt="Design" className="w-full rounded-2xl shadow-2xl" />
+            <button onClick={() => setLightbox(null)} className="absolute top-3 right-3 bg-white/90 text-gray-700 rounded-full w-9 h-9 flex items-center justify-center hover:bg-white transition"><X className="w-4 h-4" /></button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

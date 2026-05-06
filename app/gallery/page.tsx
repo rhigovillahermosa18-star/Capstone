@@ -6,35 +6,28 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-const allImages = [
-  { src: "/nail1.jpg", category: "Gel" },
-  { src: "/nail2.jpg", category: "Acrylic" },
-  { src: "/nail3.jpg", category: "Gel" },
-  { src: "/nail4.jpg", category: "Nail Art" },
-  { src: "/nail5.jpg", category: "Acrylic" },
-  { src: "/nail6.jpg", category: "Nail Art" },
-  { src: "/nail7.jpg", category: "Gel" },
-  { src: "/nail8.jpg", category: "Acrylic" },
-  { src: "/nail9.jpg", category: "Nail Art" },
-  { src: "/nail10.jpg", category: "Gel" },
-  { src: "/nail11.jpg", category: "Acrylic" },
-  { src: "/nail12.jpg", category: "Nail Art" },
-];
+type GalleryItem = { id: string; image_url: string; category: string; title: string };
 
 export default function Gallery() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const [activeCategory, setActiveCategory] = useState("All");
   const [lightbox, setLightbox] = useState<string | null>(null);
+  const [images, setImages] = useState<GalleryItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setIsLoggedIn(!!localStorage.getItem("user_id"));
+    fetch("/api/gallery").then(r => r.json()).then(data => {
+      setImages(Array.isArray(data) ? data : []);
+      setLoading(false);
+    });
     const handleKey = (e: KeyboardEvent) => { if (e.key === "Escape") setLightbox(null); };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
   }, []);
 
-  const categories = ["All", "Gel", "Acrylic", "Nail Art"];
-  const filtered = activeCategory === "All" ? allImages : allImages.filter(i => i.category === activeCategory);
+  const categories = ["All", ...Array.from(new Set(images.map(i => i.category)))];
+  const filtered = activeCategory === "All" ? images : images.filter(i => i.category === activeCategory);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#FFF0F5] via-[#FFE4EF] to-[#FFD3DF] flex flex-col relative overflow-hidden">
@@ -69,18 +62,31 @@ export default function Gallery() {
             ))}
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filtered.map((img, i) => (
-              <div key={i} onClick={() => setLightbox(img.src)}
-                className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer">
-                <Image src={img.src} width={400} height={400} alt="Nail design" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                  <span className="text-white text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">🔍</span>
+          {loading ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {Array.from({length: 8}).map((_, i) => (
+                <div key={i} className="w-full h-64 bg-pink-100 rounded-2xl animate-pulse" />
+              ))}
+            </div>
+          ) : filtered.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-5xl mb-4">💅</p>
+              <p className="text-gray-400 text-lg">No images yet. Check back soon!</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {filtered.map((img) => (
+                <div key={img.id} onClick={() => setLightbox(img.image_url)}
+                  className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer">
+                  <img src={img.image_url} alt={img.title || "Nail design"} className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                    <span className="text-white text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">🔍</span>
+                  </div>
+                  <span className="absolute top-2 right-2 bg-white/80 text-pink-600 text-xs font-semibold px-2 py-0.5 rounded-full">{img.category}</span>
                 </div>
-                <span className="absolute top-2 right-2 bg-white/80 text-pink-600 text-xs font-semibold px-2 py-0.5 rounded-full">{img.category}</span>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
         </div>
       </div>

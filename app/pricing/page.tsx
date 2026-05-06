@@ -101,18 +101,6 @@ export default function Pricing() {
 
           </div>
 
-          {/* What's Included */}
-          <div className="bg-white rounded-2xl shadow-lg border border-pink-50 p-6">
-            <h3 className="font-bold text-gray-800 text-lg mb-4 text-center">✨ All Sets Include</h3>
-            <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
-              {[["🧴","Nail Prep & Cleaning"],["💅","Shape & File"],["🎨","Color Application"],["✨","Top Coat Finish"]].map(([icon,text]) => (
-                <div key={text} className="flex items-center gap-3 bg-pink-50 rounded-xl p-3">
-                  <span className="text-xl">{icon}</span>
-                  <span className="text-sm font-medium text-gray-700">{text}</span>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
 

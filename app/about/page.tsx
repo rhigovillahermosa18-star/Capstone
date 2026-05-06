@@ -121,7 +121,7 @@ export default function AboutUs() {
             <div className="text-center md:text-left">
               <p className="text-xs font-semibold uppercase tracking-widest text-pink-100 mb-1">Founder & Lead Artist</p>
               <h3 className="text-2xl font-extrabold mb-2">Marvelous Felaine Villahermosa</h3>
-              <p className="text-pink-100 text-sm leading-relaxed">With a passion for nail artistry and a commitment to making every client feel beautiful, Felaine founded Marvelously Polished to bring premium nail care to Barili, Cebu. Every set is crafted with love, precision, and creativity.</p>
+              <p className="text-pink-100 text-sm leading-relaxed">With a passion for nail artistry and a commitment to making every client feel beautiful, Marvelous Felaine Villahermosa founded Marvelously Polished in May 2024 to bring premium nail care to Barili, Cebu. Every set is crafted with love, precision, and creativity.</p>
             </div>
           </div>
 

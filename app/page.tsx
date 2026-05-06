@@ -74,15 +74,6 @@ export default function LandingPage() {
                 ))}
               </div>
             </div>
-            {/* Stats */}
-            <div className="flex gap-4 w-full max-w-xl">
-              {[{num:"500+",label:"Happy Clients"},{num:"3+",label:"Years Experience"},{num:"100%",label:"Satisfaction"}].map(s => (
-                <div key={s.label} className="flex-1 bg-white/80 backdrop-blur rounded-2xl p-3 text-center shadow-sm border border-pink-100">
-                  <p className="text-pink-500 font-bold text-lg">{s.num}</p>
-                  <p className="text-gray-500 text-xs">{s.label}</p>
-                </div>
-              ))}
-            </div>
           </div>
 
         </div>

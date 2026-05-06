@@ -49,14 +49,14 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 bg-pink-100 text-pink-600 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide">
               <span>💅</span> Welcome back{firstName ? `, ${firstName}` : ""}!
             </div>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-gray-800 leading-tight">
+            <h2 className="text-4xl md:text-6xl font-extrabold text-gray-800 leading-tight">
               Beauty Starts From<br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-pink-400">Tips to Toes</span>
             </h2>
             <p className="text-gray-500 leading-relaxed text-base max-w-lg mx-auto lg:mx-0">
               Experience luxury nail care in Ylaya, Barili. Our artists use premium products to create stunning designs that express your unique style. Whether you prefer simple elegance or bold nail art, we bring your vision to life with care, creativity, and precision — making every visit a relaxing and beautiful experience.
             </p>
-            <div className="flex gap-5 justify-center lg:justify-start text-sm text-gray-500 flex-wrap pt-1">
+            <div className="flex gap-6 justify-center lg:justify-start text-sm text-gray-500 flex-wrap pt-1">
               <div className="flex items-center gap-1.5"><span className="w-5 h-5 bg-pink-100 rounded-full flex items-center justify-center text-pink-500 text-xs">✓</span><span>Premium Products</span></div>
               <div className="flex items-center gap-1.5"><span className="w-5 h-5 bg-pink-100 rounded-full flex items-center justify-center text-pink-500 text-xs">✓</span><span>Expert Artists</span></div>
               <div className="flex items-center gap-1.5"><span className="w-5 h-5 bg-pink-100 rounded-full flex items-center justify-center text-pink-500 text-xs">✓</span><span>Custom Designs</span></div>
@@ -79,14 +79,6 @@ export default function Home() {
                   <button key={i} onClick={() => setCurrent(i)} className={`rounded-full transition-all duration-300 ${i === current ? "bg-pink-500 w-5 h-2" : "bg-white/70 w-2 h-2"}`} />
                 ))}
               </div>
-            </div>
-            <div className="flex gap-4 w-full max-w-xl">
-              {[{num:"500+",label:"Happy Clients"},{num:"3+",label:"Years Experience"},{num:"100%",label:"Satisfaction"}].map(s => (
-                <div key={s.label} className="flex-1 bg-white/80 backdrop-blur rounded-2xl p-3 text-center shadow-sm border border-pink-100">
-                  <p className="text-pink-500 font-bold text-lg">{s.num}</p>
-                  <p className="text-gray-500 text-xs">{s.label}</p>
-                </div>
-              ))}
             </div>
           </div>
 

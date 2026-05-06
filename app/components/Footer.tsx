@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { MapPin, Phone, Clock, Star, Gem, Flower2, Sparkles, Heart } from "lucide-react";
 
 type Props = {
   isLoggedIn?: boolean | null;
@@ -60,12 +61,17 @@ export default function Footer({ isLoggedIn }: Props) {
           <div className="space-y-3">
             <h4 className="font-bold text-gray-800 text-base border-b border-pink-300 pb-1">Contact Us</h4>
             <div className="space-y-2.5 text-sm text-gray-700">
-              <p className="flex items-center gap-2"><span>📍</span> Ylaya, Barili, Cebu</p>
-              <p className="flex items-center gap-2"><span>📞</span> 09064455283</p>
+              <p className="flex items-center gap-2"><MapPin className="w-4 h-4 text-pink-500 flex-shrink-0" /> Ylaya, Barili, Cebu</p>
+              <p className="flex items-center gap-2"><Phone className="w-4 h-4 text-pink-500 flex-shrink-0" /> 09064455283</p>
               <a href="https://www.instagram.com/marvelously.polished" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-pink-600 transition">
-                <span>📸</span> marvelously.polished
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-pink-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
+                </svg>
+                marvelously.polished
               </a>
-              <p className="flex items-center gap-2"><span>⏰</span> Mon–Sat: 9AM – 7PM</p>
+              <p className="flex items-center gap-2"><Clock className="w-4 h-4 text-pink-500 flex-shrink-0" /> Mon–Sat: 9AM – 7PM</p>
             </div>
           </div>
 
@@ -73,11 +79,11 @@ export default function Footer({ isLoggedIn }: Props) {
           <div className="space-y-3">
             <h4 className="font-bold text-gray-800 text-base border-b border-pink-300 pb-1">About the Salon</h4>
             <div className="space-y-2 text-sm text-gray-700">
-              <p>✨ Expert nail artists with years of experience</p>
-              <p>💎 Premium gel & acrylic products</p>
-              <p>🌸 Clean, relaxing salon environment</p>
-              <p>💅 Custom designs tailored just for you</p>
-              <p>❤️ Trusted by hundreds of happy clients</p>
+              <p className="flex items-center gap-2"><Star className="w-4 h-4 text-pink-500 flex-shrink-0" /> Expert nail artists with years of experience</p>
+              <p className="flex items-center gap-2"><Gem className="w-4 h-4 text-pink-500 flex-shrink-0" /> Premium gel & acrylic products</p>
+              <p className="flex items-center gap-2"><Flower2 className="w-4 h-4 text-pink-500 flex-shrink-0" /> Clean, relaxing salon environment</p>
+              <p className="flex items-center gap-2"><Sparkles className="w-4 h-4 text-pink-500 flex-shrink-0" /> Custom designs tailored just for you</p>
+              <p className="flex items-center gap-2"><Heart className="w-4 h-4 text-pink-500 flex-shrink-0" /> Trusted by hundreds of happy clients</p>
             </div>
           </div>
 

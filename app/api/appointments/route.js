@@ -41,7 +41,15 @@ export async function POST(request) {
   return NextResponse.json(data, { status: 201 });
 }
 
-export async function PATCH(request) {
+export async function DELETE(request) {
+  const supabase = getSupabase();
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+  if (!id) return NextResponse.json({ error: "Missing id." }, { status: 400 });
+  const { error } = await supabase.from("appointments").delete().eq("id", id);
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json({ success: true });
+}
   const supabase = getSupabase();
   const body = await request.json();
   const { id, status } = body;

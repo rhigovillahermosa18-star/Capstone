@@ -63,12 +63,9 @@ export default function Appointments() {
     payments.some((p) => p.appointment_id === apptId && (p.status === "Pending" || p.status === "Verified"));
 
   const handleCancel = async (id: string) => {
-    await fetch("/api/appointments", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, status: "Cancelled" }),
-    });
-    fetchAppointments();
+    if (!confirm("Are you sure you want to cancel and delete this appointment?")) return;
+    await fetch(`/api/appointments?id=${id}`, { method: "DELETE" });
+    setAppointments(prev => prev.filter(a => a.id !== id));
   };
 
   const handleLogout = async () => {

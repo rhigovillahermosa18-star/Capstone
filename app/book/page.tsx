@@ -237,7 +237,7 @@ function BookContent() {
           </div>
 
           {/* Right - Design Upload */}
-          <div className="hidden lg:flex flex-col gap-6">
+          <div className="flex flex-col gap-6">
             <div className="bg-white/90 backdrop-blur p-8 rounded-3xl shadow-xl border border-pink-100 flex flex-col gap-5">
               <div>
                 <h3 className="text-pink-600 font-bold text-lg mb-1 flex items-center gap-2">💅 Upload Your Desired Design</h3>

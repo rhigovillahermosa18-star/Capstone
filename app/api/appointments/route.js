@@ -50,7 +50,8 @@ export async function DELETE(request) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ success: true });
 }
-  const supabase = getSupabase();
+
+export async function PATCH(request) {
   const body = await request.json();
   const { id, status } = body;
 

@@ -42,7 +42,7 @@ export default function Pricing() {
       {/* Pricing Content */}
       <div className="flex-grow flex justify-center items-start relative z-10 px-6 pb-12">
         <div className="max-w-5xl w-full space-y-10">
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
             {/* Plain Set */}
             <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-pink-50">

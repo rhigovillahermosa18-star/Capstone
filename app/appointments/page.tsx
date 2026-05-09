@@ -126,7 +126,7 @@ export default function Appointments() {
             <div className="space-y-4">
               {appointments.map((appt) => (
                 <div key={appt.id} className="bg-white p-5 rounded-2xl shadow-lg border border-pink-50 hover:shadow-xl transition-all duration-300">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex items-start gap-4">
                       <div className="bg-gradient-to-br from-pink-100 to-pink-50 text-2xl w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-sm">💅</div>
                       <div className="space-y-0.5">

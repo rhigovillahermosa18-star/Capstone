@@ -205,7 +205,7 @@ function BookContent() {
               {/* Time Slots */}
               <div className="border-2 border-gray-200 rounded-xl p-4">
                 <p className="text-sm font-semibold text-gray-700 mb-3">Select Time</p>
-                <div className="grid grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {["9:00 AM", "1:00 PM", "4:00 PM", "7:00 PM"].map((slot) => {
                     const taken = date ? (bookedSlots[date] || []).includes(slot) : false;
                     const isSelected = time === slot;

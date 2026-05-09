@@ -62,7 +62,7 @@ export default function LandingPage() {
               <div className="flex transition-transform duration-700 ease-in-out" style={{ transform: `translateX(-${current * 100}%)` }}>
                 {nailImages.map((src, i) => (
                   <div key={i} className="min-w-full">
-                    <Image src={src} width={600} height={400} alt={`Nail ${i + 1}`} className="w-full h-80 object-cover" />
+                    <Image src={src} width={600} height={400} alt={`Nail ${i + 1}`} className="w-full h-56 sm:h-80 object-cover" />
                   </div>
                 ))}
               </div>

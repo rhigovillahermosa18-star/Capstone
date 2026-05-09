@@ -191,83 +191,50 @@ export default function Admin() {
   if (!authorized) return null;
 
   return (
-    <div className="h-screen bg-[#FFE4EF] flex flex-col overflow-hidden">
+    <div className="min-h-screen bg-[#FFE4EF] flex flex-col">
 
       {/* Header */}
-      <div className="bg-[#FFD3DF] py-4 px-6 shadow-sm z-10 flex items-center justify-between flex-shrink-0">
-        <span className="text-2xl tracking-widest font-semibold text-black">MARVELOUSLY POLISHED</span>
+      <div className="bg-[#FFD3DF] py-4 px-4 md:px-6 shadow-sm z-10 flex items-center justify-between flex-shrink-0">
+        <span className="text-sm md:text-2xl tracking-widest font-semibold text-black">MARVELOUSLY POLISHED</span>
         <button onClick={handleLogout} className="flex items-center gap-2 bg-gray-200 px-4 py-2 rounded-full text-gray-700 hover:bg-gray-300 transition text-sm whitespace-nowrap">
           <LogOut className="w-4 h-4" /> Logout
         </button>
       </div>
 
       {/* Body */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 flex-col md:flex-row overflow-hidden">
 
         {/* Left Sidebar */}
-        <div className="w-56 bg-white shadow-lg flex flex-col py-8 px-4 gap-3 flex-shrink-0 overflow-y-auto sticky top-0 self-start h-[calc(100vh-64px)]">
+        <div className="w-full md:w-56 bg-white shadow-lg flex flex-col py-4 md:py-8 px-4 gap-3 flex-shrink-0 md:overflow-y-auto md:sticky md:top-0 md:self-start md:h-[calc(100vh-64px)]">
           <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 px-2">Admin Panel</p>
 
-          <div className="flex flex-col gap-2">
-            <button
-              onClick={() => setActiveTab("appointments")}
-              className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition text-sm ${
-                activeTab === "appointments" ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
-              }`}
-            >
-              <CalendarDays className="w-4 h-4 inline mr-2" />Appointments
-            </button>
-            <button
-              onClick={() => setActiveTab("payments")}
-              className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition text-sm ${
-                activeTab === "payments" ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
-              }`}
-            >
-              <CreditCard className="w-4 h-4 inline mr-2" />Payments
-            </button>
-            <button
-              onClick={() => setActiveTab("users")}
-              className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition text-sm ${
-                activeTab === "users" ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
-              }`}
-            >
-              <Users className="w-4 h-4 inline mr-2" />Users
-            </button>
-            <button
-              onClick={() => setActiveTab("chart")}
-              className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition text-sm ${
-                activeTab === "chart" ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
-              }`}
-            >
-              <BarChart2 className="w-4 h-4 inline mr-2" />Sales Chart
-            </button>
-            <button
-              onClick={() => setActiveTab("reviews")}
-              className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition text-sm ${
-                activeTab === "reviews" ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
-              }`}
-            >
-              <Star className="w-4 h-4 inline mr-2" />Reviews
-            </button>
-            <button
-              onClick={() => setActiveTab("gallery")}
-              className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition text-sm ${
-                activeTab === "gallery" ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
-              }`}
-            >
-              <Image className="w-4 h-4 inline mr-2" />Gallery
-            </button>
+          <div className="flex flex-row md:flex-col gap-2 overflow-x-auto pb-1 md:pb-0">
+            {([
+              { tab: "appointments", icon: <CalendarDays className="w-4 h-4" />, label: "Appointments" },
+              { tab: "payments", icon: <CreditCard className="w-4 h-4" />, label: "Payments" },
+              { tab: "users", icon: <Users className="w-4 h-4" />, label: "Users" },
+              { tab: "chart", icon: <BarChart2 className="w-4 h-4" />, label: "Sales Chart" },
+              { tab: "reviews", icon: <Star className="w-4 h-4" />, label: "Reviews" },
+              { tab: "gallery", icon: <Image className="w-4 h-4" />, label: "Gallery" },
+            ] as const).map(({ tab, icon, label }) => (
+              <button key={tab} onClick={() => setActiveTab(tab)}
+                className={`flex-shrink-0 flex items-center gap-2 px-4 py-3 rounded-xl font-semibold transition text-sm ${
+                  activeTab === tab ? "bg-pink-500 text-white shadow" : "text-gray-600 hover:bg-pink-50"
+                }`}>
+                {icon}<span className="whitespace-nowrap">{label}</span>
+              </button>
+            ))}
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 px-6 py-8 overflow-y-auto">
+        <div className="flex-1 px-4 md:px-6 py-6 md:py-8 overflow-y-auto">
 
           <h2 className="text-3xl font-bold text-gray-800 mb-2">Admin Panel</h2>
           <p className="text-gray-600 mb-6">Manage all appointments, payments and users</p>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4 mb-8">
             {stats.map((stat) => (
               <div key={stat.label} className="bg-white p-4 rounded-2xl shadow-lg text-center hover:shadow-xl transition">
                 <div className="flex justify-center mb-1">{stat.icon}</div>

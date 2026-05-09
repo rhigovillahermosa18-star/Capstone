@@ -33,7 +33,7 @@ export default function Footer({ isLoggedIn }: Props) {
   return (
     <footer className="bg-gradient-to-b from-[#FFD3DF] to-[#FFB6C9] relative z-10 pt-12 pb-6 px-6">
       <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-4 gap-10 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">
 
           {/* Brand */}
           <div className="space-y-3">

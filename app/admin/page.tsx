@@ -195,7 +195,7 @@ export default function Admin() {
 
       {/* Header */}
       <div className="bg-[#FFD3DF] py-4 px-4 md:px-6 shadow-sm z-10 flex items-center justify-between flex-shrink-0">
-        <span className="text-sm md:text-2xl tracking-widest font-semibold text-black">MARVELOUSLY POLISHED</span>
+        <span className="text-sm md:text-xl lg:text-2xl tracking-widest font-semibold text-black truncate">MARVELOUSLY POLISHED</span>
         <button onClick={handleLogout} className="flex items-center gap-2 bg-gray-200 px-4 py-2 rounded-full text-gray-700 hover:bg-gray-300 transition text-sm whitespace-nowrap">
           <LogOut className="w-4 h-4" /> Logout
         </button>

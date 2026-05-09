@@ -281,6 +281,7 @@ export default function Admin() {
                         <td className="p-4 text-gray-600">{appt.service}</td>
                         <td className="p-4 text-gray-600">
                         {appt.design && <p className="text-xs">{appt.design}</p>}
+                        {appt.nail_size && <p className="text-xs text-pink-500 font-semibold">{appt.nail_size}</p>}
                         {appt.design_image && (
                           <img src={appt.design_image} alt="Design" onClick={() => setLightbox(appt.design_image)} className="mt-1 w-16 h-16 object-cover rounded-lg border border-pink-200 cursor-pointer hover:scale-105 transition" />
                         )}

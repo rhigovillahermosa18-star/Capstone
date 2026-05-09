@@ -16,6 +16,7 @@ function BookContent() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [service, setService] = useState(searchParams.get("service") || "");
+  const [nailSize, setNailSize] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [requests, setRequests] = useState("");
@@ -83,7 +84,7 @@ function BookContent() {
   };
 
   const handleSubmit = async () => {
-    if (!name || !phone || !service || !date || !time) {
+    if (!name || !phone || !service || !nailSize || !date || !time) {
       setError("Please fill in all required fields.");
       return;
     }
@@ -108,7 +109,7 @@ function BookContent() {
     const res = await fetch("/api/appointments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, phone, email, service, date, time, requests, design, design_image: designImageUrl, user_id }),
+      body: JSON.stringify({ name, phone, email, service, nail_size: nailSize, date, time, requests, design, design_image: designImageUrl, user_id }),
     });
     const data = await res.json();
     if (!res.ok) {
@@ -155,6 +156,21 @@ function BookContent() {
                 <option>Basic Set</option>
                 <option>Full Set</option>
               </select>
+
+              {/* Nail Size */}
+              <div className="border-2 border-gray-200 rounded-xl p-4">
+                <p className="text-sm font-semibold text-gray-700 mb-3">Select Nail Size</p>
+                <div className="grid grid-cols-3 gap-3">
+                  {["Short", "Medium", "Long"].map((size) => (
+                    <button key={size} type="button" onClick={() => setNailSize(size)}
+                      className={`py-3 rounded-xl text-sm font-semibold transition ${
+                        nailSize === size ? "bg-pink-500 text-white shadow-lg" : "bg-gray-100 text-gray-700 hover:bg-pink-100 hover:text-pink-600"
+                      }`}>
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
               {/* Calendar */}
               <div className="border-2 border-gray-200 rounded-xl p-4">

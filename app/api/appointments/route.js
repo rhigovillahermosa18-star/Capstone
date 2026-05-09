@@ -25,7 +25,7 @@ export async function GET(request) {
 export async function POST(request) {
   const supabase = getSupabase();
   const body = await request.json();
-  const { name, phone, email, service, date, time, requests, design, design_image, user_id } = body;
+  const { name, phone, email, service, nail_size, date, time, requests, design, design_image, user_id } = body;
 
   if (!name || !phone || !service || !date || !time) {
     return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
@@ -33,7 +33,7 @@ export async function POST(request) {
 
   const { data, error } = await supabase
     .from("appointments")
-    .insert([{ user_id: user_id ?? null, name, phone, email: email ?? "", service, date, time, requests: requests ?? "", design: design ?? "", design_image: design_image ?? "", status: "Pending" }])
+    .insert([{ user_id: user_id ?? null, name, phone, email: email ?? "", service, nail_size: nail_size ?? "", date, time, requests: requests ?? "", design: design ?? "", design_image: design_image ?? "", status: "Pending" }])
     .select()
     .single();
 

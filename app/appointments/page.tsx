@@ -131,7 +131,7 @@ export default function Appointments() {
                       <div className="bg-gradient-to-br from-pink-100 to-pink-50 text-2xl w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-sm">💅</div>
                       <div className="space-y-0.5">
                         <p className="font-bold text-gray-800 text-base">{appt.name}</p>
-                        <p className="text-pink-500 font-semibold text-sm">{appt.service}</p>
+                        <p className="text-pink-500 font-semibold text-sm">{appt.service}{appt.nail_size ? ` · ${appt.nail_size}` : ""}</p>
                         {appt.design && <p className="text-gray-400 text-xs">Design: {appt.design}</p>}
                         {appt.design_image && (
                           <img src={appt.design_image} alt="Design" className="mt-2 w-20 h-20 object-cover rounded-xl border-2 border-pink-100 shadow-sm" />

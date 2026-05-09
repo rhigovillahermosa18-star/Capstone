@@ -82,7 +82,7 @@ export default function Navbar({ active, mode = "auto" }: Props) {
         {/* Logo */}
         <Link href={isLoggedIn ? "/homepage" : "/"} className="flex items-center gap-2.5 flex-shrink-0">
           <Image src="/logo1.png" alt="Logo" width={40} height={40} className="rounded-full border-2 border-pink-200 shadow" />
-          <span className="text-pink-700 font-extrabold tracking-widest text-xs hidden sm:block">MARVELOUSLY POLISHED</span>
+          <span className="text-pink-700 font-extrabold tracking-widest text-xs">MARVELOUSLY POLISHED</span>
         </Link>
 
         {/* Desktop Links */}

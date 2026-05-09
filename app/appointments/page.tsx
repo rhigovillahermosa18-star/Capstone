@@ -171,7 +171,7 @@ export default function Appointments() {
                         <div className="flex gap-2">
                           {!hasPaid(appt.id) && (
                             <Link
-                              href={`/payment?service=${encodeURIComponent(appt.service)}&id=${appt.id}&name=${encodeURIComponent(appt.name)}`}
+                              href={`/payment?service=${encodeURIComponent(appt.service)}&nail_size=${encodeURIComponent(appt.nail_size || "Short")}&id=${appt.id}&name=${encodeURIComponent(appt.name)}`}
                               className="bg-pink-500 text-white px-4 py-1.5 rounded-full text-xs font-bold hover:bg-pink-600 transition shadow-sm"
                             >
                               💳 Pay

@@ -7,19 +7,20 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-const SERVICE_PRICES: Record<string, number> = {
-  "Plain Set": 400,
-  "Basic Set": 450,
-  "Full Set": 600,
+const SERVICE_PRICES: Record<string, Record<string, number>> = {
+  "Plain Set": { "Short": 400, "Medium": 450, "Long": 500 },
+  "Basic Set": { "Short": 450, "Medium": 500, "Long": 550 },
+  "Full Set":  { "Short": 600, "Medium": 650, "Long": 700 },
 };
 
 function PaymentContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const service = searchParams.get("service") || "Basic Set";
+  const nailSize = searchParams.get("nail_size") || "Short";
   const nameFromUrl = searchParams.get("name") || "";
 
-  const totalAmount = SERVICE_PRICES[service] ?? 450;
+  const totalAmount = SERVICE_PRICES[service]?.[nailSize] ?? SERVICE_PRICES[service]?.["Short"] ?? 450;
   const halfAmount = totalAmount / 2;
 
   const [paymentType, setPaymentType] = useState<"half" | "full">("full");
@@ -130,7 +131,7 @@ function PaymentContent() {
                 </div>
                 <div className="bg-gradient-to-br from-pink-50 to-white rounded-2xl p-4 w-full border border-pink-100">
                   <p className="text-xs text-gray-400 uppercase tracking-wide">Service</p>
-                  <p className="font-bold text-gray-800 text-base">{service}</p>
+                  <p className="font-bold text-gray-800 text-base">{service} · {nailSize}</p>
                   <p className="text-xs text-gray-400 uppercase tracking-wide mt-2">Amount to Pay</p>
                   <p className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-pink-400 text-4xl">₱{amountToPay}</p>
                   <p className="text-xs text-gray-400 mt-1">({paymentType === "half" ? "Half Payment" : "Full Payment"})</p>

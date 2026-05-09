@@ -36,6 +36,7 @@ export default function Appointments() {
   const [reviewComment, setReviewComment] = useState("");
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
   const [reviewLoading, setReviewLoading] = useState(false);
+  const [cancelId, setCancelId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchAppointments();
@@ -63,9 +64,11 @@ export default function Appointments() {
     payments.some((p) => p.appointment_id === apptId && (p.status === "Pending" || p.status === "Verified"));
 
   const handleCancel = async (id: string) => {
-    if (!confirm("Are you sure you want to cancel and delete this appointment?")) return;
-    await fetch(`/api/appointments?id=${id}`, { method: "DELETE" });
-    setAppointments(prev => prev.filter(a => a.id !== id));
+    const res = await fetch(`/api/appointments?id=${id}`, { method: "DELETE" });
+    if (res.ok) {
+      setAppointments(prev => prev.filter(a => a.id !== id));
+    }
+    setCancelId(null);
   };
 
   const handleLogout = async () => {
@@ -180,7 +183,7 @@ export default function Appointments() {
                             </span>
                           ) : (
                             <button
-                              onClick={() => handleCancel(appt.id)}
+                              onClick={() => setCancelId(appt.id)}
                               className="bg-pink-50 text-pink-500 border border-pink-200 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-pink-100 transition"
                             >
                               Cancel
@@ -205,6 +208,21 @@ export default function Appointments() {
       </div>
 
       <Footer isLoggedIn={true} />
+
+      {/* Cancel Confirmation Modal */}
+      {cancelId && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full text-center space-y-4">
+            <p className="text-3xl">🗑️</p>
+            <h3 className="text-lg font-bold text-gray-800">Cancel Appointment?</h3>
+            <p className="text-gray-500 text-sm">This will permanently delete your appointment. This cannot be undone.</p>
+            <div className="flex gap-3">
+              <button onClick={() => handleCancel(cancelId)} className="flex-1 bg-red-500 text-white py-3 rounded-xl font-semibold hover:bg-red-600 transition">Yes, Delete</button>
+              <button onClick={() => setCancelId(null)} className="flex-1 bg-gray-100 text-gray-600 py-3 rounded-xl font-semibold hover:bg-gray-200 transition">Keep It</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Review Modal */}
       {reviewAppt && (

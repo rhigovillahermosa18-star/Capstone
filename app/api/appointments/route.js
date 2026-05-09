@@ -52,6 +52,7 @@ export async function DELETE(request) {
 }
 
 export async function PATCH(request) {
+  const supabase = getSupabase();
   const body = await request.json();
   const { id, status } = body;
 

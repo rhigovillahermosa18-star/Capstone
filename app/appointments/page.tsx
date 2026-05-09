@@ -65,8 +65,11 @@ export default function Appointments() {
 
   const handleCancel = async (id: string) => {
     const res = await fetch(`/api/appointments?id=${id}`, { method: "DELETE" });
-    if (res.ok) {
+    const data = await res.json();
+    if (res.ok && data.success) {
       setAppointments(prev => prev.filter(a => a.id !== id));
+    } else {
+      alert("Failed to delete: " + (data.error || "Unknown error"));
     }
     setCancelId(null);
   };
